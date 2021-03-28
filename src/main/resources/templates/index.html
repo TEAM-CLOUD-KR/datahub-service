@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Data-Hub</title>
+    <!--    BootStrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+    <!--    font awesome-->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <!--    Leon Sans Font-->
+    <style>
+        #logo {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            outline: 0;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            /*cursor: move;*/
+        }
+
+        /*.dg{*/
+        /*    display: none;*/
+        /*}*/
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.js"></script>
+
+    <!--    CSS Link-->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<header>
+    <ul class="nav justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="login.html">사이트맵</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="login.html">로그인</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="register.html">회원가입</a>
+        </li>
+    </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light"
+         style="background-color: white!important; padding-top: 0;">
+        <div class="container-fluid">
+            <div id="logo" style="width: 270px; height: 55px; background-color: white; cursor: pointer;"
+                 onclick="location.href='index.html'">
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            API
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">API 목록 및 조회</a></li>
+                            <li><a class="dropdown-item" href="#">API 생성</a></li>
+                            <li><a class="dropdown-item" href="#">API 관리</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            데이터셋
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">데이터 목록 및 조회</a></li>
+                            <li><a class="dropdown-item" href="#">데이터 등록 및 관리</a></li>
+                            <li><a class="dropdown-item" href="#">데이터 요청</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">데이터허브</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+</header>
+<container>
+    <div id="main">
+        <div class="input-group flex-nowrap">
+            <input type="text" class="form-control" placeholder="검색할 데이터 입력!" aria-label="Username"
+                   aria-describedby="addon-wrapping">
+            <button type="button" class="btn btn-primary"><i class="fas fa-search fa-3x"></i></button>
+
+        </div>
+        <!--    부스트랩 이동-->
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="footer-category" id="footer-category-n1">
+                        <a href="#">
+                            <i class="fas fa-school fa-4x"></i>
+                            <div class="txt">교육</div>
+                        </a>
+                    </div>
+                    <div class="footer-category" id="footer-category-n2">
+                        <a href="#">
+                            <i class="fas fa-industry fa-4x"></i>
+                            <div class="txt">경제/산업</div>
+                        </a>
+                    </div>
+                    <div class="footer-category" id="footer-category-n3">
+                        <a href="#">
+                            <i class="fas fa-hands-helping fa-4x"></i>
+                            <div class="txt">사회복지</div>
+                        </a>
+                    </div>
+                    <div class="footer-category" id="footer-category-n4">
+                        <a href="#">
+                            <i class="fas fa-medkit fa-4x"></i>
+                            <div class="txt">보건</div>
+                        </a>
+                    </div>
+                    <div class="footer-category" id="footer-category-n5">
+                        <a href="#">
+                            <i class="fas fa-plane-departure fa-4x"></i>
+                            <div class="txt">문화/관광</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="footer-category" id="footer-category-n6">
+                        <a href="#">
+                            <i class="fas fa-city fa-4x"></i>
+                            <div class="txt">도시관리</div>
+                        </a>
+                    </div>
+                    <div class="footer-category" id="footer-category-n7">
+                        <a href="#">
+                            <i class="fas fa-car-side fa-4x"></i>
+                            <div class="txt">교통</div>
+                        </a>
+                    </div>
+                    <div class="footer-category" id="footer-category-n8">
+                        <a href="#">
+                            <i class="fas fa-leaf fa-4x"></i>
+                            <div class="txt">환경</div>
+                        </a>
+                    </div>
+                    <div class="footer-category" id="footer-category-n9">
+                        <a href="#">
+                            <i class="fas fa-flask fa-4x"></i>
+                            <div class="txt">과학기술</div>
+                        </a>
+                    </div>
+                    <div class="footer-category" id="footer-category-n10">
+                        <a href="#">
+                            <i class="fas fa-gavel fa-4x"></i>
+                            <div class="txt">법률</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <i class="fas fa-arrow-left fa-4x" style="color: black"></i>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <i class="fas fa-arrow-right fa-4x" style="color: black"></i>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+
+</container>
+<footer style="background-color: black;">
+    d
+</footer>
+<script src="js/leon.js"></script>
+<script src="js/util.js"></script>
+<script>
+    let leon, controll;
+
+    function init() {
+        generateCanvas();
+
+        controll = {
+            color: {},
+            roundCap: true,
+            multiply: true,
+
+            drawing: () => {
+                let i, total = leon.drawing.length;
+                for (i = 0; i < total; i++) {
+                    TweenMax.killTweensOf(leon.drawing[i]);
+                    TweenMax.fromTo(leon.drawing[i], 2, {
+                        value: 0
+                    }, {
+                        value: 1,
+                        ease: Cubic.easeOut
+                    });
+                }
+            }
+
+        };
+
+
+        leon = new LeonSans({
+            text: 'DataPortal',
+            color: ['#000000'],
+            size: 53,
+            weight: 818,
+
+
+        });
+
+
+        requestAnimationFrame(animate);
+        controll.drawing(0);
+
+    }
+
+
+    function animate(t) {
+        requestAnimationFrame(animate);
+
+        ctx.clearRect(0, 0, sw, sh);
+
+        const x = (sw - leon.rect.w) / 2;
+        const y = (sh - leon.rect.h) / 2;
+        leon.position(x, y);
+
+        leon.drawColorful(ctx);
+    }
+
+    window.onload = () => {
+        init();
+    };
+</script>
+</body>
+</html>

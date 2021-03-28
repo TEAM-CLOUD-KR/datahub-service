@@ -1,0 +1,58 @@
+.header_link{
+    color: white;
+}
+#main {
+    background-color: white;
+    width: 100%;
+    height: 89vh;
+}
+.flex-nowrap{
+    padding-top: 100px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.carousel-inner{
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-control{
+    font-size: 2rem;
+}
+
+/*이어붙이기(hj)*/
+.footer-category-group{
+    display: flex;
+    justify-content: space-around;
+}
+.footer-category{
+    text-align: center;
+    float: left;
+    padding:1rem;
+}
+.footer-category i:hover{
+    color: cornflowerblue;
+}
+.footer-category a{
+    color:black;
+    text-decoration: none;
+    font-weight: bold;
+}
+.txt{
+    margin-top: 1rem;
+}
+.footer_category_group_g2{
+    text-align: center;
+    float: left;
+}
+.footer_category_group_g2 > div{
+    width: 11rem;
+    height: 6rem;
+    border-bottom: 2px solid black;
+    float:left;
+    padding: 1rem;
+}
+.footer_category_group_g2 i:hover{
+    color: cornflowerblue;
+}
+
