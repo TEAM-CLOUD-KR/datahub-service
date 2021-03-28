@@ -1,0 +1,20 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /home/datahub/datahub-service
+    overwrite: yes
+
+permissions:
+  - object: /home/datahub/datahub-service
+    owner: datahub
+    group: datahub
+    mode: 755
+    type:
+      - directory
+
+hooks:
+  AfterInstall:
+    - location: deploy.sh
+      timeout: 60
