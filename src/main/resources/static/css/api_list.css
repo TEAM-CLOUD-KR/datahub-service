@@ -1,0 +1,76 @@
+.container{
+    margin-top: 3%;
+}
+.container > .row{
+    margin-bottom: 3%;
+}
+.api-search{
+    display: flex;
+}
+/* .api-search > input[type='search']{
+    width: 100%;
+} */
+.search-result{
+    font-size: 20px;
+}
+.search-result span{
+    color: blue;
+}
+.wrap{
+    width: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.condition{
+    width: 20%;
+    float: left;
+    border:1px solid lightgray
+}
+.condition-tit{
+    padding: 1rem;
+    text-align: center;
+}
+.condition-list{
+    display: block;
+    overflow-y: scroll;
+    height: 10rem;
+    margin-left: 1rem;
+}
+.condition-list ul{
+    list-style: none;
+    padding: 0;
+}
+.ul-wrapper{
+    padding-left: 0;
+}
+.api-list{
+    list-style: none;
+    border: 1px solid lightgray;
+}
+ .api-title{
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+.api-content{
+    font-size: 13px;
+    margin-bottom: 1rem;
+}
+.api-info-title{
+    float: left;
+    font-size:13px;
+    font-weight: bold;
+    margin-right: 1%;
+}
+.api-data{
+    font-size:13px;
+    color: darkgray;
+    margin-right: 7%;
+    /*float: left;*/
+}
+.api-info button{
+    width: 9%;
+    height: 5rem;
+    float: left;
+    margin-left: 72rem;
+    margin-top: -6.5rem;
+}

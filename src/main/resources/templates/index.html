@@ -31,6 +31,13 @@
         /*.dg{*/
         /*    display: none;*/
         /*}*/
+
+        @media screen and (max-width: 768px) {
+            #category_main {
+                margin-top: 0px !important;
+            }
+        }
+
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
@@ -54,7 +61,7 @@
         </li>
     </ul>
     <nav class="navbar navbar-expand-lg navbar-light bg-light"
-         style="background-color: white!important; padding-top: 0;">
+         style="background-color: white!important; padding-top: 0;;">
         <div class="container-fluid">
             <div id="logo" style="width: 270px; height: 55px; background-color: white; cursor: pointer;"
                  onclick="location.href='index.html'">
@@ -97,98 +104,82 @@
     </nav>
 
 </header>
-<container>
-    <div id="main">
-        <div class="input-group flex-nowrap">
-            <input type="text" class="form-control" placeholder="검색할 데이터 입력!" aria-label="Username"
-                   aria-describedby="addon-wrapping">
-            <button type="button" class="btn btn-primary"><i class="fas fa-search fa-3x"></i></button>
-
+<div class="container">
+    <div class="input-group flex-nowrap" id="main">
+        <input type="text" class="form-control" placeholder="검색할 데이터 입력!" aria-label="Username"
+               aria-describedby="addon-wrapping">
+        <button type="button" class="btn btn-primary"><i class="fas fa-search fa-3x"></i></button>
+    </div>
+    <!--    부스트랩 이동-->
+    <div id="category_main">
+        <div class="footer-category" id="footer-category-n1">
+            <a href="#">
+                <i class="fas fa-school fa-4x"></i>
+                <div class="txt">교육</div>
+            </a>
         </div>
-        <!--    부스트랩 이동-->
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="footer-category" id="footer-category-n1">
-                        <a href="#">
-                            <i class="fas fa-school fa-4x"></i>
-                            <div class="txt">교육</div>
-                        </a>
-                    </div>
-                    <div class="footer-category" id="footer-category-n2">
-                        <a href="#">
-                            <i class="fas fa-industry fa-4x"></i>
-                            <div class="txt">경제/산업</div>
-                        </a>
-                    </div>
-                    <div class="footer-category" id="footer-category-n3">
-                        <a href="#">
-                            <i class="fas fa-hands-helping fa-4x"></i>
-                            <div class="txt">사회복지</div>
-                        </a>
-                    </div>
-                    <div class="footer-category" id="footer-category-n4">
-                        <a href="#">
-                            <i class="fas fa-medkit fa-4x"></i>
-                            <div class="txt">보건</div>
-                        </a>
-                    </div>
-                    <div class="footer-category" id="footer-category-n5">
-                        <a href="#">
-                            <i class="fas fa-plane-departure fa-4x"></i>
-                            <div class="txt">문화/관광</div>
-                        </a>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="footer-category" id="footer-category-n6">
-                        <a href="#">
-                            <i class="fas fa-city fa-4x"></i>
-                            <div class="txt">도시관리</div>
-                        </a>
-                    </div>
-                    <div class="footer-category" id="footer-category-n7">
-                        <a href="#">
-                            <i class="fas fa-car-side fa-4x"></i>
-                            <div class="txt">교통</div>
-                        </a>
-                    </div>
-                    <div class="footer-category" id="footer-category-n8">
-                        <a href="#">
-                            <i class="fas fa-leaf fa-4x"></i>
-                            <div class="txt">환경</div>
-                        </a>
-                    </div>
-                    <div class="footer-category" id="footer-category-n9">
-                        <a href="#">
-                            <i class="fas fa-flask fa-4x"></i>
-                            <div class="txt">과학기술</div>
-                        </a>
-                    </div>
-                    <div class="footer-category" id="footer-category-n10">
-                        <a href="#">
-                            <i class="fas fa-gavel fa-4x"></i>
-                            <div class="txt">법률</div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                <i class="fas fa-arrow-left fa-4x" style="color: black"></i>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                <i class="fas fa-arrow-right fa-4x" style="color: black"></i>
-                <span class="visually-hidden">Next</span>
-            </button>
+        <div class="footer-category" id="footer-category-n2">
+            <a href="#">
+                <i class="fas fa-industry fa-4x"></i>
+                <div class="txt">경제/산업</div>
+            </a>
+        </div>
+        <div class="footer-category" id="footer-category-n3">
+            <a href="#">
+                <i class="fas fa-hands-helping fa-4x"></i>
+                <div class="txt">사회복지</div>
+            </a>
+        </div>
+        <div class="footer-category" id="footer-category-n4">
+            <a href="#">
+                <i class="fas fa-medkit fa-4x"></i>
+                <div class="txt">보건</div>
+            </a>
+        </div>
+        <div class="footer-category" id="footer-category-n5">
+            <a href="#">
+                <i class="fas fa-plane-departure fa-4x"></i>
+                <div class="txt">문화/관광</div>
+            </a>
+        </div>
+        <!--            두번째줄-->
+        <div class="footer-category" id="footer-category-n6">
+            <a href="#">
+                <i class="fas fa-city fa-4x"></i>
+                <div class="txt">도시관리</div>
+            </a>
+        </div>
+        <div class="footer-category" id="footer-category-n7">
+            <a href="#">
+                <i class="fas fa-car-side fa-4x"></i>
+                <div class="txt">교통</div>
+            </a>
+        </div>
+        <div class="footer-category" id="footer-category-n8">
+            <a href="#">
+                <i class="fas fa-leaf fa-4x"></i>
+                <div class="txt">환경</div>
+            </a>
+        </div>
+        <div class="footer-category" id="footer-category-n9">
+            <a href="#">
+                <i class="fas fa-flask fa-4x"></i>
+                <div class="txt">과학기술</div>
+            </a>
+        </div>
+        <div class="footer-category" id="footer-category-n10">
+            <a href="#">
+                <i class="fas fa-gavel fa-4x"></i>
+                <div class="txt">법률</div>
+            </a>
         </div>
     </div>
 
+</div>
 
-</container>
-<footer style="background-color: black;">
-    d
-</footer>
+<!--<footer style="background-color: black;">-->
+<!--    d-->
+<!--</footer>-->
 <script src="js/leon.js"></script>
 <script src="js/util.js"></script>
 <script>
