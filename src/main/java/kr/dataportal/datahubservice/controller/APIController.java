@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api")
 public class APIController {
 
-    @GetMapping("/list")
+    @GetMapping("/")
     public String ApiList() {
         return "api_list";
     }
