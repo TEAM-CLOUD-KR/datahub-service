@@ -12,7 +12,8 @@ public class DataHubServiceApplication {
                         "spring.config.location=" +
                         "classpath:/application.yml," +
                         "optional:C:/repository/_secrets/datahub-service.yml," +
-                        "optional:/home/datahub/_secrets/datahub-service.yml"
+                        "optional:/home/datahub/_secrets/datahub-service.yml," +
+                        "optional:/Users/sun/repository/_secrets/datahub-service.yml"
                 )
                 .run(args);
     }

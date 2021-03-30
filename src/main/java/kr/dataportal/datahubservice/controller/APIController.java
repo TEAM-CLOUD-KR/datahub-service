@@ -11,15 +11,18 @@
 
 package kr.dataportal.datahubservice.controller;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
 @RequestMapping("/api")
 public class APIController {
 
     @GetMapping("/")
+    @ApiIgnore
     public String ApiList() {
         return "api_list";
     }
