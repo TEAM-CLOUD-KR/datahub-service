@@ -35,7 +35,7 @@ public class UserController {
         return "register";
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public String SignupAction(@RequestBody UserSignupDto user) {
         User u = User.create(user.getEmail(), user.getFirstPassword(), user.getSecondPassword(), user.getNickname());
         if (u == null) {

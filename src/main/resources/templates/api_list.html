@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -199,10 +199,10 @@
                     <!-- API-result(list) -->
                     <div class="row">
                         <h6 class="big-tit"><strong>API 목록</strong></h6>
-                        <ul class="ul-wrapper">
+                        <ul class="ul-wrapper" th:each="api : ${apis}">
                             <li class="api-list">
                                 <a href="#">
-                                    <div class="api-title">제목</div>
+                                    <div class="api-title" th:text="${api}">제목</div>
                                 </a>
                                 <div class="api-content">간단 설명</div>
                                 <div class="d-flex justify-content-start">
