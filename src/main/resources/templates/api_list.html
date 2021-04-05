@@ -1,233 +1,233 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Data-Hub</title>
     <!--    BootStrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
     <!--    font awesome-->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
     <!--    CSS Link-->
     <link rel="stylesheet" href="/css/api_list.css">
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-10">
-                <div class="col-12">
-                    <!-- API-search(input_box) -->
-                    <div class="row">
-                        <h4 class="big-tit page-title"><strong>| API목록 및 조회 |</strong></h4>
-                        <div class="api-search">
-                            <input type="search" class="form-control" placeholder="무슨 API를 사용하실건가요?">
-                            <button type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
+<header th:replace="/fragment/header :: header"></header>
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <div class="col-12">
+                <!-- API-search(input_box) -->
+                <div class="row">
+                    <h4 class="big-tit page-title"><strong>| API목록 및 조회 |</strong></h4>
+                    <div class="api-search">
+                        <input type="search" class="form-control" placeholder="무슨 API를 사용하실건가요?">
+                        <button type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+
+                <!-- API-result(number) -->
+                <div class="row">
+                    <strong class="search-result">
+                        총 <span>1</span>개의 결과가 검색되었습니다.
+                    </strong>
+                </div>
+
+                <!-- API-search(condition) -->
+                <div class="row">
+                    <h6 class="big-tit"><strong>검색 조건 선택</strong></h6>
+                    <div class="condition col-4">
+                        <div class="condition-tit">카테고리</div>
+                        <div class="condition-list">
+                            <ul>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">교육</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">경제/산업</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">사회복지</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">보건</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">문화관광</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">도시관리</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">교통</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">환경</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">과학기술</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">법률</label>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-
-                    <!-- API-result(number) -->
-                    <div class="row">
-                        <strong class="search-result">
-                            총 <span>1</span>개의 결과가 검색되었습니다.
-                        </strong>
-                    </div>
-
-                    <!-- API-search(condition) -->
-                    <div class="row">
-                        <h6 class="big-tit"><strong>검색 조건 선택</strong></h6>
-                        <div class="condition col-4">
-                            <div class="condition-tit">카테고리</div>
-                            <div class="condition-list">
-                                <ul>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">교육</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">경제/산업</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">사회복지</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">보건</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">문화관광</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">도시관리</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">교통</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">환경</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">과학기술</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">법률</label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="condition col-4">
-                            <div class="condition-tit">제공처</div>
-                            <div class="condition-list">
-                                <ul>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">공공기관</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">교육기관</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">교육행정기관</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">국가행정기관</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">위원회</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">입법기관</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">자치행정기관</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">헌법기관</label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="condition col-4">
-                            <div class="condition-tit">확장자</div>
-                            <div class="condition-list">
-                                <ul>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">CSV</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">DOC</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">DOCX</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">HWP</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">JPG</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">JSON</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">MP4</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">PDF</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">SHP</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">TXT</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">XLS</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">XLSX</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">XML</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" value="">
-                                        <label for="">ZIP</label>
-                                    </li>
-                                </ul>
-                            </div>
+                    <div class="condition col-4">
+                        <div class="condition-tit">제공처</div>
+                        <div class="condition-list">
+                            <ul>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">공공기관</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">교육기관</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">교육행정기관</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">국가행정기관</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">위원회</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">입법기관</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">자치행정기관</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">헌법기관</label>
+                                </li>
+                            </ul>
                         </div>
                     </div>
+                    <div class="condition col-4">
+                        <div class="condition-tit">확장자</div>
+                        <div class="condition-list">
+                            <ul>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">CSV</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">DOC</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">DOCX</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">HWP</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">JPG</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">JSON</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">MP4</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">PDF</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">SHP</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">TXT</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">XLS</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">XLSX</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">XML</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="">
+                                    <label for="">ZIP</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-                    <!-- API-result(list) -->
-                    <div class="row">
-                        <h6 class="big-tit"><strong>API 목록</strong></h6>
-                        <ul class="ul-wrapper" th:each="api : ${apis}">
-                            <li class="api-list">
-                                <a href="#">
-                                    <div class="api-title" th:text="${api}">제목</div>
-                                </a>
-                                <div class="api-content">간단 설명</div>
-                                <div class="d-flex justify-content-start">
-                                    <!-- api-data에 들어가있는 값은 '예시' -->
-                                    <div class="info-item">
-                                        <span class="api-info-title">제공처</span>
-                                        <span class="api-data">대구시청</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <span class="api-info-title">갱신일</span>
-                                        <span class="api-data">2021.03.29</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <span class="api-info-title">조회수</span>
-                                        <span class="api-data">100</span>
-                                    </div>
-                                    <button type="button" class="btn btn-primary downbutt">다운로드</button>
+                <!-- API-result(list) -->
+                <div class="row">
+                    <h6 class="big-tit"><strong>API 목록</strong></h6>
+                    <ul class="ul-wrapper" th:each="api : ${apis}">
+                        <li class="api-list">
+                            <a href="#">
+                                <div class="api-title" th:text="${api}">제목</div>
+                            </a>
+                            <div class="api-content">간단 설명</div>
+                            <div class="d-flex justify-content-start">
+                                <!-- api-data에 들어가있는 값은 '예시' -->
+                                <div class="info-item">
+                                    <span class="api-info-title">제공처</span>
+                                    <span class="api-data">대구시청</span>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
+                                <div class="info-item">
+                                    <span class="api-info-title">갱신일</span>
+                                    <span class="api-data">2021.03.29</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="api-info-title">조회수</span>
+                                    <span class="api-data">100</span>
+                                </div>
+                                <button type="button" class="btn btn-primary downbutt">다운로드</button>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 
 </html>

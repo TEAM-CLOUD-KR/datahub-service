@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -27,9 +27,7 @@
     </style>
 </head>
 <body>
-<header>
-
-</header>
+<header th:replace="/fragment/header :: header"></header>
 <div class="container">
     <div class="row">
         <div class="col-12 col-lg-6 mx-auto">
