@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
 <header th:fragment="fragment-header">
     <ul class="nav justify-content-end">
         <li class="nav-item">
@@ -15,9 +17,10 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light"
          style="background-color: white!important; padding-top: 0;;">
         <div class="container-fluid">
-            <div id="logo" style="width: 270px; height: 55px; background-color: white; cursor: pointer;"
-                 onclick="location.href='index.html'">
-            </div>
+            <a href="/">
+                <div id="logo" style="width: 270px; height: 55px; background-color: white; cursor: pointer;">
+                </div>
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +34,7 @@
                             API
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">API 목록 및 조회</a></li>
+                            <li><a class="dropdown-item" href="/api">API 목록 및 조회</a></li>
                             <li><a class="dropdown-item" href="#">API 생성</a></li>
                             <li><a class="dropdown-item" href="#">API 관리</a></li>
                         </ul>
@@ -54,5 +57,67 @@
             </div>
         </div>
     </nav>
+    <script src="//cdn.dataportal.kr/asset/js/leon.js"></script>
+    <script src="//cdn.dataportal.kr/asset/js/util.js"></script>
+    <script>
+        let leon, controll;
+
+        function init() {
+            generateCanvas();
+
+            controll = {
+                color: {},
+                roundCap: true,
+                multiply: true,
+
+                drawing: () => {
+                    let i, total = leon.drawing.length;
+                    for (i = 0; i < total; i++) {
+                        TweenMax.killTweensOf(leon.drawing[i]);
+                        TweenMax.fromTo(leon.drawing[i], 2, {
+                            value: 0
+                        }, {
+                            value: 1,
+                            ease: Cubic.easeOut
+                        });
+                    }
+                }
+
+            };
+
+
+            leon = new LeonSans({
+                text: 'DataPortal',
+                color: ['#000000'],
+                size: 53,
+                weight: 818,
+
+
+            });
+
+
+            requestAnimationFrame(animate);
+            controll.drawing(0);
+
+        }
+
+
+        function animate(t) {
+            requestAnimationFrame(animate);
+
+            ctx.clearRect(0, 0, sw, sh);
+
+            const x = (sw - leon.rect.w) / 2;
+            const y = (sh - leon.rect.h) / 2;
+            leon.position(x, y);
+
+            leon.drawColorful(ctx);
+        }
+
+        window.onload = () => {
+            init();
+        };
+    </script>
 </header>
+</body>
 </html>
