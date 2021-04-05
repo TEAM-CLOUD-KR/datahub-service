@@ -1,10 +1,21 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Data-Hub</title>
-    <th:block th:replace="fragments/head.html :: head"/>
-
-
+    <!--    BootStrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+    <!--    font awesome-->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <!--    Leon Sans Font-->
     <style>
         #logo {
             width: 100%;
@@ -16,99 +27,91 @@
             background-color: #f0f0f0;
             /*cursor: move;*/
         }
-
-        /*.dg{*/
-        /*    display: none;*/
-        /*}*/
-
-        @media screen and (max-width: 768px) {
-            #category_main {
-                margin-top: 0px !important;
-            }
-        }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.js"></script>
 
     <!--    CSS Link-->
-    <link rel="stylesheet" href="//cdn.dataportal.kr/asset/css/index.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-<header th:replace="fragments/header.html :: fragment-header"></header>
-<div class="container">
-    <div class="row mt-0">
+<div th:replace="fragments/header.html :: fragment-header"></div>
+<div class="container mt-3">
+    <div class="row">
         <div class="col-lg-10 mx-auto">
             <div class="input-group flex-nowrap">
                 <input type="text" class="form-control" placeholder="검색할 데이터 입력!" aria-label="Username"
                        aria-describedby="addon-wrapping">
-                <button type="button" class="btn btn-primary"><i class="fas fa-search fa-3x"></i></button>
+                <button type="button" class="btn btn-primary"><i class="fas fa-search fa-2x"></i></button>
             </div>
 
         </div>
     </div>
-    <div class="row mt-0">
-        <div class="col-lg-6 mx-auto">
-            <div class="footer-category" id="footer-category-n1">
+    <div class="row">
+        <div class="col-11 col-md-9 col-lg-7 mx-auto d-flex flex-wrap justify-content-center">
+            <div class="footer-category">
                 <a href="#">
-                    <i class="fas fa-school fa-4x"></i>
+                    <i class="fas fa-school fa-3x"></i>
                     <div class="txt">교육</div>
                 </a>
             </div>
-            <div class="footer-category" id="footer-category-n2">
+            <div class="footer-category">
                 <a href="#">
-                    <i class="fas fa-industry fa-4x"></i>
+                    <i class="fas fa-industry fa-3x"></i>
                     <div class="txt">경제/산업</div>
                 </a>
             </div>
-            <div class="footer-category" id="footer-category-n3">
+            <div class="footer-category">
                 <a href="#">
-                    <i class="fas fa-hands-helping fa-4x"></i>
+                    <i class="fas fa-hands-helping fa-3x"></i>
                     <div class="txt">사회복지</div>
                 </a>
             </div>
-            <div class="footer-category" id="footer-category-n4">
+            <div class="footer-category">
                 <a href="#">
-                    <i class="fas fa-medkit fa-4x"></i>
+                    <i class="fas fa-medkit fa-3x"></i>
                     <div class="txt">보건</div>
                 </a>
             </div>
-            <div class="footer-category" id="footer-category-n5">
+            <div class="footer-category">
                 <a href="#">
-                    <i class="fas fa-plane-departure fa-4x"></i>
+                    <i class="fas fa-plane-departure fa-3x"></i>
                     <div class="txt">문화/관광</div>
                 </a>
             </div>
-            <!--            두번째줄-->
             <div class="footer-category" id="footer-category-n6">
                 <a href="#">
-                    <i class="fas fa-city fa-4x"></i>
+                    <i class="fas fa-city fa-3x"></i>
                     <div class="txt">도시관리</div>
                 </a>
             </div>
             <div class="footer-category" id="footer-category-n7">
                 <a href="#">
-                    <i class="fas fa-car-side fa-4x"></i>
+                    <i class="fas fa-car-side fa-3x"></i>
                     <div class="txt">교통</div>
                 </a>
             </div>
             <div class="footer-category" id="footer-category-n8">
                 <a href="#">
-                    <i class="fas fa-leaf fa-4x"></i>
+                    <i class="fas fa-leaf fa-3x"></i>
                     <div class="txt">환경</div>
                 </a>
             </div>
             <div class="footer-category" id="footer-category-n9">
                 <a href="#">
-                    <i class="fas fa-flask fa-4x"></i>
+                    <i class="fas fa-flask fa-3x"></i>
                     <div class="txt">과학기술</div>
                 </a>
             </div>
             <div class="footer-category" id="footer-category-n10">
                 <a href="#">
-                    <i class="fas fa-gavel fa-4x"></i>
+                    <i class="fas fa-gavel fa-3x"></i>
                     <div class="txt">법률</div>
                 </a>
             </div>
         </div>
-
+        <!--            두번째줄-->
     </div>
 </div>
 </body>
