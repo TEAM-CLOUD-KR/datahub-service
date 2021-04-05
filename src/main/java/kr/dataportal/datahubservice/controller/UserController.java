@@ -11,7 +11,6 @@
 
 package kr.dataportal.datahubservice.controller;
 
-import io.swagger.annotations.ApiModelProperty;
 import kr.dataportal.datahubservice.domain.user.User;
 import kr.dataportal.datahubservice.dto.UserSignupDto;
 import kr.dataportal.datahubservice.service.UserService;

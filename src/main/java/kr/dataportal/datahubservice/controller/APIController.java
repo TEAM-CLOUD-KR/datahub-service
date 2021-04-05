@@ -33,6 +33,6 @@ public class APIController {
         a.add("b");
         a.add("c");
         model.addAttribute("apis", a);
-        return "api_list";
+        return "api/list";
     }
 }

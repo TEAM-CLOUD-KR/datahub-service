@@ -1,0 +1,54 @@
+/* common */
+.container {
+    margin-top: 3%;
+}
+
+/* API-detail-page-title */
+.big-tit,
+.sm-tit {
+    padding: 0;
+}
+
+/* API-result(list) */
+.ul-wrapper {
+    padding: 0;
+}
+
+.api-list {
+    list-style: none;
+    border: 1px solid lightgray;
+    padding: 1.5%;
+}
+
+.api-title {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.api-content {
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.info-item {
+    width: 12%;
+}
+
+.api-info-title {
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-right: 1%;
+}
+
+.api-data {
+    font-size: 0.75rem;
+    color: darkgray;
+    margin-right: 7%;
+    /*float: left;*/
+}
+
+/* API-detail-API-backbutt */
+.backbutt{
+    color: white;
+    text-decoration: none;
+}

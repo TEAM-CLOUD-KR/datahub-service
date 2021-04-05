@@ -1,0 +1,50 @@
+/* common */
+.bg-tit {
+    padding: 0;
+}
+
+.input-api-name,
+.input-use-dataset,
+.input-open-range {
+    padding: 0;
+}
+
+.sm-tit {
+    margin-top: 5%;
+    font-weight: bold;
+    padding: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+/* API-use_dataset */
+.input-use-dataset .row {
+    --bs-gutter-x: none;
+}
+
+.control-butt {
+    text-align: center;
+}
+
+/* API-select-column */
+.select-column .column-list {
+    border: 1px solid lightgray;
+    display: block;
+    overflow-y: scroll;
+    height: 5rem;
+}
+
+.column-list ul {
+    padding-left: 0;
+}
+
+/* API-create_button */
+.create-butt {
+    margin-top: 4rem;
+}
+
+.popup-create-name {
+    color: blue;
+}
