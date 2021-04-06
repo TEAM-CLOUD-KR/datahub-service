@@ -11,42 +11,27 @@
 
 package kr.dataportal.datahubservice.controller;
 
-import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import springfox.documentation.annotations.ApiIgnore;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-@Controller
-@RequestMapping("/api")
-public class APIController {
-
-    @GetMapping("")
-    @ApiIgnore
-    public String ApiList(Model model) {
+@RestController
+@RequestMapping("/test")
+public class TestController {
+    @GetMapping("/{target}")
+    public Object Test(@PathVariable String target) {
         WebClient client = WebClient.builder()
                 .baseUrl("https://api.dataportal.kr")
                 .build();
 
-        JSONResponse result = client.get()
-                .uri("/dataset/gwanbo")
+        return client.get()
+                .uri("/common/util/scheme/{target}", target)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToFlux(JSONResponse.class)
-                .toStream()
-                .collect(Collectors.toList()).get(0);
-
-        List<Object> apis = (List<Object>) result.getData();
-        model.addAttribute("apis", apis);
-        return "api/list";
+                .bodyToMono(Object.class);
     }
 }
