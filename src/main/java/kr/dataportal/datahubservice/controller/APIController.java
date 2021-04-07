@@ -12,6 +12,7 @@
 package kr.dataportal.datahubservice.controller;
 
 import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
+import kr.dataportal.datahubservice.util.CommonUtil;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,7 +46,7 @@ public class APIController {
                 .toStream()
                 .collect(Collectors.toList()).get(0);
 
-        List<Object> apis = (List<Object>) result.getData();
+        List<?> apis = CommonUtil.convertObjectToList(result.getData());
         model.addAttribute("apis", apis);
         return "api/list";
     }
