@@ -12,6 +12,7 @@
 package kr.dataportal.datahubservice.controller;
 
 import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
+import kr.dataportal.datahubservice.dto.ApiListPagingDTO;
 import kr.dataportal.datahubservice.util.CommonUtil;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -38,15 +40,21 @@ public class APIController {
                 .baseUrl("https://api.dataportal.kr")
                 .build();
 
-        JSONResponse result = client.get()
-                .uri("/dataset/gwanbo")
+        Optional<JSONResponse> jsonResponse = client.post()
+                .uri("/api/list")
                 .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(new ApiListPagingDTO(1, 10))
                 .retrieve()
-                .bodyToFlux(JSONResponse.class)
-                .toStream()
-                .collect(Collectors.toList()).get(0);
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
 
-        List<?> apis = CommonUtil.convertObjectToList(result.getData());
+        List<?> apis = new ArrayList<>();
+        if (jsonResponse.isPresent()) {
+            apis = CommonUtil.convertObjectToList(jsonResponse.get().getData());
+            for (Object api: apis) {
+                System.out.println("api = " + api);
+            }
+        }
         model.addAttribute("apis", apis);
         return "api/list";
     }
