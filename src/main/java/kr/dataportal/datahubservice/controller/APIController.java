@@ -12,7 +12,8 @@
 package kr.dataportal.datahubservice.controller;
 
 import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
-import kr.dataportal.datahubservice.dto.ApiListPagingDTO;
+import kr.dataportal.datahubservice.dto.api.ApiList;
+import kr.dataportal.datahubservice.dto.api.ApiListPagingDTO;
 import kr.dataportal.datahubservice.util.CommonUtil;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -20,14 +21,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/api")
@@ -48,9 +46,9 @@ public class APIController {
                 .bodyToMono(JSONResponse.class)
                 .blockOptional();
 
-        List<?> apis = new ArrayList<>();
+        List<ApiList> apis = new ArrayList<>();
         if (jsonResponse.isPresent()) {
-            apis = CommonUtil.convertObjectToList(jsonResponse.get().getData());
+            apis = new CommonUtil<ApiList>().convertObjectToList(jsonResponse.get().getData());
         }
         model.addAttribute("apis", apis);
         return "api/list";

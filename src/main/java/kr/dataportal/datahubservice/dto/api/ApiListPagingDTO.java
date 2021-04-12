@@ -1,4 +1,4 @@
-package kr.dataportal.datahubservice.dto;
+package kr.dataportal.datahubservice.dto.api;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

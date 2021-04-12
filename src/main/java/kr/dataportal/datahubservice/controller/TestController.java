@@ -41,6 +41,6 @@ public class TestController {
                 .toStream()
                 .collect(Collectors.toList()).get(0);
 
-        return CommonUtil.convertObjectToList(result.getData());
+        return new CommonUtil<Object>().convertObjectToList(result.getData());
     }
 }
