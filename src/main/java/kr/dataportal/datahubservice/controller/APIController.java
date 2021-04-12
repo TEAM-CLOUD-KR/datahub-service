@@ -46,11 +46,21 @@ public class APIController {
                 .bodyToMono(JSONResponse.class)
                 .blockOptional();
 
-        List<ApiList> apis = new ArrayList<>();
-        if (jsonResponse.isPresent()) {
-            apis = new CommonUtil<ApiList>().convertObjectToList(jsonResponse.get().getData());
-            model.addAttribute("apis", apis);
-        }
+        jsonResponse.ifPresent(response ->
+                model.addAttribute(
+                        "apis",
+                        new CommonUtil<ApiList>().convertObjectToList(response.getData())
+                ));
+
+        jsonResponse = client.get()
+                .uri("/api/count")
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        jsonResponse.ifPresent(response -> model.addAttribute("api_count", response.getData()));
+
         return "api/list";
     }
 }
