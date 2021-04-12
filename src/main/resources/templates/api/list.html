@@ -159,7 +159,7 @@
                 <ul class="ul-wrapper" th:each="api : ${apis}">
                     <li class="p-3 d-flex justify-content-between border mb-5">
                         <div>
-                            <a href="#">
+                            <a th:href="@{/api/{id}(id=${api.seq})}" href="#">
                                 <h5 class="mb-2" th:text="${api.name}">
                                     제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목</h5>
                             </a>
