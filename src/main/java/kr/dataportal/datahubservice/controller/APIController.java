@@ -49,8 +49,8 @@ public class APIController {
         List<ApiList> apis = new ArrayList<>();
         if (jsonResponse.isPresent()) {
             apis = new CommonUtil<ApiList>().convertObjectToList(jsonResponse.get().getData());
+            model.addAttribute("apis", apis);
         }
-        model.addAttribute("apis", apis);
         return "api/list";
     }
 }
