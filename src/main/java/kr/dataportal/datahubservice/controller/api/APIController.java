@@ -9,8 +9,9 @@
         Aaron(JIN, Taeyang) - 
 */
 
-package kr.dataportal.datahubservice.controller;
+package kr.dataportal.datahubservice.controller.api;
 
+import io.swagger.annotations.Api;
 import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
 import kr.dataportal.datahubservice.dto.api.ApiList;
 import kr.dataportal.datahubservice.dto.api.ApiListPagingDTO;
@@ -19,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.reactive.function.client.WebClient;
 import springfox.documentation.annotations.ApiIgnore;
@@ -31,9 +33,10 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class APIController {
 
+    // API 목록 화면
     @GetMapping("")
     @ApiIgnore
-    public String ApiList(Model model) {
+    public String ApiListView(Model model) {
         WebClient client = WebClient.builder()
                 .baseUrl("https://api.dataportal.kr")
                 .build();
@@ -62,5 +65,40 @@ public class APIController {
         jsonResponse.ifPresent(response -> model.addAttribute("api_count", response.getData()));
 
         return "api/list";
+    }
+
+    // API 상세 조회 화면
+    @GetMapping("/{seq}")
+    @ApiIgnore
+    public String ApiDetailView(@PathVariable("seq") String seq) {
+        return "api/view";
+    }
+
+    // API 생성 화면
+    @GetMapping("/new")
+    @ApiIgnore
+    public String ApiCreateView() {
+        return "api/new";
+    }
+
+    // API 관리 화면
+    @GetMapping("/manage/{seq}")
+    @ApiIgnore
+    public String ApiManageView(@PathVariable("seq") String seq) {
+        return "api/manage";
+    }
+
+    // API 활용 신청 목록 화면
+    @GetMapping("/dev")
+    @ApiIgnore
+    public String ApiDevRequestListView() {
+        return "api/dev/list";
+    }
+
+    // API 활용 신청 화면
+    @GetMapping("/dev/{seq}")
+    @ApiIgnore
+    public String ApiDevRequestView(@PathVariable("seq") String seq) {
+        return "api/dev/action";
     }
 }
