@@ -11,22 +11,21 @@
 
 package kr.dataportal.datahubservice.controller.api;
 
-import io.swagger.annotations.Api;
 import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
 import kr.dataportal.datahubservice.dto.api.ApiList;
-import kr.dataportal.datahubservice.dto.api.ApiListPagingDTO;
+import kr.dataportal.datahubservice.dto.api.ApiListSearchDTO;
 import kr.dataportal.datahubservice.util.CommonUtil;
+import lombok.extern.java.Log;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -35,8 +34,7 @@ public class APIController {
 
     // API 목록 화면
     @GetMapping("")
-    @ApiIgnore
-    public String ApiListView(Model model) {
+    public String ApiListView(ApiListSearchDTO searchDTO, Model model) {
         WebClient client = WebClient.builder()
                 .baseUrl("https://api.dataportal.kr")
                 .build();
@@ -44,7 +42,7 @@ public class APIController {
         Optional<JSONResponse> jsonResponse = client.post()
                 .uri("/api/list")
                 .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(new ApiListPagingDTO(1, 10))
+                .bodyValue(searchDTO)
                 .retrieve()
                 .bodyToMono(JSONResponse.class)
                 .blockOptional();
