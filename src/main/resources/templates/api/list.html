@@ -48,13 +48,13 @@
 <div class="container">
     <div class="row gx-0">
         <div class="col-10 mx-auto">
-            <h2 class="mb-5">API목록 및 조회</h2>
+            <h2 class="mb-5">API 목록 및 조회</h2>
 
             <!-- API-search(input_box) -->
             <div class="d-flex flex-column mb-5">
                 <div class="d-flex">
                     <input type="search" class="form-control" placeholder="무슨 API를 사용하실건가요?"/>
-                    <button type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    <button type="button" class="btn btn-primary" id="btn-"><i class="fas fa-search"></i></button>
                     <button class="btn btn-outline-primary col-md-auto" data-bs-toggle="collapse"
                             href="#collapseExample">고급 검색
                     </button>
@@ -68,8 +68,8 @@
                                 <div class="condition-list mr-auto p-2">
                                     <ul th:each="hub : ${datahub}">
                                         <li>
-                                            <input type="checkbox" th:value="${hub.name}">
-                                            <label th:text="${hub.name}"></label>
+                                            <input type="checkbox" th:value="${hub.name}" th:id="'hub_' + ${hub.name}">
+                                            <label th:text="${hub.name}" th:for="'hub_' + ${hub.name}"></label>
                                         </li>
                                     </ul>
                                 </div>
@@ -79,8 +79,8 @@
                                 <div class="condition-list mr-auto p-2">
                                     <ul th:each="cat : ${category}">
                                         <li>
-                                            <input type="checkbox" th:value="${cat.text}">
-                                            <label th:text="${cat.text}"></label>
+                                            <input type="checkbox" th:value="${cat.text}" th:id="'cat_' + ${cat.text}">
+                                            <label th:text="${cat.text}" th:for="'cat_' + ${cat.text}"></label>
                                         </li>
                                     </ul>
                                 </div>
@@ -90,8 +90,8 @@
                                 <div class="condition-list mr-auto p-2">
                                     <ul th:each="org : ${organization}">
                                         <li>
-                                            <input type="checkbox" th:value="${org}">
-                                            <label th:text="${org}"></label>
+                                            <input type="checkbox" th:value="${org}" th:id="'org_' + ${org}">
+                                            <label th:text="${org}" th:for="'org_' + ${org}"></label>
                                         </li>
                                     </ul>
                                 </div>
