@@ -24,4 +24,18 @@ public class ApiList {
     private final User publisher;
     private final LocalDateTime publish_at;
     private final LocalDateTime last_edit;
+
+    public ApiList() {
+        this.seq = -1;
+        this.name = null;
+        this.targetDataset = null;
+        this.permissionGroup = null;
+        this.apiDesc = null;
+        this.category1st = null;
+        this.category2nd = null;
+        this.organization = null;
+        this.publisher = null;
+        this.publish_at = null;
+        this.last_edit = null;
+    }
 }

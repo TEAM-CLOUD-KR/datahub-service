@@ -7,4 +7,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class Category1st {
     private final String text;
+
+    public Category1st() {
+        this.text = null;
+    }
 }

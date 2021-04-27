@@ -11,11 +11,18 @@
 
 package kr.dataportal.datahubservice.controller.api;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
 import kr.dataportal.datahubservice.dto.api.ApiList;
 import kr.dataportal.datahubservice.dto.api.ApiListSearchDTO;
+import kr.dataportal.datahubservice.dto.api.ApiListSearchFilterDTO;
 import kr.dataportal.datahubservice.util.CommonUtil;
-import lombok.extern.java.Log;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
@@ -23,25 +30,28 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class APIController {
+    private final Gson gson;
 
     // API 목록 화면
     @GetMapping("")
-    public String ApiListView(@Nullable ApiListSearchDTO searchDTO, Model model) {
+    public String ApiListView(@Nullable ApiListSearchFilterDTO searchDTO, Model model) {
         WebClient client = WebClient.builder()
                 .baseUrl("https://api.dataportal.kr")
                 .build();
 
         if (searchDTO == null)
-            searchDTO = ApiListSearchDTO.createDefault();
+            searchDTO = ApiListSearchFilterDTO.createDefault();
 
         Optional<JSONResponse> jsonResponse = client.post()
                 .uri("/api/list")
@@ -51,20 +61,14 @@ public class APIController {
                 .bodyToMono(JSONResponse.class)
                 .blockOptional();
 
-        jsonResponse.ifPresent(response ->
-                model.addAttribute(
-                        "apis",
-                        new CommonUtil<ApiList>().convertObjectToList(response.getData())
-                ));
-
-        jsonResponse = client.get()
-                .uri("/api/count")
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToMono(JSONResponse.class)
-                .blockOptional();
-
-        jsonResponse.ifPresent(response -> model.addAttribute("api_count", response.getData()));
+        jsonResponse.ifPresent(response -> {
+            ApiListSearchDTO apiList = gson.fromJson(gson.toJson(response.getData()), ApiListSearchDTO.class);
+            model.addAttribute("apiCount", apiList.getItemCount());
+            model.addAttribute("category", apiList.getCategory());
+            model.addAttribute("organization", apiList.getOrganization());
+            model.addAttribute("datahub", apiList.getOwnDatahub());
+            model.addAttribute("apiData", apiList.getItems());
+        });
 
         return "api/list";
     }

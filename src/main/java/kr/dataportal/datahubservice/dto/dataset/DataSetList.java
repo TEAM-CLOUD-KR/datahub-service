@@ -7,4 +7,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class DataSetList {
     private final String dataset;
+
+    public DataSetList() {
+        this.dataset = null;
+    }
 }

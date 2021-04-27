@@ -5,6 +5,7 @@
     <title>Data-Hub</title>
 
     <th:block th:replace="fragments/head :: head"/>
+
     <style>
         ol,
         ul,
@@ -25,7 +26,19 @@
         .condition-list {
             display: block;
             overflow-y: scroll;
-            height: 10rem;
+            height: 8rem;
+        }
+
+        .ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            /* 라인수 */
+            -webkit-box-orient: vertical;
+            word-wrap: break-word;
+            line-height: 1.2em;
+            height: 2.4em;
         }
     </style>
 </head>
@@ -33,159 +46,100 @@
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
 <div class="container">
-    <div class="row">
+    <div class="row gx-0">
         <div class="col-10 mx-auto">
+            <h2 class="mb-5">API목록 및 조회</h2>
+
             <!-- API-search(input_box) -->
-            <div class="row">
-                <h2>API목록 및 조회</h2>
+            <div class="d-flex flex-column mb-5">
                 <div class="d-flex">
-                    <input type="search" class="form-control" placeholder="무슨 API를 사용하실건가요?">
+                    <input type="search" class="form-control" placeholder="무슨 API를 사용하실건가요?"/>
                     <button type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    <button class="btn btn-outline-primary col-md-auto" data-bs-toggle="collapse"
+                            href="#collapseExample">고급 검색
+                    </button>
+                </div>
+                <div>
+                    <!-- API-search(condition) -->
+                    <div class="collapse" id="collapseExample">
+                        <div class="row gx-0 mt-2">
+                            <div class="border col-12 col-md-4">
+                                <div class="p-2 text-center">공개범위</div>
+                                <div class="condition-list mr-auto p-2">
+                                    <ul th:each="hub : ${datahub}">
+                                        <li>
+                                            <input type="checkbox" th:value="${hub.name}">
+                                            <label th:text="${hub.name}"></label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="border col-12 col-md-4">
+                                <div class="p-2 text-center">카테고리</div>
+                                <div class="condition-list mr-auto p-2">
+                                    <ul th:each="cat : ${category}">
+                                        <li>
+                                            <input type="checkbox" th:value="${cat.text}">
+                                            <label th:text="${cat.text}"></label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="border col-12 col-md-4">
+                                <div class="p-2 text-center">제공처</div>
+                                <div class="condition-list mr-auto p-2">
+                                    <ul th:each="org : ${organization}">
+                                        <li>
+                                            <input type="checkbox" th:value="${org}">
+                                            <label th:text="${org}"></label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- API-result(number) -->
-            <h3 class="text-center mt-5">총 <span class="text-primary" th:text="${api_count}"></span>개의 결과가 검색되었습니다.</h3>
-
-            <!-- API-search(condition) -->
-            <div class="row gx-0 mt-5">
-                <h4>검색 조건 선택</h4>
-                <div class="border col-12 col-md-4">
-                    <div class="p-2 text-center">공개범위</div>
-                    <div class="condition-list mr-auto p-2">
-                        <ul>
-                            <li>
-                                <input type="checkbox" value="전체" id="chk_all">
-                                <label for="chk_all">전체</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="데이터허브" id="chk_datah">
-                                <label for="chk_datah">데이터허브</label>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="border col-12 col-md-4">
-                    <div class="p-2 text-center">카테고리</div>
-                    <div class="condition-list mr-auto p-2">
-                        <ul>
-                            <li>
-                                <input type="checkbox" value="교육" id="chk_edu">
-                                <label for="chk_edu">교육</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="경제/산업" id="chk_ecin">
-                                <label for="chk_ecin">경제/산업</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="사회복지" id="chk_wel">
-                                <label for="chk_wel">사회복지</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="보건" id="chk_hel">
-                                <label for="chk_hel">보건</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="문화관광" id="chk_cul">
-                                <label for="chk_cul">문화관광</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="도시관리" id="chk_cima">
-                                <label for="chk_cima">도시관리</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="교통" id="chk_traf">
-                                <label for="chk_traf">교통</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="환경" id="chk_envi">
-                                <label for="chk_envi">환경</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="과학기술" id="chk_stech">
-                                <label for="chk_stech">과학기술</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="법률" id="chk_law">
-                                <label for="chk_law">법률</label>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="border col-12 col-md-4">
-                    <div class="p-2 text-center">제공처</div>
-                    <div class="condition-list mr-auto p-2">
-                        <ul>
-                            <li>
-                                <input type="checkbox" value="공공기관" id="chk_publ">
-                                <label for="chk_publ">공공기관</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="교육기관" id="chk_eduin">
-                                <label for="chk_eduin">교육기관</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="교육행정기관" id="chk_eduag">
-                                <label for="chk_eduag">교육행정기관</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="국가행정기관" id="chk_natag">
-                                <label for="chk_natag">국가행정기관</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="위원회" id="chk_comm">
-                                <label for="chk_comm">위원회</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="입법기관" id="chk_lagi">
-                                <label for="chk_lagi">입법기관</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="자치행정기관" id="chk_autag">
-                                <label for="chk_autag">자치행정기관</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" value="헌법기관" id="chk_stiin">
-                                <label for="chk_stiin">헌법기관</label>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <h3 class="text-center my-5">총 <span class="text-primary" th:text="${apiCount}">99999</span>개의 결과가
+                검색되었습니다.</h3>
 
             <!-- API-result(list) -->
-            <div class="row gx-0 mt-5">
+            <div class="row gx-0">
                 <h4>API 목록</h4>
-                <ul class="ul-wrapper" th:each="api : ${apis}">
-                    <li class="p-3 d-flex justify-content-between border mb-5">
+                <ul class="ul-wrapper" th:each="api : ${apiData}">
+                    <li class="p-3 d-flex justify-content-between border mb-3">
                         <div>
                             <a th:href="@{/api/{id}(id=${api.seq})}" href="#">
-                                <h5 class="mb-2" th:text="${api.name}">
-                                    제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목</h5>
+                                <h5 class="ellipsis mb-2" th:text="${api.name}">
+                                    정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴
+                                    제목정말
+                                    긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목입니다.</h5>
                             </a>
                             <p th:text="${api.apiDesc}">간단 설명</p>
                             <!-- 하단 column -->
-                            <div class="row d-flex justify-content-start">
-                                <div class="me-3 col-12 col-md-4">
+                            <div class="row">
+                                <div class="col-12 col-md-auto">
                                     <span>분류</span>
-                                    <span th:text="${api.category2nd.text}">분류</span>
+                                    <span class="text-muted" th:text="${api.category1st.text}">과학기술</span>
                                 </div>
 
                                 <!-- 기관에서 제공할 때 -->
-                                <div class="me-3 col-12 col-md-4" th:if="${api.organization} != null">
+                                <div class="col-12 col-md-auto" th:if="${api.organization} != null">
                                     <span>제공기관</span>
-                                    <span class="text-muted" th:text="${api.organization}">제공기관</span>
+                                    <span class="text-muted" th:text="${api.organization}">보건복지부</span>
                                 </div>
 
                                 <!-- 관리자 및 닉네임이 제공할 때 -->
-                                <div class="me-3 col-12 col-md-4">
+                                <div class="col-12 col-md-auto">
                                     <span>등록</span>
-                                    <span class="text-muted" th:text="${api.publisher.nickname}">등록</span>
+                                    <span class="text-muted" th:text="${api.publisher.nickname}">관리자</span>
                                 </div>
-                                <div class="me-3 col-12 col-md-4">
+                                <div class="col-12 col-md-auto">
                                     <span>갱신일</span>
                                     <span class="text-muted"
-                                          th:text="${#temporals.format(#temporals.createDateTime(api.last_edit), 'yyyy-MM-dd')}">갱신일</span>
+                                          th:text="${#temporals.format(api.last_edit, 'yyyy-MM-dd')}">2021-03-01</span>
                                 </div>
                             </div>
                         </div>

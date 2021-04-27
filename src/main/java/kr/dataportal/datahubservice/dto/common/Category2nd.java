@@ -1,5 +1,6 @@
 package kr.dataportal.datahubservice.dto.common;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -8,4 +9,9 @@ import lombok.RequiredArgsConstructor;
 public class Category2nd {
     private final String text;
     private final Category1st parent;
+
+    public Category2nd() {
+        this.text = null;
+        this.parent = null;
+    }
 }
