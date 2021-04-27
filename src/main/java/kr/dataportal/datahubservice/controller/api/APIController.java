@@ -17,6 +17,7 @@ import kr.dataportal.datahubservice.dto.api.ApiListSearchDTO;
 import kr.dataportal.datahubservice.util.CommonUtil;
 import lombok.extern.java.Log;
 import org.springframework.http.MediaType;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,10 +35,13 @@ public class APIController {
 
     // API 목록 화면
     @GetMapping("")
-    public String ApiListView(ApiListSearchDTO searchDTO, Model model) {
+    public String ApiListView(@Nullable ApiListSearchDTO searchDTO, Model model) {
         WebClient client = WebClient.builder()
                 .baseUrl("https://api.dataportal.kr")
                 .build();
+
+        if (searchDTO == null)
+            searchDTO = ApiListSearchDTO.createDefault();
 
         Optional<JSONResponse> jsonResponse = client.post()
                 .uri("/api/list")

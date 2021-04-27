@@ -23,4 +23,8 @@ public class ApiListSearchDTO {
         this.category = Objects.requireNonNullElse(category, "");
         this.organization = Objects.requireNonNullElse(organization, "");
     }
+
+    public static ApiListSearchDTO createDefault() {
+        return new ApiListSearchDTO(null, null, null, null, null);
+    }
 }
