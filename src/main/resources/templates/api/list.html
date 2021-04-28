@@ -33,14 +33,14 @@
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 2;
-            /* 라인수 */
+            -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
             word-wrap: break-word;
             line-height: 1.2em;
-            height: 2.4em;
+            height: 1.2em;
         }
     </style>
+    <script type="text/javascript" th:src="@{/js/apiList.js}"></script>
 </head>
 
 <body>
@@ -53,8 +53,8 @@
             <!-- API-search(input_box) -->
             <div class="d-flex flex-column mb-5">
                 <div class="d-flex">
-                    <input type="search" class="form-control" placeholder="무슨 API를 사용하실건가요?"/>
-                    <button type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    <input type="search" class="form-control" id="text-search" placeholder="무슨 API를 사용하실건가요?"/>
+                    <button type="button" class="btn btn-primary" id="btn-search"><i class="fas fa-search"></i></button>
                     <button class="btn btn-outline-primary col-md-auto" data-bs-toggle="collapse"
                             href="#collapseExample">고급 검색
                     </button>
