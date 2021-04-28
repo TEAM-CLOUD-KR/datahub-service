@@ -66,7 +66,7 @@ public class APIController {
             model.addAttribute("apiData", apiList.getItems());
         });
 
-        model.addAttribute("search_name", new ArrayList<String>());
+        model.addAttribute("search_name", "");
         model.addAttribute("check_organization", new ArrayList<String>());
         model.addAttribute("check_category", new ArrayList<String>());
         model.addAttribute("check_datahub", new ArrayList<String>());
