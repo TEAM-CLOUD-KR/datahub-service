@@ -92,6 +92,11 @@ public class APIController {
             model.addAttribute("apiData", apiList.getItems());
         });
 
+        model.addAttribute("search_name", searchDTO.getName());
+        model.addAttribute("check_organization", searchDTO.getOrganization());
+        model.addAttribute("check_category", searchDTO.getCategory());
+        model.addAttribute("check_datahub", searchDTO.getOwnDatahub());
+
         return "api/list";
     }
 

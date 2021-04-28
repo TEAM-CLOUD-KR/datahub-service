@@ -53,7 +53,8 @@
             <div class="d-flex flex-column mb-5">
                 <form action="/api" method="post" id="frm-search">
                     <div class="d-flex">
-                        <input type="search" name="name" class="form-control" id="text-search" placeholder="무슨 API를 사용하실건가요?"/>
+                        <input type="search" name="name" class="form-control" id="text-search"
+                               placeholder="무슨 API를 사용하실건가요?" th:value="${search_name}"/>
                         <button type="submit" class="btn btn-primary" id="btn-search"><i class="fas fa-search"></i>
                         </button>
                         <input type="button" class="btn btn-outline-primary col-md-auto" data-bs-toggle="collapse"
@@ -67,7 +68,11 @@
                                 <div class="condition-list mr-auto p-2">
                                     <ul th:each="hub : ${datahub}">
                                         <li>
-                                            <input name="own-datahub" type="checkbox" th:value="${hub.name}"
+                                            <input th:if="${check_datahub.contains(hub.name)}"
+                                                   name="own-datahub" type="checkbox" th:value="${hub.name}"
+                                                   th:id="'hub_' + ${hub.name}" checked>
+                                            <input th:unless="${check_datahub.contains(hub.name)}"
+                                                   name="own-datahub" type="checkbox" th:value="${hub.name}"
                                                    th:id="'hub_' + ${hub.name}">
                                             <label th:text="${hub.name}" th:for="'hub_' + ${hub.name}"></label>
                                         </li>
@@ -79,7 +84,11 @@
                                 <div class="condition-list mr-auto p-2">
                                     <ul th:each="cat : ${category}">
                                         <li>
-                                            <input name="category" type="checkbox" th:value="${cat.text}"
+                                            <input th:if="${check_category.contains(cat.text)}"
+                                                   name="category" type="checkbox" th:value="${cat.text}"
+                                                   th:id="'cat_' + ${cat.text}" checked>
+                                            <input th:unless="${check_category.contains(cat.text)}"
+                                                   name="category" type="checkbox" th:value="${cat.text}"
                                                    th:id="'cat_' + ${cat.text}">
                                             <label th:text="${cat.text}" th:for="'cat_' + ${cat.text}"></label>
                                         </li>
@@ -91,7 +100,11 @@
                                 <div class="condition-list mr-auto p-2">
                                     <ul th:each="org : ${organization}">
                                         <li>
-                                            <input name="organization" type="checkbox" th:value="${org}"
+                                            <input th:if="${check_organization.contains(org)}"
+                                                   name="organization" type="checkbox" th:value="${org}"
+                                                   th:id="'org_' + ${org}" checked>
+                                            <input th:unless="${check_organization.contains(org)}"
+                                                   name="organization" type="checkbox" th:value="${org}"
                                                    th:id="'org_' + ${org}">
                                             <label th:text="${org}" th:for="'org_' + ${org}"></label>
                                         </li>
