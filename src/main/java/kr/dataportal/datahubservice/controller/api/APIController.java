@@ -27,9 +27,7 @@ import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -45,13 +43,37 @@ public class APIController {
 
     // API 목록 화면
     @GetMapping("")
-    public String ApiListView(@Nullable ApiListSearchFilterDTO searchDTO, Model model) {
+    public String ApiListView(Model model) {
         WebClient client = WebClient.builder()
                 .baseUrl("https://api.dataportal.kr")
                 .build();
 
-        if (searchDTO == null)
-            searchDTO = ApiListSearchFilterDTO.createDefault();
+        Optional<JSONResponse> jsonResponse = client.post()
+                .uri("/api/list")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(ApiListSearchFilterDTO.createDefault())
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        jsonResponse.ifPresent(response -> {
+            ApiListSearchDTO apiList = gson.fromJson(gson.toJson(response.getData()), ApiListSearchDTO.class);
+            model.addAttribute("apiCount", apiList.getItemCount());
+            model.addAttribute("category", apiList.getCategory());
+            model.addAttribute("organization", apiList.getOrganization());
+            model.addAttribute("datahub", apiList.getOwnDatahub());
+            model.addAttribute("apiData", apiList.getItems());
+        });
+
+        return "api/list";
+    }
+
+    @PostMapping("")
+    public String ApiListView(ApiListSearchFilterDTO searchDTO, Model model) {
+        System.out.println(searchDTO);
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
 
         Optional<JSONResponse> jsonResponse = client.post()
                 .uri("/api/list")

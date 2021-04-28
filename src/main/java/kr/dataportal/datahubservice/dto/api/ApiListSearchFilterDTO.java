@@ -29,4 +29,16 @@ public class ApiListSearchFilterDTO {
         return new ApiListSearchFilterDTO(null, null, null, null,
                 null, null);
     }
+
+    @Override
+    public String toString() {
+        return "ApiListSearchFilterDTO{" +
+                "page=" + page +
+                ", itemPerPage=" + itemPerPage +
+                ", ownDatahub=" + ownDatahub +
+                ", category=" + category +
+                ", organization=" + organization +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

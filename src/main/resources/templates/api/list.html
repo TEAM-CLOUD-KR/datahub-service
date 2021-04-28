@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <title>Data-Hub</title>
@@ -49,17 +49,16 @@
     <div class="row gx-0">
         <div class="col-10 mx-auto">
             <h2 class="mb-5">API 목록 및 조회</h2>
-
             <!-- API-search(input_box) -->
             <div class="d-flex flex-column mb-5">
-                <div class="d-flex">
-                    <input type="search" class="form-control" id="text-search" placeholder="무슨 API를 사용하실건가요?"/>
-                    <button type="button" class="btn btn-primary" id="btn-search"><i class="fas fa-search"></i></button>
-                    <button class="btn btn-outline-primary col-md-auto" data-bs-toggle="collapse"
-                            href="#collapseExample">고급 검색
-                    </button>
-                </div>
-                <div>
+                <form action="/api" method="post" id="frm-search">
+                    <div class="d-flex">
+                        <input type="search" class="form-control" id="text-search" placeholder="무슨 API를 사용하실건가요?"/>
+                        <button type="submit" class="btn btn-primary" id="btn-search"><i class="fas fa-search"></i>
+                        </button>
+                        <input type="button" class="btn btn-outline-primary col-md-auto" data-bs-toggle="collapse"
+                               href="#collapseExample" value="고급 검색">
+                    </div>
                     <!-- API-search(condition) -->
                     <div class="collapse" id="collapseExample">
                         <div class="row gx-0 mt-2">
@@ -68,7 +67,8 @@
                                 <div class="condition-list mr-auto p-2">
                                     <ul th:each="hub : ${datahub}">
                                         <li>
-                                            <input type="checkbox" th:value="${hub.name}" th:id="'hub_' + ${hub.name}">
+                                            <input name="own-datahub" type="checkbox" th:value="${hub.name}"
+                                                   th:id="'hub_' + ${hub.name}">
                                             <label th:text="${hub.name}" th:for="'hub_' + ${hub.name}"></label>
                                         </li>
                                     </ul>
@@ -79,7 +79,8 @@
                                 <div class="condition-list mr-auto p-2">
                                     <ul th:each="cat : ${category}">
                                         <li>
-                                            <input type="checkbox" th:value="${cat.text}" th:id="'cat_' + ${cat.text}">
+                                            <input name="category" type="checkbox" th:value="${cat.text}"
+                                                   th:id="'cat_' + ${cat.text}">
                                             <label th:text="${cat.text}" th:for="'cat_' + ${cat.text}"></label>
                                         </li>
                                     </ul>
@@ -90,7 +91,8 @@
                                 <div class="condition-list mr-auto p-2">
                                     <ul th:each="org : ${organization}">
                                         <li>
-                                            <input type="checkbox" th:value="${org}" th:id="'org_' + ${org}">
+                                            <input name="organization" type="checkbox" th:value="${org}"
+                                                   th:id="'org_' + ${org}">
                                             <label th:text="${org}" th:for="'org_' + ${org}"></label>
                                         </li>
                                     </ul>
@@ -98,7 +100,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
 
             <!-- API-result(number) -->
