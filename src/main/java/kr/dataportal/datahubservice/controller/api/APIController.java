@@ -33,6 +33,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
@@ -64,6 +65,11 @@ public class APIController {
             model.addAttribute("datahub", apiList.getOwnDatahub());
             model.addAttribute("apiData", apiList.getItems());
         });
+
+        model.addAttribute("search_name", new ArrayList<String>());
+        model.addAttribute("check_organization", new ArrayList<String>());
+        model.addAttribute("check_category", new ArrayList<String>());
+        model.addAttribute("check_datahub", new ArrayList<String>());
 
         return "api/list";
     }
