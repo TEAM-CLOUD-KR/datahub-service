@@ -3,20 +3,17 @@
 <head>
     <title>Data-Hub</title>
     <th:block th:replace="fragments/head :: head"/>
-    <!--    CSS Link-->
-    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
 <div class="container mt-3">
     <div class="row">
-        <div class="col-lg-10 mx-auto">
+        <div class="col-lg-8 mx-auto">
             <div class="input-group flex-nowrap">
                 <input type="text" class="form-control" placeholder="검색할 데이터 입력!" aria-label="Username"
                        aria-describedby="addon-wrapping">
                 <button type="button" class="btn btn-primary"><i class="fas fa-search fa-2x"></i></button>
             </div>
-
         </div>
     </div>
 </div>
