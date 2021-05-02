@@ -8,10 +8,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class Category2nd {
     private final String text;
-    private final Category1st parent;
 
     public Category2nd() {
         this.text = null;
-        this.parent = null;
     }
 }
