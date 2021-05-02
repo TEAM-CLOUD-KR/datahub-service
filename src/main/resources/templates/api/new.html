@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Data-Hub</title>
+
+    <th:block th:replace="fragments/head :: head"/>
+
+    <!-- Java Script Link -->
+    <script src="/js/api/new.js"></script>
+
+    <style>
+        ol,
+        ul,
+        dl,
+        li {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .select-column .check-list {
+            display: block;
+            overflow-y: scroll;
+            height: 10rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div th:replace="fragments/header.html :: fragment-header"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-11 col-md-10 mx-auto">
+                <form name="api_view" onsubmit="return validate();" action="">
+                    <!-- API-name -->
+                    <h2>API 생성</h2>
+                    <div class="input-api-name mt-5">
+                        <h4>API 이름</h4>
+                        <input type="text" class="form-control" name="api_name" value="">
+                    </div>
+
+                    <div class="row">
+                        <!-- API-use_dataset -->
+                        <div class="col-12 mt-3">
+                            <h4>대상 데이터셋</h4>
+                            <div class="d-flex">
+                                <input type="text" disabled class="form-control" name="use_dataset">
+                                <input type="button" value="검색" class="btn btn-primary">
+                            </div>
+                        </div>
+                        <!-- API-select-column -->
+                        <div class="col-12 mt-3">
+                            <h4>컬럼 선택</h4>
+                            데이터셋 예시(최근 n건) 표시 + 컬럼 선택 기능 / Spread Sheet Column Filter 느낌
+                        </div>
+
+                        <!-- API-explain -->
+                        <div class="col-12 mt-3">
+                            <h4>API 설명</h4>
+                            <textarea class="col-12" name="explain" id="#"></textarea>
+                        </div>
+
+                        <!-- API-open_range -->
+                        <div class="col-12 input-open-range justify-content-start mt-3">
+                            <h4>공개 범위</h4>
+                            <div class="form-check form-check-inline col-12 col-md-3">
+                                <input class="form-check-input" type="radio" name="PERMISSION" value="all"
+                                    id="PERMISSION_PUBLIC" checked>
+                                <label class="form-check-label" for="PERMISSION_PUBLIC">전체공개</label>
+                            </div>
+                            <div class="form-check form-check-inline col-12 col-md-3">
+                                <input class="form-check-input" type="radio" name="PERMISSION" value="private"
+                                    id="PERMISSION_PRIVATE">
+                                <label class="form-check-label" for="PERMISSION_PRIVATE">비공개</label>
+                            </div>
+                            <div class="form-check form-check-inline col-12 col-md-3">
+                                <input class="form-check-input" type="radio" name="PERMISSION" value="datahub"
+                                    id="PERMISSION_DATAHUB">
+                                <label class="form-check-label" for="PERMISSION_DATAHUB">데이터허브</label>
+                            </div>
+                        </div>
+
+                        <!-- API-create_button -->
+                        <div class="d-grid gap-1 mt-3">
+                            <button type="submit" class="btn btn-primary">생성하기</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
