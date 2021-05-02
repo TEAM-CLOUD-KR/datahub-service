@@ -29,6 +29,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.servlet.view.RedirectView;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import springfox.documentation.annotations.ApiIgnore;
@@ -109,7 +110,22 @@ public class APIController {
     // API 상세 조회 화면
     @GetMapping("/{seq}")
     @ApiIgnore
-    public String ApiDetailView(@PathVariable("seq") String seq) {
+    public String ApiDetailView(@PathVariable("seq") String seq, Model model) {
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.get()
+                .uri("/api/" + seq)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        jsonResponse.ifPresent(response -> {
+            ApiList apiList = gson.fromJson(gson.toJson(response.getData()), ApiList.class);
+            model.addAttribute("api_detail", apiList);
+        });
         return "api/view";
     }
 
@@ -118,6 +134,13 @@ public class APIController {
     @ApiIgnore
     public String ApiCreateView() {
         return "api/new";
+    }
+
+    // API 생성 기능
+    @PostMapping("/new")
+    @ApiIgnore
+    public RedirectView ApiCreateFunction() {
+        return new RedirectView("/api/14");
     }
 
     // API 관리 화면

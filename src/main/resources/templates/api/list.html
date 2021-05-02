@@ -51,7 +51,7 @@
             <h2 class="mb-5">API 목록 및 조회</h2>
             <!-- API-search(input_box) -->
             <div class="d-flex flex-column mb-5">
-                <form action="/api" method="post" id="frm-search">
+                <form th:action="@{/api}" method="post" id="frm-search">
                     <div class="d-flex">
                         <input type="search" name="name" class="form-control" id="text-search"
                                placeholder="무슨 API를 사용하실건가요?" th:value="${search_name}"/>

@@ -24,6 +24,7 @@ public class ApiList {
     private final User publisher;
     private final LocalDateTime publish_at;
     private final LocalDateTime last_edit;
+    private String path;
 
     public ApiList() {
         this.seq = -1;
@@ -37,5 +38,6 @@ public class ApiList {
         this.publisher = null;
         this.publish_at = null;
         this.last_edit = null;
+        this.path = null;
     }
 }
