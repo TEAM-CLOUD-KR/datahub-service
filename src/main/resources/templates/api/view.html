@@ -83,8 +83,9 @@
                 <div class="col-4 col-md-2 py-3 bg-light border-top border-white d-flex justify-content-center fw-bold">
                     서비스 요청 URL
                 </div>
-                <div class="col-8 col-md-10 py-3 border-bottom"
-                     th:text="'https://api.dataportal.kr/api/v2' + ${api_detail.getPath()}"></div>
+                <a class="col-8 col-md-10 py-3 border-bottom"
+                   th:href="'https://api.dataportal.kr/api/v2' + ${api_detail.getPath()}"
+                   th:text="'https://api.dataportal.kr/api/v2' + ${api_detail.getPath()}"></a>
             </div>
 
             <!-- API-view-API-dfunc/Use-use_case tab -->
