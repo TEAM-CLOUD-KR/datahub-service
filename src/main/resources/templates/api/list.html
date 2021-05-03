@@ -124,7 +124,7 @@
             <div class="row gx-0">
                 <h4>API 목록</h4>
                 <ul class="ul-wrapper" th:each="api : ${apiData}">
-                    <li class="p-3 d-flex justify-content-between border mb-3">
+                    <li class="p-3 d-flex justify-content-between border mb-1">
                         <div>
                             <a th:href="@{/api/{id}(id=${api.seq})}" href="#">
                                 <h5 class="ellipsis mb-2" th:text="${api.name}">
