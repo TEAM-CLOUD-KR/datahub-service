@@ -32,7 +32,7 @@
 <div th:replace="fragments/header.html :: fragment-header"></div>
 <div class="container">
     <div class="row">
-        <div class="col-10 mx-auto">
+        <div class="col-12 col-m-10 mx-auto">
             <!-- API-view-page-big-title -->
             <h2>API 상세 조회</h2>
 
@@ -53,23 +53,23 @@
                     <span> > </span>
                     <span th:text="${api_detail.getCategory2nd().getText()}"></span>
                 </div>
-                <div class="col-4 col-md-2 py-3 bg-light border-white d-flex justify-content-center fw-bold">
+                <div class="col-4 col-md-2 py-3 bg-light border-white border-top d-flex justify-content-center fw-bold">
                     제공기관
                 </div>
-                <div class="col-8 col-md-4 py-3 border-top border-bottom"
+                <div class="col-8 col-md-4 py-3 border-bottom"
                      th:text="${api_detail.getOrganization()}"></div>
             </div>
             <div class="row mx-auto">
                 <div class="col-4 col-md-2 py-3 bg-light border-top border-white d-flex justify-content-center fw-bold">
                     등록일
                 </div>
-                <div class="col-8 col-md-4 py-3"
+                <div class="col-8 col-md-4 py-3 border-bottom"
                      th:text="${#temporals.format(api_detail.getPublish_at(), 'yyyy-MM-dd')}">2021-04-28
                 </div>
                 <div class="col-4 col-md-2 py-3 bg-light border-top border-white d-flex justify-content-center fw-bold">
                     갱신일
                 </div>
-                <div class="col-8 col-md-4 py-3"
+                <div class="col-8 col-md-4 py-3 border-bottom"
                      th:text="${#temporals.format(api_detail.getLast_edit(), 'yyyy-MM-dd')}">2021-04-28
                 </div>
             </div>
@@ -77,7 +77,7 @@
                 <div class="col-4 col-md-2 py-3 bg-light border-top border-white d-flex justify-content-center fw-bold">
                     설명
                 </div>
-                <div class="col-8 col-md-10 py-3 border-top border-bottom" th:text="${api_detail.getApiDesc()}"></div>
+                <div class="col-8 col-md-10 py-3 border-bottom" th:text="${api_detail.getApiDesc()}"></div>
             </div>
 
             <!-- API-view-API-dfunc/Use-use_case tab -->
@@ -95,44 +95,30 @@
             </ul>
             <div class="tab-content">
                 <!-- tab(dfunc) -->
-                <div class="tab-pane fade show active border p-2" id="dfunc" aria-labelledby="dfunc-tab">
-                    <div class="row mx-auto">
-                        <div class="col-4 col-md-2 py-2 bg-light border border-white d-flex justify-content-center fw-bold">
+                <div class="tab-pane fade show active border border-top-0 p-2" id="dfunc" aria-labelledby="dfunc-tab">
+                    <div class="row mx-auto border">
+                        <div class="col-4 col-md-2 py-2 bg-light border-end border-white d-flex justify-content-center fw-bold">
                             EndPoint
                         </div>
-                        <div class="col-8 col-md-10 py-2 border-top border-bottom"
+                        <div class="col-8 col-md-10 py-2 overflow-scroll"
                              th:text="'https://api.dataportal.kr' + ${api_detail.getPath()}"></div>
                     </div>
 
                     <h4 class="mt-3">요청변수</h4>
+                    ...
+                    <h4 class="mt-3">응답변수</h4>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                             <tr class="bg-light border-end border-white">
-                                <th class="col-3">Endpoint</th>
-                                <th class="col-3">구조</th>
-                                <th class="col-3">요청변수</th>
-                                <th class="col-3">응답변수</th>
+                                <th class="col-4">Scheme</th>
+                                <th class="col-8">Description</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>ewsffe</td>
-                                <td>edfsd</td>
-                                <td>sdfs</td>
-                                <td>sdfs</td>
-                            </tr>
-                            <tr>
-                                <td>ewsffe</td>
-                                <td>edfsd</td>
-                                <td>sdfs</td>
-                                <td>sdfs</td>
-                            </tr>
-                            <tr>
-                                <td>ewsffe</td>
-                                <td>edfsd</td>
-                                <td>sdfs</td>
-                                <td>sdfs</td>
+                            <tr th:each="ds : ${api_dataset_column_desc}">
+                                <td th:text="${ds.getColumn()}"></td>
+                                <td th:text="${ds.getDesc()}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -140,7 +126,7 @@
 
                 </div>
                 <!-- tab(use_case) -->
-                <div class="tab-pane fade border p-2" id="use_case" role="tabpanel" aria-labelledby="use_case-tab">
+                <div class="tab-pane fade border border-top-0 p-2" id="use_case" role="tabpanel" aria-labelledby="use_case-tab">
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>

@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
 import kr.dataportal.datahubservice.dto.api.ApiList;
+import kr.dataportal.datahubservice.dto.api.ApiListDetailAndDataSetColumn;
 import kr.dataportal.datahubservice.dto.api.ApiListSearchDTO;
 import kr.dataportal.datahubservice.dto.api.ApiListSearchFilterDTO;
 import kr.dataportal.datahubservice.util.CommonUtil;
@@ -123,8 +124,9 @@ public class APIController {
                 .blockOptional();
 
         jsonResponse.ifPresent(response -> {
-            ApiList apiList = gson.fromJson(gson.toJson(response.getData()), ApiList.class);
-            model.addAttribute("api_detail", apiList);
+            ApiListDetailAndDataSetColumn apiList = gson.fromJson(gson.toJson(response.getData()), ApiListDetailAndDataSetColumn.class);
+            model.addAttribute("api_detail", apiList.getDetail());
+            model.addAttribute("api_dataset_column_desc", apiList.getDataSetColumnDesc());
         });
         return "api/view";
     }
