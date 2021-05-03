@@ -105,14 +105,32 @@
                     </div>
 
                     <h4 class="mt-3">요청변수</h4>
-                    ...
+                    <div class="table-responsive">
+                        <table class="table table-bordered mb-0">
+                            <thead>
+                            <tr class="text-center">
+                                <th class="col-2">항목명</th>
+                                <th class="col-1">항목구분</th>
+                                <th class="col-9">항목설명</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>test-parameter-name</td>
+                                <td class="text-center">필수</td>
+                                <td>test-parameter-desc</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                     <h4 class="mt-3">응답변수</h4>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-bordered mb-0">
                             <thead>
-                            <tr class="bg-light border-end border-white">
-                                <th class="col-4">Scheme</th>
-                                <th class="col-8">Description</th>
+                            <tr class="text-center">
+                                <th class="col-3">항목명</th>
+                                <th class="col-9">항목설명</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -126,11 +144,12 @@
 
                 </div>
                 <!-- tab(use_case) -->
-                <div class="tab-pane fade border border-top-0 p-2" id="use_case" role="tabpanel" aria-labelledby="use_case-tab">
+                <div class="tab-pane fade border border-top-0 p-2" id="use_case" role="tabpanel"
+                     aria-labelledby="use_case-tab">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-bordered table-hover">
                             <thead>
-                            <tr class="bg-light border-end border-white text-center">
+                            <tr class="text-center">
                                 <th class="col-1">No.</th>
                                 <th class="col-1">분류</th>
                                 <th class="col-3">내용</th>
