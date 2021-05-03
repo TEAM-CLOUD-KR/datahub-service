@@ -23,6 +23,12 @@
             color: inherit;
         }
 
+        a:hover {
+            text-decoration: underline;
+            text-decoration-color: var(--bs-primary);
+            color: var(--bs-primary);
+        }
+
         .condition-list {
             display: block;
             overflow-y: scroll;
@@ -123,39 +129,37 @@
             <!-- API-result(list) -->
             <div class="row gx-0">
                 <h4>API 목록</h4>
-                <ul class="ul-wrapper" th:each="api : ${apiData}">
-                    <li class="p-3 d-flex justify-content-between border mb-1">
-                        <div>
-                            <a th:href="@{/api/{id}(id=${api.seq})}" href="#">
-                                <h5 class="ellipsis mb-2" th:text="${api.name}">
-                                    정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴
-                                    제목정말
-                                    긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목입니다.</h5>
-                            </a>
-                            <p th:text="${api.apiDesc}">간단 설명</p>
-                            <!-- 하단 column -->
-                            <div class="row">
-                                <div class="col-12 col-md-auto">
-                                    <span>분류</span>
-                                    <span class="text-muted" th:text="${api.category1st.text}">과학기술</span>
-                                </div>
+                <ul class="ul-wrapper">
+                    <li class="p-3 border mb-1" th:each="api : ${apiData}">
+                        <a th:href="@{/api/{id}(id=${api.seq})}" href="#">
+                            <h5 class="ellipsis mb-1" th:text="${api.name}">
+                                정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴
+                                제목정말
+                                긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목정말 긴 제목입니다.</h5>
+                        </a>
+                        <p class="mb-1" th:text="${api.apiDesc}">간단 설명</p>
+                        <!-- 하단 column -->
+                        <div class="row">
+                            <div class="col-12 col-md-auto">
+                                <span>분류</span>
+                                <span class="text-muted" th:text="${api.category1st.text}">과학기술</span>
+                            </div>
 
-                                <!-- 기관에서 제공할 때 -->
-                                <div class="col-12 col-md-auto" th:if="${api.organization} != null">
-                                    <span>제공기관</span>
-                                    <span class="text-muted" th:text="${api.organization}">보건복지부</span>
-                                </div>
+                            <!-- 기관에서 제공할 때 -->
+                            <div class="col-12 col-md-auto" th:if="${api.organization} != null">
+                                <span>제공기관</span>
+                                <span class="text-muted" th:text="${api.organization}">보건복지부</span>
+                            </div>
 
-                                <!-- 관리자 및 닉네임이 제공할 때 -->
-                                <div class="col-12 col-md-auto">
-                                    <span>등록</span>
-                                    <span class="text-muted" th:text="${api.publisher.nickname}">관리자</span>
-                                </div>
-                                <div class="col-12 col-md-auto">
-                                    <span>갱신일</span>
-                                    <span class="text-muted"
-                                          th:text="${#temporals.format(api.last_edit, 'yyyy-MM-dd')}">2021-03-01</span>
-                                </div>
+                            <!-- 관리자 및 닉네임이 제공할 때 -->
+                            <div class="col-12 col-md-auto">
+                                <span>등록</span>
+                                <span class="text-muted" th:text="${api.publisher.nickname}">관리자</span>
+                            </div>
+                            <div class="col-12 col-md-auto">
+                                <span>갱신일</span>
+                                <span class="text-muted"
+                                      th:text="${#temporals.format(api.last_edit, 'yyyy-MM-dd')}">2021-03-01</span>
                             </div>
                         </div>
                     </li>
