@@ -6,22 +6,6 @@
 
     <th:block th:replace="fragments/head :: head"/>
     <style>
-        ol,
-        ul,
-        dl,
-        li {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        a,
-        a:link,
-        a:visited {
-            text-decoration: none;
-            color: inherit;
-        }
-
         th, td {
             white-space: nowrap;
         }
@@ -32,7 +16,7 @@
 <div th:replace="fragments/header.html :: fragment-header"></div>
 <div class="container">
     <div class="row">
-        <div class="col-12 col-m-10 mx-auto">
+        <div class="col-12 col-md-10 mx-auto">
             <!-- API-view-page-big-title -->
             <h2>API 상세 조회</h2>
 
@@ -83,7 +67,7 @@
                 <div class="col-4 col-md-2 py-3 bg-light border-top border-white d-flex justify-content-center fw-bold">
                     서비스 요청 URL
                 </div>
-                <a class="col-8 col-md-10 py-3 border-bottom"
+                <a class="col-8 col-md-10 py-3 border-bottom" target="_blank"
                    th:href="'https://api.dataportal.kr/api/v2' + ${api_detail.getPath()}"
                    th:text="'https://api.dataportal.kr/api/v2' + ${api_detail.getPath()}"></a>
             </div>
@@ -109,16 +93,34 @@
                         <table class="table table-bordered mb-0">
                             <thead>
                             <tr class="text-center bg-light">
-                                <th class="col-2">항목명</th>
+                                <th class="col-2">항목명(영문)</th>
+                                <th class="col-2">항목명(국문)</th>
                                 <th class="col-1">항목구분</th>
-                                <th class="col-9">항목설명</th>
+                                <th class="col-1">항목기본값</th>
+                                <th class="col-6">항목설명</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td>test-parameter-name</td>
+                                <td>serviceKey</td>
+                                <td>서비스 키</td>
                                 <td class="text-center">필수</td>
-                                <td>test-parameter-desc</td>
+                                <td class="text-center">-</td>
+                                <td>-----TEST-----</td>
+                            </tr>
+                            <tr>
+                                <td>page</td>
+                                <td>조회 대상 페이지</td>
+                                <td class="text-center">옵션</td>
+                                <td class="text-center">1</td>
+                                <td>-----TEST-----</td>
+                            </tr>
+                            <tr>
+                                <td>itemPerPage</td>
+                                <td>페이지 당 조회 건수</td>
+                                <td class="text-center">옵션</td>
+                                <td class="text-center">10</td>
+                                <td>-----TEST-----</td>
                             </tr>
                             </tbody>
                         </table>
