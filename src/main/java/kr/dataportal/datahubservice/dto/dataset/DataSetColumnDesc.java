@@ -17,6 +17,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class DataSetColumnDesc {
-    private final String column;
-    private final String desc;
+    private final String columnEn;
+    private final String columnKr;
+    private final String columnType;
+    private final int columnLength;
+    private final Boolean nullable;
+    private final String columnDesc;
 }

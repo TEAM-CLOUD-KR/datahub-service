@@ -131,14 +131,22 @@
                         <table class="table table-bordered mb-0">
                             <thead>
                             <tr class="bg-light text-center">
-                                <th class="col-3">항목명</th>
-                                <th class="col-9">항목설명</th>
+                                <th class="col-2">항목명(영문)</th>
+                                <th class="col-2">항목명(국문)</th>
+                                <th class="col-1">항목타입</th>
+                                <th class="col-1">항목길이</th>
+                                <th class="col-1">널허용</th>
+                                <th class="col-5">항목설명</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="ds : ${api_dataset_column_desc}">
-                                <td th:text="${ds.getColumn()}"></td>
-                                <td th:text="${ds.getDesc()}"></td>
+                                <td th:text="${ds.getColumnEn()}"></td>
+                                <td th:text="${ds.getColumnKr()}"></td>
+                                <td class="text-center" th:text="${ds.getColumnType()}"></td>
+                                <td class="text-center" th:text="${ds.getColumnLength()}"></td>
+                                <td class="text-center" th:text="${ds.getNullable()}"></td>
+                                <td th:text="${ds.getColumnDesc()}"></td>
                             </tr>
                             </tbody>
                         </table>
