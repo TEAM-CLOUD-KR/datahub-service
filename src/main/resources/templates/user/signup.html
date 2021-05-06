@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Data-Hub 회원가입</title>
+
+    <th:block th:replace="fragments/head :: head"/>
+
+    <script src="../js/javascript/signup.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header.html :: fragment-header"></div>
+<div class="container">
+    <div class="row" style="height: 100vh">
+        <div class="col-12 align-self-center">
+            <div class="row">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4 mx-auto login_bottom">
+                    <div class="mt-2 logo_div mb-5">
+                        <a href="/">
+                            <div class="mx-auto" id="logo" style="width: 230px; height: 55px; cursor: pointer;">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="text" class="form-control" placeholder="register@datahub.com" id="email">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input type="text" class="form-control" placeholder="닉네임"
+                               aria-describedby="basic-addon1" id="nick-name">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" placeholder="비밀번호"
+                               aria-describedby="basic-addon1" id="pw">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" placeholder="비밀번호 확인"
+                               aria-describedby="basic-addon1" id="pw02">
+                    </div>
+                    <div class="d-grid gap-2 mb-3">
+                        <button type="button" class="btn text-white bg-primary fw-bold" id="btn-login"
+                                onclick="validate();">REGISTER
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="d-grid justify-content-center mb-5">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">로그인</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">아이디 찾기</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">비밀번호 찾기</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="//cdn.dataportal.kr/asset/js/leon.js"></script>
+<script src="//cdn.dataportal.kr/asset/js/util.js"></script>
+<script>
+    let leon, controll;
+
+    function init() {
+        generateCanvas();
+
+        controll = {
+            color: {},
+            roundCap: true,
+            multiply: true,
+
+            drawing: () => {
+                let i, total = leon.drawing.length;
+                for (i = 0; i < total; i++) {
+                    TweenMax.killTweensOf(leon.drawing[i]);
+                    TweenMax.fromTo(leon.drawing[i], 2, {
+                        value: 0
+                    }, {
+                        value: 1,
+                        ease: Cubic.easeOut
+                    });
+                }
+            }
+
+        };
+
+
+        leon = new LeonSans({
+            text: 'DataPortal',
+            color: ['#000000'],
+            size: 42,
+            weight: 818,
+
+
+        });
+
+
+        requestAnimationFrame(animate);
+        controll.drawing(0);
+
+    }
+
+
+    function animate(t) {
+        requestAnimationFrame(animate);
+
+        ctx.clearRect(0, 0, sw, sh);
+        ctx.lineCap = "round";
+
+        const x = (sw - leon.rect.w) / 2;
+        const y = (sh - leon.rect.h) / 2;
+        leon.position(x, y);
+
+        leon.drawColorful(ctx);
+    }
+
+    window.onload = () => {
+        init();
+    };
+</script>
+</body>
+</html>
