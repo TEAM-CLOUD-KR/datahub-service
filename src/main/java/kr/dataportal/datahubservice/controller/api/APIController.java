@@ -78,7 +78,6 @@ public class APIController {
 
     @PostMapping("")
     public String ApiListView(ApiListSearchFilterDTO searchDTO, Model model) {
-        System.out.println(searchDTO);
         WebClient client = WebClient.builder()
                 .baseUrl("https://api.dataportal.kr")
                 .build();

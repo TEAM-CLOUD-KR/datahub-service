@@ -55,44 +55,13 @@
     <script th:inline="javascript">
         window.onload = () => {
             init();
-            const btnLogin = document.getElementById('btn-login');
+            const formLogin = document.getElementById('form-login');
             const textUsername = document.getElementById('text-username');
             const textPassword = document.getElementById('text-password');
-            btnLogin.addEventListener('click', () => {
+            formLogin.onsubmit = function () {
                 // 입력 폼 유효성 검사
-                if (!validate(textUsername, "이메일"))
-                    return false;
-                if (!validate(textPassword, "비밀번호"))
-                    return false;
-
-                const xhr = new XMLHttpRequest();
-                const data = {
-                    // email: textUsername.value + '@' + textDomain.value,
-                    email: textUsername.value,
-                    password: textPassword.value,
-                };
-                xhr.onload = function () {
-                    const result = JSON.parse(xhr.responseText);
-                    if (xhr.status === 200 || xhr.status === 201) {
-                        alert(result.data);
-                        switch (result.data) {
-                            case '존재하지 않는 이메일입니다.':
-                                textUsername.focus();
-                                break;
-                            case '암호가 일치하지 않습니다.':
-                                textPassword.focus();
-                                break;
-                        }
-                    } else {
-                        // 오류
-                        console.error(result);
-                        alert(result.data);
-                    }
-                };
-                xhr.open('POST', 'https://api.dataportal.kr/user/signin');
-                xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
-                xhr.send(JSON.stringify(data)); // 데이터를 stringify해서 보냄
-            });
+                return validate(textUsername, "이메일") && validate(textPassword, "비밀번호");
+            }
         };
     </script>
 </head>
@@ -101,7 +70,8 @@
     <div class="row" style="height: 100vh">
         <div class="col-12 align-self-center">
             <div class="row">
-                <div class="col-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4 mx-auto login_bottom">
+                <form class="col-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4 mx-auto login_bottom" id="form-login"
+                      method="post" th:action="@{/user}">
                     <div class="mt-2 logo_div mb-5">
                         <a href="/">
                             <div class="mx-auto" id="logo" style="width: 230px; height: 55px; cursor: pointer;">
@@ -110,16 +80,16 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                        <input type="text" class="form-control" placeholder="이메일"
-                               aria-describedby="basic-addon1" id="text-username">
+                        <input th:value="${username}" type="text" class="form-control" placeholder="이메일"
+                               aria-describedby="basic-addon1" id="text-username" name="email">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        <input type="password" class="form-control" placeholder="비밀번호"
-                               aria-describedby="basic-addon1" id="text-password">
+                        <input th:value="${password}" type="password" class="form-control" placeholder="비밀번호"
+                               aria-describedby="basic-addon1" id="text-password" name="password">
                     </div>
                     <div class="d-grid gap-2 mb-3">
-                        <button type="button" class="btn text-white bg-primary fw-bold" id="btn-login">ENTER
+                        <button type="submit" class="btn text-white bg-primary fw-bold" id="btn-login">ENTER
                         </button>
                     </div>
                     <hr>
@@ -136,7 +106,7 @@
                             </li>
                         </ul>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
