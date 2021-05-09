@@ -8,7 +8,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("/user")
 public class UserController {
     // 로그인 화면 연결
-    @GetMapping("/")
+    @GetMapping("")
     @ApiIgnore
     public String SignInView() {
         return "user/signin";

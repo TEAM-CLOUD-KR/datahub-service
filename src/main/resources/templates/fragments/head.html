@@ -43,5 +43,15 @@
             color: var(--bs-primary);
         }
     </style>
+    <script>
+        function validate(target_element, placeholder) {
+            if (!target_element.value) {
+                alert(placeholder + "을(를) 입력해주세요");
+                target_element.focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 </html>

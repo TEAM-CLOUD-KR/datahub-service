@@ -4,15 +4,67 @@
     <title>Data-Hub 로그인</title>
 
     <th:block th:replace="fragments/head :: head"/>
+    <script th:inline="javascript">
+        let leon, controll;
 
-    <script>
+        function init() {
+            generateCanvas();
+
+            controll = {
+                color: {},
+                roundCap: true,
+                multiply: true,
+
+                drawing: () => {
+                    let i, total = leon.drawing.length;
+                    for (i = 0; i < total; i++) {
+                        TweenMax.killTweensOf(leon.drawing[i]);
+                        TweenMax.fromTo(leon.drawing[i], 2, {
+                            value: 0
+                        }, {
+                            value: 1,
+                            ease: Cubic.easeOut
+                        });
+                    }
+                }
+            };
+
+            leon = new LeonSans({
+                text: 'DataPortal',
+                color: ['#000000'],
+                size: 42,
+                weight: 818,
+            });
+            requestAnimationFrame(animate);
+            controll.drawing(0);
+        }
+
+        function animate(t) {
+            requestAnimationFrame(animate);
+
+            ctx.clearRect(0, 0, sw, sh);
+            ctx.lineCap = "round";
+
+            const x = (sw - leon.rect.w) / 2;
+            const y = (sh - leon.rect.h) / 2;
+            leon.position(x, y);
+
+            leon.drawColorful(ctx);
+        }
+    </script>
+    <script th:inline="javascript">
         window.onload = () => {
+            init();
             const btnLogin = document.getElementById('btn-login');
             const textUsername = document.getElementById('text-username');
-            // const textDomain = document.getElementById('text-domain');
             const textPassword = document.getElementById('text-password');
             btnLogin.addEventListener('click', () => {
                 // 입력 폼 유효성 검사
+                if (!validate(textUsername, "이메일"))
+                    return false;
+                if (!validate(textPassword, "비밀번호"))
+                    return false;
+
                 const xhr = new XMLHttpRequest();
                 const data = {
                     // email: textUsername.value + '@' + textDomain.value,
@@ -22,9 +74,15 @@
                 xhr.onload = function () {
                     const result = JSON.parse(xhr.responseText);
                     if (xhr.status === 200 || xhr.status === 201) {
-                        // 오류 없음(성공)
-                        console.log(result);
                         alert(result.data);
+                        switch (result.data) {
+                            case '존재하지 않는 이메일입니다.':
+                                textUsername.focus();
+                                break;
+                            case '암호가 일치하지 않습니다.':
+                                textPassword.focus();
+                                break;
+                        }
                     } else {
                         // 오류
                         console.error(result);
@@ -37,11 +95,8 @@
             });
         };
     </script>
-    <script src="../js/javascript/signin.js"></script>
-
 </head>
 <body>
-<!--<div th:replace="fragments/header.html :: fragment-header"></div>-->
 <div class="container">
     <div class="row" style="height: 100vh">
         <div class="col-12 align-self-center">
@@ -54,7 +109,7 @@
                         </a>
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text"><i class="fas fa-envelope"></i></i></span>
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                         <input type="text" class="form-control" placeholder="이메일"
                                aria-describedby="basic-addon1" id="text-username">
                     </div>
@@ -64,7 +119,8 @@
                                aria-describedby="basic-addon1" id="text-password">
                     </div>
                     <div class="d-grid gap-2 mb-3">
-                        <button type="button" class="btn text-white bg-primary fw-bold" id="btn-login" onclick="validate();">ENTER</button>
+                        <button type="button" class="btn text-white bg-primary fw-bold" id="btn-login">ENTER
+                        </button>
                     </div>
                     <hr>
                     <div class="d-grid justify-content-center mb-5">
@@ -85,68 +141,7 @@
         </div>
     </div>
 </div>
-</div>
 <script src="//cdn.dataportal.kr/asset/js/leon.js"></script>
 <script src="//cdn.dataportal.kr/asset/js/util.js"></script>
-<script>
-    let leon, controll;
-
-    function init() {
-        generateCanvas();
-
-        controll = {
-            color: {},
-            roundCap: true,
-            multiply: true,
-
-            drawing: () => {
-                let i, total = leon.drawing.length;
-                for (i = 0; i < total; i++) {
-                    TweenMax.killTweensOf(leon.drawing[i]);
-                    TweenMax.fromTo(leon.drawing[i], 2, {
-                        value: 0
-                    }, {
-                        value: 1,
-                        ease: Cubic.easeOut
-                    });
-                }
-            }
-
-        };
-
-
-        leon = new LeonSans({
-            text: 'DataPortal',
-            color: ['#000000'],
-            size: 42,
-            weight: 818,
-
-
-        });
-
-
-        requestAnimationFrame(animate);
-        controll.drawing(0);
-
-    }
-
-
-    function animate(t) {
-        requestAnimationFrame(animate);
-
-        ctx.clearRect(0, 0, sw, sh);
-        ctx.lineCap = "round";
-
-        const x = (sw - leon.rect.w) / 2;
-        const y = (sh - leon.rect.h) / 2;
-        leon.position(x, y);
-
-        leon.drawColorful(ctx);
-    }
-
-    window.onload = () => {
-        init();
-    };
-</script>
 </body>
 </html>
