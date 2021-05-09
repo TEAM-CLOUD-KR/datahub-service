@@ -22,6 +22,7 @@ import kr.dataportal.datahubservice.dto.api.ApiList;
 import kr.dataportal.datahubservice.dto.api.ApiListDetailAndDataSetColumn;
 import kr.dataportal.datahubservice.dto.api.ApiListSearchDTO;
 import kr.dataportal.datahubservice.dto.api.ApiListSearchFilterDTO;
+import kr.dataportal.datahubservice.dto.user.User;
 import kr.dataportal.datahubservice.util.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -35,6 +36,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -43,6 +45,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class APIController {
     private final Gson gson;
+    @ModelAttribute("user")
+    public User userModel(HttpServletRequest req) {
+        return (User) req.getSession().getAttribute("user");
+    }
 
     // API 목록 화면
     @GetMapping("")

@@ -5,6 +5,7 @@ import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
 import kr.dataportal.datahubservice.dto.api.ApiListSearchDTO;
 import kr.dataportal.datahubservice.dto.user.SignInResponse;
 import kr.dataportal.datahubservice.dto.user.SignInStatus;
+import kr.dataportal.datahubservice.dto.user.User;
 import kr.dataportal.datahubservice.dto.user.UserSignInDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -24,6 +25,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserController {
     private final Gson gson;
+    @ModelAttribute("user")
+    public User userModel(HttpServletRequest req) {
+        return (User) req.getSession().getAttribute("user");
+    }
 
     // 로그인 화면 연결
     @GetMapping("")

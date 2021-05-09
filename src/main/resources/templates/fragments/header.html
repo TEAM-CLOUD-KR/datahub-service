@@ -52,7 +52,10 @@
                 </ul>
                 <ul th:unless="${user == null}" class="navbar-nav ms-3 ms-lg-auto mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/logout"><i class="fas fa-sign-in-alt me-1"></i>로그아웃</a>
+                        <a class="nav-link" href="/user/info"><i class="fas fa-user-circle me-1"></i>마이페이지</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/user/logout}"><i class="fas fa-sign-out-alt me-1"></i>로그아웃</a>
                     </li>
                 </ul>
             </div>

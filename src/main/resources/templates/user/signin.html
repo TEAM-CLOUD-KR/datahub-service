@@ -64,6 +64,13 @@
             }
         };
     </script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const result = /*[[${result}]]*/;
+        if (result)
+            alert(result);
+        /*]]>*/
+    </script>
 </head>
 <body>
 <div class="container">
