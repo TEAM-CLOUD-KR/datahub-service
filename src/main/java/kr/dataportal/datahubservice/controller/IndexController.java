@@ -13,15 +13,19 @@ package kr.dataportal.datahubservice.controller;
 
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class IndexController {
 
     @GetMapping("/")
     @ApiIgnore
-    public String Index() {
+    public String Index(Model model, HttpServletRequest req) {
+        model.addAttribute("user", req.getSession().getAttribute("user"));
         return "index";
     }
 }

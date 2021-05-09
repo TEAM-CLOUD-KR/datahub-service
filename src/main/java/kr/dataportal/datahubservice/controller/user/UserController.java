@@ -28,11 +28,21 @@ public class UserController {
     // 로그인 화면 연결
     @GetMapping("")
     @ApiIgnore
-    public String SignInView(HttpServletRequest req) { HttpSession session = req.getSession();
+    public String SignInView(HttpServletRequest req) {
+        HttpSession session = req.getSession();
         if (session.getAttribute("user") != null) {
             return "redirect:/";
         }
         return "user/signin";
+    }
+
+    // 로그아웃 화면 연결
+    @GetMapping("/logout")
+    @ApiIgnore
+    public String UserLogout(HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        session.removeAttribute("user");
+        return "redirect:/";
     }
 
     @PostMapping("")
@@ -68,6 +78,9 @@ public class UserController {
         model.addAttribute("username", signInDto.getEmail());
         model.addAttribute("password", signInDto.getPassword());
 
+        if (session.getAttribute("user") != null) {
+            return "redirect:/";
+        }
         return "user/signin";
     }
 
