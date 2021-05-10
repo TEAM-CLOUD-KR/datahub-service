@@ -18,7 +18,8 @@
     <div class="row" style="height: 100vh">
         <div class="col-12 align-self-center">
             <div class="row">
-                <div class="col-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4 mx-auto login_bottom">
+                <form class="col-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4 mx-auto login_bottom" id="form-register"
+                      method="post" th:action="@{/user/new}">
                     <div class="mt-2 logo_div mb-5">
                         <a href="/">
                             <div class="mx-auto" id="logo" style="width: 230px; height: 55px; cursor: pointer;">
@@ -27,11 +28,12 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                        <input type="text" class="form-control" placeholder="이메일" name="email">
+                        <input type="text" class="form-control" placeholder="이메일" name="email" th:value="${email}">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        <input type="text" class="form-control" placeholder="닉네임" name="nickname">
+                        <input type="text" class="form-control" placeholder="닉네임" name="nickname"
+                               th:value="${nickname}">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
@@ -42,9 +44,8 @@
                         <input type="password" class="form-control" placeholder="비밀번호 확인" name="secondPassword">
                     </div>
                     <div class="d-grid gap-2 mb-3">
-                        <button type="button" class="btn text-white bg-primary fw-bold" id="btn-login"
-                                onclick="validate();">REGISTER
-                        </button>
+                        <input type="submit" class="btn text-white bg-primary fw-bold" id="btn-register"
+                               value="REGISTER">
                     </div>
                     <hr>
                     <div class="d-grid justify-content-center mb-5">
@@ -60,7 +61,7 @@
                             </li>
                         </ul>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

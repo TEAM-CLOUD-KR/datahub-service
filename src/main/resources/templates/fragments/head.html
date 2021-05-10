@@ -31,14 +31,14 @@
             margin: 0;
         }
 
-        a,
-        a:link,
-        a:visited {
+        a:not(.btn),
+        a:not(.btn):link,
+        a:not(.btn):visited {
             text-decoration: none;
             color: inherit;
         }
 
-        .container a:hover {
+        .container a:not(.btn):hover {
             text-decoration: underline;
             text-decoration-color: var(--bs-primary);
             color: var(--bs-primary);

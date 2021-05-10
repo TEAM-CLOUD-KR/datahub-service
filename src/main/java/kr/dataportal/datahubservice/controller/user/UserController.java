@@ -100,6 +100,7 @@ public class UserController {
         if (session.getAttribute("user") != null) {
             return "redirect:/";
         }
+        model.addAttribute("user", userSignUpDto);
 
         WebClient client = WebClient.builder()
                 .baseUrl("https://api.dataportal.kr")
@@ -117,8 +118,14 @@ public class UserController {
             SignUpStatus signUpStatus = gson.fromJson(gson.toJson(response.getData()), SignUpStatus.class);
             model.addAttribute("result", signUpStatus);
         });
-        
-        return "user/signup_result";
+        model.addAttribute("email", userSignUpDto.getEmail());
+
+        SignUpStatus result = (SignUpStatus) model.getAttribute("result");
+        if (result == SignUpStatus.SUCCESS) {
+            return "user/signup_result";
+        }
+        model.addAttribute("nickname", userSignUpDto.getNickname());
+        return "user/signup";
     }
 
     // 마이페이지 화면 연결
