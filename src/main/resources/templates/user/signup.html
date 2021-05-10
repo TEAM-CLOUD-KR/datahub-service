@@ -5,10 +5,15 @@
 
     <th:block th:replace="fragments/head :: head"/>
 
-    <script src="../js/javascript/signup.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const result = /*[[${result}]]*/;
+        if (result)
+            alert(result);
+        /*]]>*/
+    </script>
 </head>
 <body>
-<div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
 <div class="container">
     <div class="row" style="height: 100vh">
         <div class="col-12 align-self-center">
@@ -22,22 +27,19 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                        <input type="text" class="form-control" placeholder="register@datahub.com" id="email">
+                        <input type="text" class="form-control" placeholder="이메일" name="email">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        <input type="text" class="form-control" placeholder="닉네임"
-                               aria-describedby="basic-addon1" id="nick-name">
+                        <input type="text" class="form-control" placeholder="닉네임" name="nickname">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        <input type="password" class="form-control" placeholder="비밀번호"
-                               aria-describedby="basic-addon1" id="pw">
+                        <input type="password" class="form-control" placeholder="비밀번호" name="firstPassword">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        <input type="password" class="form-control" placeholder="비밀번호 확인"
-                               aria-describedby="basic-addon1" id="pw02">
+                        <input type="password" class="form-control" placeholder="비밀번호 확인" name="secondPassword">
                     </div>
                     <div class="d-grid gap-2 mb-3">
                         <button type="button" class="btn text-white bg-primary fw-bold" id="btn-login"
@@ -67,61 +69,6 @@
 <script src="//cdn.dataportal.kr/asset/js/leon.js"></script>
 <script src="//cdn.dataportal.kr/asset/js/util.js"></script>
 <script>
-    let leon, controll;
-
-    function init() {
-        generateCanvas();
-
-        controll = {
-            color: {},
-            roundCap: true,
-            multiply: true,
-
-            drawing: () => {
-                let i, total = leon.drawing.length;
-                for (i = 0; i < total; i++) {
-                    TweenMax.killTweensOf(leon.drawing[i]);
-                    TweenMax.fromTo(leon.drawing[i], 2, {
-                        value: 0
-                    }, {
-                        value: 1,
-                        ease: Cubic.easeOut
-                    });
-                }
-            }
-
-        };
-
-
-        leon = new LeonSans({
-            text: 'DataPortal',
-            color: ['#000000'],
-            size: 42,
-            weight: 818,
-
-
-        });
-
-
-        requestAnimationFrame(animate);
-        controll.drawing(0);
-
-    }
-
-
-    function animate(t) {
-        requestAnimationFrame(animate);
-
-        ctx.clearRect(0, 0, sw, sh);
-        ctx.lineCap = "round";
-
-        const x = (sw - leon.rect.w) / 2;
-        const y = (sh - leon.rect.h) / 2;
-        leon.position(x, y);
-
-        leon.drawColorful(ctx);
-    }
-
     window.onload = () => {
         init();
     };

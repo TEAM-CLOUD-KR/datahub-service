@@ -2,11 +2,7 @@ package kr.dataportal.datahubservice.controller.user;
 
 import com.google.gson.Gson;
 import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
-import kr.dataportal.datahubservice.dto.api.ApiListSearchDTO;
-import kr.dataportal.datahubservice.dto.user.SignInResponse;
-import kr.dataportal.datahubservice.dto.user.SignInStatus;
-import kr.dataportal.datahubservice.dto.user.User;
-import kr.dataportal.datahubservice.dto.user.UserSignInDto;
+import kr.dataportal.datahubservice.dto.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -25,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserController {
     private final Gson gson;
+
     @ModelAttribute("user")
     public User userModel(HttpServletRequest req) {
         return (User) req.getSession().getAttribute("user");
@@ -94,6 +91,34 @@ public class UserController {
     @ApiIgnore
     public String SignUpView() {
         return "user/signup";
+    }
+
+    @PostMapping("/new")
+    @ApiIgnore
+    public String SignUpAction(UserSignUpDto userSignUpDto, HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession();
+        if (session.getAttribute("user") != null) {
+            return "redirect:/";
+        }
+
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.post()
+                .uri("/user/signup")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(userSignUpDto)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        jsonResponse.ifPresent(response -> {
+            SignUpStatus signUpStatus = gson.fromJson(gson.toJson(response.getData()), SignUpStatus.class);
+            model.addAttribute("result", signUpStatus);
+        });
+        
+        return "user/signup_result";
     }
 
     // 마이페이지 화면 연결
