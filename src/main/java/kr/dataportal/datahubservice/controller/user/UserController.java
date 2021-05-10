@@ -129,9 +129,9 @@ public class UserController {
     }
 
     // 마이페이지 화면 연결
-    @GetMapping("/{seq}")
+    @GetMapping("/info")
     @ApiIgnore
-    public String MyPageView(@PathVariable("seq") String seq) {
+    public String MyPageView() {
         return "user/info";
     }
 }
