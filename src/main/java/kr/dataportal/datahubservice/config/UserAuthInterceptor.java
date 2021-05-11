@@ -28,8 +28,8 @@ public class UserAuthInterceptor implements HandlerInterceptor {
         Object user = httpSession.getAttribute("user");
 
         if (user == null) {
-            response.sendRedirect("/user");
-            return false;
+//            response.sendRedirect("/user");
+//            return false;
         }
         return true;
     }

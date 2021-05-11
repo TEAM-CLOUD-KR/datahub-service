@@ -24,12 +24,11 @@
             height: 1.2em;
         }
     </style>
-    <script type="text/javascript" th:src="@{/js/apiList.js}"></script>
 </head>
 
 <body>
 <div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
-<div class="container">
+<div class="container mb-5">
     <div class="row gx-0">
         <div class="col-10 mx-auto">
             <h2 class="mb-5">API 목록 및 조회</h2>
@@ -145,17 +144,17 @@
             </div>
 
             <!-- API-Pagination -->
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
+            <!--            <nav aria-label="Page navigation example">-->
+            <!--                <ul class="pagination justify-content-center">-->
+            <!--                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>-->
+            <!--                    <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+            <!--                    <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+            <!--                    <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+            <!--                    <li class="page-item"><a class="page-link" href="#">4</a></li>-->
+            <!--                    <li class="page-item"><a class="page-link" href="#">5</a></li>-->
+            <!--                    <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
+            <!--                </ul>-->
+            <!--            </nav>-->
         </div>
     </div>
 </div>

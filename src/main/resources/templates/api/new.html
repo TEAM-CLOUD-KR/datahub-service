@@ -6,14 +6,11 @@
 
     <th:block th:replace="fragments/head :: head"/>
 
-    <!-- Java Script Link -->
-    <script src="/js/api/new.js"></script>
-
     <style>
-        .select-column .check-list {
+        .condition-list {
             display: block;
             overflow-y: scroll;
-            height: 10rem;
+            height: 8rem;
         }
     </style>
     <script th:inline="javascript">
@@ -41,6 +38,59 @@
             alert("신청이 정상적으로 완료되었습니다.");
         }
     </script>
+    <script th:inline="javascript">
+        function fetch_dataset_column(dataset) {
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () { // 요청에 대한 콜백
+                if (xhr.readyState === xhr.DONE) { // 요청이 완료되면
+                    if (xhr.status === 200 || xhr.status === 201) {
+                        const responseData = JSON.parse(xhr.responseText)['data'];
+                        const dataset_column_selector = document.querySelector('#dataset-column > ul.condition-list');
+                        dataset_column_selector.textContent = '';
+                        responseData.forEach(column => {
+                            console.log(column['columnEn'] + '/' + column['columnKr']);
+                            let htmlliElement = document.createElement('li');
+                            let htmlInputElement = document.createElement('input');
+                            htmlInputElement.name = 'target_column';
+                            htmlInputElement.type = 'checkbox';
+                            htmlInputElement.value = column['columnEn'];
+                            htmlInputElement.id = 'dataset_column_' + column['columnEn'];
+                            htmlInputElement.checked = true;
+                            let htmlLabelElement = document.createElement('label');
+                            htmlLabelElement.classList.add('ms-1');
+                            htmlLabelElement.htmlFor = htmlInputElement.id;
+                            if (column['columnKr'])
+                                htmlLabelElement.textContent = column['columnKr'];
+                            else
+                                htmlLabelElement.textContent = column['columnEn'];
+
+                            htmlliElement.append(htmlInputElement);
+                            htmlliElement.append(htmlLabelElement);
+                            dataset_column_selector.append(htmlliElement);
+                        });
+                    } else {
+                        console.error(xhr.responseText);
+                    }
+                }
+            };
+            xhr.open('GET', 'https://api.dataportal.kr/common/util/scheme/' + dataset); // 메소드와 주소 설정
+            xhr.send(); // 요청 전송
+        }
+
+        window.onload = () => {
+            document.getElementById('btn-dataset-search').addEventListener('click', () => {
+                window.name = "parentForm";
+                const openWin = window.open("/dataset/search",
+                    "childForm", "width=570, height=350, resizable = no, scrollbars = no");
+                openWin.addEventListener('unload', () => {
+                    if (openWin.closed) {
+                        document.getElementById('dataset-column').classList.remove('d-none');
+                        fetch_dataset_column(document.getElementById('text-dataset-search').value);
+                    }
+                });
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -48,7 +98,7 @@
 <div class="container">
     <div class="row">
         <div class="col-11 col-md-10 mx-auto">
-            <form name="api_view" onsubmit="return validate();" th:action="@{/api/new}" method="POST">
+            <form name="api_view" th:action="@{/api/new}" method="POST">
                 <!-- API-name -->
                 <h2>API 생성</h2>
                 <div class="input-api-name mt-5">
@@ -60,21 +110,23 @@
                     <!-- API-use_dataset -->
                     <div class="col-12 mt-3">
                         <h4>대상 데이터셋</h4>
-                        <div class="d-flex">
-                            <input type="text" disabled class="form-control" name="use_dataset">
-                            <input type="button" value="검색" class="btn btn-primary">
+                        <div class="input-group">
+                            <input type="text" disabled class="form-control" id="text-dataset-search">
+                            <span class="btn btn-primary" id="btn-dataset-search">검색</span>
                         </div>
                     </div>
                     <!-- API-select-column -->
-                    <div class="col-12 mt-3">
+                    <div class="col-12 mt-3 d-none" id="dataset-column">
                         <h4>컬럼 선택</h4>
-                        데이터셋 예시(최근 n건) 표시 + 컬럼 선택 기능 / Spread Sheet Column Filter 느낌
+                        <ul class="condition-list border p-2 pt-0">
+
+                        </ul>
                     </div>
 
                     <!-- API-explain -->
                     <div class="col-12 mt-3">
                         <h4>API 설명</h4>
-                        <textarea class="col-12" name="explain" id="#"></textarea>
+                        <textarea class="col-12" rows="5"></textarea>
                     </div>
 
                     <!-- API-open_range -->
@@ -99,7 +151,7 @@
 
                     <!-- API-create_button -->
                     <div class="d-grid gap-1 mt-3">
-                        <button type="submit" class="btn btn-primary">생성하기</button>
+                        <input type="submit" class="btn btn-primary" value="생성하기">
                     </div>
                 </div>
             </form>

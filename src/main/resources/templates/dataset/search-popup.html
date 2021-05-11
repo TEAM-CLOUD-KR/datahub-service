@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Data-Hub</title>
+    <th:block th:replace="fragments/head :: head"/>
+    <script th:inline="javascript">
+        function setParentText(value) {
+            opener.document.getElementById("text-dataset-search").value = value;
+            window.close();
+        }
+    </script>
+</head>
+<body class="bg-light">
+<div class="container m-0 p-0 w-100 mw-100">
+    <form class="input-group" th:action="@{/dataset/search}" method="get">
+        <input type="text" class="form-control" placeholder="데이터셋 이름" name="name">
+        <input type="submit" class="btn btn-outline-primary" value="검색">
+    </form>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item bg-light" th:each="item : ${dataset}">
+            <a th:href="'javascript:setParentText(\'' + ${item} + '\');'" th:text="${item}"></a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

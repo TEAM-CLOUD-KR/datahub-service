@@ -119,12 +119,26 @@ public class UserController {
             model.addAttribute("result", signUpStatus);
         });
         model.addAttribute("email", userSignUpDto.getEmail());
-
+        model.addAttribute("nickname", userSignUpDto.getNickname());
+        
         SignUpStatus result = (SignUpStatus) model.getAttribute("result");
+        if (result == null) {
+            model.addAttribute("result", "알 수 없는 오류가 발생하였습니다. [SRV->CORE]");
+            return "user/signup_result";
+        }
+        String resultMsg = switch (result) {
+            case SUCCESS -> "회원가입에 성공하였습니다.";
+            case CONFLICT_EMAIL -> "이미 등록된 이메일입니다.";
+            case CONFLICT_NICKNAME -> "이미 등록된 닉네임입니다.";
+            case MISMATCH_PASSWORD -> "패스워드가 일치하지 않습니다.";
+            case FAIL -> "알 수 없는 오류가 발생하였습니다. 다시 시도해주세요.";
+        };
+        model.addAttribute("result", resultMsg);
+
         if (result == SignUpStatus.SUCCESS) {
             return "user/signup_result";
         }
-        model.addAttribute("nickname", userSignUpDto.getNickname());
+
         return "user/signup";
     }
 
