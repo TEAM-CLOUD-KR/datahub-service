@@ -49,8 +49,8 @@
                             <div class="border col-12 col-md-4">
                                 <div class="p-2 text-center">공개범위</div>
                                 <div class="condition-list mr-auto p-2">
-                                    <ul th:each="hub : ${datahub}">
-                                        <li>
+                                    <ul>
+                                        <li th:each="hub : ${datahub}">
                                             <input th:if="${check_datahub.contains(hub.name)}"
                                                    name="ownDatahub" type="checkbox" th:value="${hub.name}"
                                                    th:id="'hub_' + ${hub.name}" checked>
@@ -65,8 +65,8 @@
                             <div class="border col-12 col-md-4">
                                 <div class="p-2 text-center">카테고리</div>
                                 <div class="condition-list mr-auto p-2">
-                                    <ul th:each="cat : ${category}">
-                                        <li>
+                                    <ul>
+                                        <li th:each="cat : ${category}">
                                             <input th:if="${check_category.contains(cat.text)}"
                                                    name="category" type="checkbox" th:value="${cat.text}"
                                                    th:id="'cat_' + ${cat.text}" checked>
@@ -81,8 +81,8 @@
                             <div class="border col-12 col-md-4">
                                 <div class="p-2 text-center">제공 기관</div>
                                 <div class="condition-list mr-auto p-2">
-                                    <ul th:each="org : ${organization}">
-                                        <li>
+                                    <ul>
+                                        <li th:each="org : ${organization}">
                                             <input th:if="${check_organization.contains(org)}"
                                                    name="organization" type="checkbox" th:value="${org}"
                                                    th:id="'org_' + ${org}" checked>

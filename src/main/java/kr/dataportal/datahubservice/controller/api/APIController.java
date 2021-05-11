@@ -38,6 +38,8 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -45,6 +47,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class APIController {
     private final Gson gson;
+
     @ModelAttribute("user")
     public User userModel(HttpServletRequest req) {
         return (User) req.getSession().getAttribute("user");
@@ -139,7 +142,26 @@ public class APIController {
     // API 생성 화면
     @GetMapping("/new")
     @ApiIgnore
-    public String ApiCreateView() {
+    public String ApiCreateView(Model model) {
+        User user = (User) model.getAttribute("user");
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.get()
+                .uri("/user/datahub?userSeq=" + Objects.requireNonNull(user).getSeq())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        jsonResponse.ifPresent(response -> {
+            CommonUtil<String> commonUtil = new CommonUtil<>();
+            List<String> datahubList = commonUtil.convertObjectToList(
+                    gson.fromJson(gson.toJson(response.getData()), Object.class)
+            );
+            model.addAttribute("datahub", datahubList);
+        });
         return "api/new";
     }
 
