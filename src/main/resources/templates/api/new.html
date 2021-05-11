@@ -13,31 +13,6 @@
         }
     </style>
     <script th:inline="javascript">
-        function validate() {
-            if (!api_view.api_name.value) {
-                alert("생성할 API의 이름을 입력하세요!");
-                api_view.api_name.focus();
-                return false;
-            }
-            // if (api_view.use_dataset.value == "") {
-            //     alert("대상 데이터셋을 선택하세요!");
-            //     api_view.use_dataset.focus();
-            //     return false;
-            // }
-            if (!api_view.api_name.value) {
-                alert("컬럼을 선택하세요!");
-                api_view.api_name.focus();
-                return false;
-            }
-            if (!api_view.explain.value) {
-                alert("생성할 API에 대해 설명해주세요!");
-                api_view.explain.focus();
-                return false;
-            }
-            alert("신청이 정상적으로 완료되었습니다.");
-        }
-    </script>
-    <script th:inline="javascript">
         function fetch_dataset_column(dataset) {
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () { // 요청에 대한 콜백
@@ -50,7 +25,7 @@
                             console.log(column['columnEn'] + '/' + column['columnKr']);
                             let htmlliElement = document.createElement('li');
                             let htmlInputElement = document.createElement('input');
-                            htmlInputElement.name = 'target_column';
+                            htmlInputElement.name = 'targetColumn';
                             htmlInputElement.type = 'checkbox';
                             htmlInputElement.value = column['columnEn'];
                             htmlInputElement.id = 'dataset_column_' + column['columnEn'];
@@ -106,12 +81,15 @@
 <div class="container">
     <div class="row">
         <div class="col-11 col-md-10 mx-auto">
-            <form name="api_view" th:action="@{/api/new}" method="POST">
+            <form th:action="@{/api/new}" method="post">
+                <input type="hidden" name="category1st" value="과학기술">
+                <input type="hidden" name="category2nd" value="테스트">
+                <input type="hidden" name="organization" value="테스트">
                 <!-- API-name -->
                 <h2>API 생성</h2>
                 <div class="input-api-name mt-5">
                     <h4>API 이름</h4>
-                    <input type="text" class="form-control" name="api_name" value="">
+                    <input type="text" class="form-control" name="name" value="">
                 </div>
 
                 <div class="row">
@@ -119,7 +97,8 @@
                     <div class="col-12 mt-3">
                         <h4>대상 데이터셋</h4>
                         <div class="input-group">
-                            <input type="text" disabled class="form-control" id="text-dataset-search">
+                            <input type="text" readonly class="form-control" id="text-dataset-search"
+                                   name="targetDataset">
                             <span class="btn btn-primary" id="btn-dataset-search">검색</span>
                         </div>
                     </div>
@@ -133,16 +112,16 @@
                     <!-- API-explain -->
                     <div class="col-12 mt-3">
                         <h4>API 설명</h4>
-                        <textarea class="col-12" rows="5"></textarea>
+                        <textarea class="col-12" rows="5" name="apiDesc"></textarea>
                     </div>
 
                     <!-- API-open_range -->
                     <div class="col-12 input-open-range justify-content-start mt-3">
                         <label for="select-permission" class="h4">공개 범위</label>
-                        <select name="PERMISSION" id="select-permission" class="form-select">
-                            <option value="all">전체공개</option>
-                            <option value="private">비공개</option>
-                            <option value="datahub">데이터허브</option>
+                        <select name="permissionGroup" id="select-permission" class="form-select">
+                            <option value="PERMISSION_PUBLIC">전체공개</option>
+                            <option value="PERMISSION_PRIVATE">비공개</option>
+                            <option value="PERMISSION_DATAHUB">데이터허브</option>
                         </select>
                         <ul class="condition-list border p-2 pt-0 d-none" id="ul_condition-list">
                             <li th:each="item : ${datahub}">

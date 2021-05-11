@@ -18,10 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
-import kr.dataportal.datahubservice.dto.api.ApiList;
-import kr.dataportal.datahubservice.dto.api.ApiListDetailAndDataSetColumn;
-import kr.dataportal.datahubservice.dto.api.ApiListSearchDTO;
-import kr.dataportal.datahubservice.dto.api.ApiListSearchFilterDTO;
+import kr.dataportal.datahubservice.dto.api.*;
 import kr.dataportal.datahubservice.dto.user.User;
 import kr.dataportal.datahubservice.util.CommonUtil;
 import lombok.RequiredArgsConstructor;
@@ -168,8 +165,29 @@ public class APIController {
     // API 생성 기능
     @PostMapping("/new")
     @ApiIgnore
-    public RedirectView ApiCreateFunction() {
-        return new RedirectView("/api/14");
+    public String ApiCreateFunction(ApiListCreateDTO apiListCreateDTO, Model model) {
+        System.out.println(apiListCreateDTO);
+        User user = (User) model.getAttribute("user");
+        apiListCreateDTO.setPublisher(Objects.requireNonNull(user).getSeq());
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.post()
+                .uri("/api/new")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(apiListCreateDTO)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        int apiSeq = jsonResponse.map(
+                response -> gson.fromJson(gson.toJson(response.getData()), Integer.class)
+        ).orElse(-1);
+        if (apiSeq == -1) {
+            return "/";
+        }
+        return "redirect:/api/" + apiSeq;
     }
 
     // API 관리 화면
