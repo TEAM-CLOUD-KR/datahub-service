@@ -94,67 +94,12 @@
                                     <td>test1</td>
                                     <td>test@datahub.com</td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                               value="option1" name="user">
-                                        <label class="form-check-label" for="inlineCheckbox1">2</label>
-                                    </th>
-                                    <td>2021-03-29 11:00</td>
-                                    <td>날씨</td>
-                                    <td>test2</td>
-                                    <td>test@datahub.com</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3"
-                                               value="option1" name="user">
-                                        <label class="form-check-label" for="inlineCheckbox1">3</label>
-                                    </th>
-                                    <td>2021-03-28 07:00</td>
-                                    <td>날씨</td>
-                                    <td>test3</td>
-                                    <td>test@datahub.com</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox4"
-                                               value="option1" name="user">
-                                        <label class="form-check-label" for="inlineCheckbox1">4</label>
-                                    </th>
-                                    <td>2021-03-25 11:00</td>
-                                    <td>날씨</td>
-                                    <td>test4</td>
-                                    <td>test@datahub.com</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox5"
-                                               value="option1" name="user">
-                                        <label class="form-check-label" for="inlineCheckbox1">5</label>
-                                    </th>
-                                    <td>2021-03-05 15:40</td>
-                                    <td>날씨</td>
-                                    <td>test5</td>
-                                    <td>test@datahub.com</td>
-                                </tr>
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-primary" style="margin-left: 10px">차단</button>
                                 <button type="button" class="btn btn-danger" style="margin-left: 10px">삭제</button>
                             </div>
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item"><a class="page-link" href="#">이전</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">다음</a></li>
-                                </ul>
-                            </nav>
-
-
                         </div>
                         <!--                        다음페이지-->
                         <div class="tab-pane fade" id="list-profile" role="tabpanel"
@@ -174,45 +119,23 @@
                                                onclick='selectAll(this)'>
                                         <label class="form-check-label" for="inlineCheckbox1">번호</label>
                                     </th>
-                                    <th scope="col">시간</th>
                                     <th scope="col">API</th>
                                     <th scope="col">사용자</th>
                                     <th scope="col">상태</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <th scope="row">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox6"
-                                               value="option1" name="user">
-                                        <label class="form-check-label" for="inlineCheckbox1">1</label>
-                                    </th>
-                                    <td>2021-03-30 14:20</td>
-                                    <td>날씨</td>
-                                    <td>testuser</td>
-                                    <td>ON</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox7"
-                                               value="option1" name="user">
-                                        <label class="form-check-label" for="inlineCheckbox1">2</label>
-                                    </th>
-                                    <td>2021-03-30 14:10</td>
-                                    <td>날씨</td>
-                                    <td>testuser</td>
-                                    <td>ON</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox8"
-                                               value="option1" name="user">
-                                        <label class="form-check-label" for="inlineCheckbox1">3</label>
-                                    </th>
-                                    <td>2021-03-30 14:04</td>
-                                    <td>날씨</td>
-                                    <td>testuser</td>
-                                    <td>OFF</td>
+                                <tr th:each="item, iterstate : ${apiUsingList}">
+                                    <td th:with="index=${iterstate.index + 1}">
+                                        <input class="form-check-input" type="checkbox"
+                                               th:id="'chk_' + ${index}"
+                                               th:value="${index}" name="a">
+                                        <label class="form-check-label" th:text="${index}"
+                                               th:for="'chk_' + ${index}">-</label>
+                                    </td>
+                                    <td th:text="${item.api.name}">-</td>
+                                    <td th:text="${item.requestUser.nickname}">-</td>
+                                    <td th:text="${item.accept}">-</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -221,15 +144,6 @@
                                 <button type="button" class="btn btn-primary" style="margin-left: 10px">차단</button>
                                 <button type="button" class="btn btn-danger" style="margin-left: 10px">삭제</button>
                             </div>
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item"><a class="page-link" href="#">이전</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">다음</a></li>
-                                </ul>
-                            </nav>
 
                         </div>
                         <!--                        <div class="tab-pane fade" id="list-messages" role="tabpanel"-->
