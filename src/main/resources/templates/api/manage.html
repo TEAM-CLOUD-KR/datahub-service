@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>API 관리</title>
+
+    <th:block th:replace="fragments/head :: head"/>
+
+    <script>
+        function selectAll(selectAll) {
+            const checkboxes
+                = document.getElementsByName('user');
+
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = selectAll.checked;
+            })
+        }
+    </script>
+</head>
+<body>
+<div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-10 mx-auto">
+            <div class="row">
+                <div class="col-2">
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <a class="list-group-item list-group-item-action active" id="list-home-list"
+                           data-bs-toggle="list" href="#list-home" role="tab" aria-controls="home">API통계</a>
+                        <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list"
+                           href="#list-profile" role="tab" aria-controls="profile">요청관리</a>
+                        <!--                        <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list"-->
+                        <!--                           href="#list-messages" role="tab" aria-controls="messages">Messages</a>-->
+                        <!--                        <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list"-->
+                        <!--                           href="#list-settings" role="tab" aria-controls="settings">Settings</a>-->
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="list-home" role="tabpanel"
+                             aria-labelledby="list-home-list">
+                            <!--                            api통계 시작-->
+                            <div class="alert alert-light" role="alert" style="background-color: white;">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                           id="inlineRadio1"
+                                           value="option1" checked="true">
+                                    <label class="form-check-label" for="inlineRadio1">시간최신순</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                           id="inlineRadio2"
+                                           value="option2">
+                                    <label class="form-check-label" for="inlineRadio2">
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                            <option selected>날씨</option>
+                                            <option value="1">미세먼지</option>
+                                            <option value="2">교통</option>
+                                            <option value="3">학습</option>
+                                        </select>
+
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                           id="inlineRadio3"
+                                           value="option3">
+                                    <label class="form-check-label" for="inlineRadio3">사용자</label>
+                                </div>
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox0"
+                                               value="selectall"
+                                               onclick='selectAll(this)'>
+                                        <label class="form-check-label">번호</label>
+                                    </th>
+                                    <th scope="col">시간</th>
+                                    <th scope="col">호출내역</th>
+                                    <th scope="col">닉네임</th>
+                                    <th scope="col">아이디</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                               value="option1" name="user">
+                                        <label class="form-check-label" for="inlineCheckbox1">1</label>
+                                    </th>
+                                    <td>2021-03-31 14:00</td>
+                                    <td>날씨</td>
+                                    <td>test1</td>
+                                    <td>test@datahub.com</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                               value="option1" name="user">
+                                        <label class="form-check-label" for="inlineCheckbox1">2</label>
+                                    </th>
+                                    <td>2021-03-29 11:00</td>
+                                    <td>날씨</td>
+                                    <td>test2</td>
+                                    <td>test@datahub.com</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3"
+                                               value="option1" name="user">
+                                        <label class="form-check-label" for="inlineCheckbox1">3</label>
+                                    </th>
+                                    <td>2021-03-28 07:00</td>
+                                    <td>날씨</td>
+                                    <td>test3</td>
+                                    <td>test@datahub.com</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox4"
+                                               value="option1" name="user">
+                                        <label class="form-check-label" for="inlineCheckbox1">4</label>
+                                    </th>
+                                    <td>2021-03-25 11:00</td>
+                                    <td>날씨</td>
+                                    <td>test4</td>
+                                    <td>test@datahub.com</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox5"
+                                               value="option1" name="user">
+                                        <label class="form-check-label" for="inlineCheckbox1">5</label>
+                                    </th>
+                                    <td>2021-03-05 15:40</td>
+                                    <td>날씨</td>
+                                    <td>test5</td>
+                                    <td>test@datahub.com</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-primary" style="margin-left: 10px">차단</button>
+                                <button type="button" class="btn btn-danger" style="margin-left: 10px">삭제</button>
+                            </div>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item"><a class="page-link" href="#">이전</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">다음</a></li>
+                                </ul>
+                            </nav>
+
+
+                        </div>
+                        <!--                        다음페이지-->
+                        <div class="tab-pane fade" id="list-profile" role="tabpanel"
+                             aria-labelledby="list-profile-list">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" placeholder="유저정보" aria-label="Username"
+                                       aria-describedby="basic-addon1">
+                                <button type="button" class="btn btn-primary">검색</button>
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox0-0"
+                                               value="selectall"
+                                               onclick='selectAll(this)'>
+                                        <label class="form-check-label" for="inlineCheckbox1">번호</label>
+                                    </th>
+                                    <th scope="col">시간</th>
+                                    <th scope="col">API</th>
+                                    <th scope="col">사용자</th>
+                                    <th scope="col">상태</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox6"
+                                               value="option1" name="user">
+                                        <label class="form-check-label" for="inlineCheckbox1">1</label>
+                                    </th>
+                                    <td>2021-03-30 14:20</td>
+                                    <td>날씨</td>
+                                    <td>testuser</td>
+                                    <td>ON</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox7"
+                                               value="option1" name="user">
+                                        <label class="form-check-label" for="inlineCheckbox1">2</label>
+                                    </th>
+                                    <td>2021-03-30 14:10</td>
+                                    <td>날씨</td>
+                                    <td>testuser</td>
+                                    <td>ON</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox8"
+                                               value="option1" name="user">
+                                        <label class="form-check-label" for="inlineCheckbox1">3</label>
+                                    </th>
+                                    <td>2021-03-30 14:04</td>
+                                    <td>날씨</td>
+                                    <td>testuser</td>
+                                    <td>OFF</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-success">승인</button>
+                                <button type="button" class="btn btn-primary" style="margin-left: 10px">차단</button>
+                                <button type="button" class="btn btn-danger" style="margin-left: 10px">삭제</button>
+                            </div>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item"><a class="page-link" href="#">이전</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">다음</a></li>
+                                </ul>
+                            </nav>
+
+                        </div>
+                        <!--                        <div class="tab-pane fade" id="list-messages" role="tabpanel"-->
+                        <!--                             aria-labelledby="list-messages-list">...-->
+                        <!--                        </div>-->
+                        <!--                        <div class="tab-pane fade" id="list-settings" role="tabpanel"-->
+                        <!--                             aria-labelledby="list-settings-list">...-->
+                        <!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

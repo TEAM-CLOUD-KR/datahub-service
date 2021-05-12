@@ -191,9 +191,28 @@ public class APIController {
     }
 
     // API 관리 화면
-    @GetMapping("/manage/{seq}")
+    @GetMapping("/manage")
     @ApiIgnore
-    public String ApiManageView(@PathVariable("seq") String seq) {
+    public String ApiManageView(Model model) {
+        User user = (User) model.getAttribute("user");
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.get()
+                .uri("/api/user?userSeq=" + Objects.requireNonNull(user).getSeq())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        jsonResponse.ifPresent(response -> {
+            CommonUtil<ApiList> commonUtil = new CommonUtil<>();
+            List<ApiList> apiLists = commonUtil.convertObjectToList(
+                    gson.fromJson(gson.toJson(response.getData()), Object.class)
+            );
+            model.addAttribute("apiList", apiLists);
+        });
         return "api/manage";
     }
 
