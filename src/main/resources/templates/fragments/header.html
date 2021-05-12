@@ -22,9 +22,9 @@
                             API
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/api">API 목록 및 조회</a></li>
-                            <li><a class="dropdown-item" href="/api/new">API 생성</a></li>
-                            <li><a class="dropdown-item" href="/api/manage">API 관리</a></li>
+                            <li><a class="dropdown-item" th:href="@{/api}">API 목록</a></li>
+                            <li><a class="dropdown-item" th:href="@{/api/new}">API 생성</a></li>
+                            <li><a class="dropdown-item" th:href="@{/api/manage}">API 관리</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -33,26 +33,26 @@
                             데이터셋
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">데이터 목록 및 조회</a></li>
-                            <li><a class="dropdown-item" href="#">데이터 등록 및 관리</a></li>
-                            <li><a class="dropdown-item" href="#">데이터 요청</a></li>
+                            <li><a class="dropdown-item" th:href="@{/}">데이터 목록</a></li>
+                            <li><a class="dropdown-item" th:href="@{/}">데이터 등록 및 관리</a></li>
+                            <li><a class="dropdown-item" th:href="@{/}">데이터 요청</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mb-0" href="/datahub">데이터허브</a>
+                        <a class="nav-link mb-0" th:href="@{/datahub}">데이터허브</a>
                     </li>
                 </ul>
                 <ul th:if="${user == null}" class="navbar-nav ms-3 ms-lg-auto mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/user"><i class="fas fa-sign-in-alt me-1"></i>로그인</a>
+                        <a class="nav-link" th:href="@{/user}"><i class="fas fa-sign-in-alt me-1"></i>로그인</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/new"><i class="fas fa-user-plus me-1"></i>회원가입</a>
+                        <a class="nav-link" th:href="@{/user/new}"><i class="fas fa-user-plus me-1"></i>회원가입</a>
                     </li>
                 </ul>
                 <ul th:unless="${user == null}" class="navbar-nav ms-3 ms-lg-auto mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/info"><i class="fas fa-user-circle me-1"></i>마이페이지</a>
+                        <a class="nav-link" th:href="@{/user/info}"><i class="fas fa-user-circle me-1"></i>마이페이지</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/user/logout}"><i class="fas fa-sign-out-alt me-1"></i>로그아웃</a>
