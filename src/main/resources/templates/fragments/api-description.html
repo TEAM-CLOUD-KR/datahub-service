@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<section th:fragment="api-description (api_detail)">
+    <!-- API-view-result-title -->
+    <div class="col-12 mt-3 fs-5">
+        <span class="px-2 bg-primary text-white">API</span>
+        <span class="px-2 bg-success text-white">JSON</span>
+        <span th:text="${api_detail.getName()}"></span>
+    </div>
+    <div class="row mt-2 mx-auto">
+        <div class="col-4 col-md-2 py-3 bg-light border-white d-flex justify-content-center fw-bold">
+            분류
+        </div>
+        <div class="col-8 col-md-4 py-3 border-top border-bottom">
+            <span th:text="${api_detail.getCategory1st().getText()}"></span>
+            <span> > </span>
+            <span th:text="${api_detail.getCategory2nd().getText()}"></span>
+        </div>
+        <div class="col-4 col-md-2 py-3 bg-light border-white border-top d-flex justify-content-center fw-bold">
+            제공기관
+        </div>
+        <div class="col-8 col-md-4 py-3 border-bottom"
+             th:text="${api_detail.getOrganization()}"></div>
+    </div>
+    <div class="row mx-auto">
+        <div class="col-4 col-md-2 py-3 bg-light border-top border-white d-flex justify-content-center fw-bold">
+            등록일
+        </div>
+        <div class="col-8 col-md-4 py-3 border-bottom"
+             th:text="${#temporals.format(api_detail.getPublish_at(), 'yyyy-MM-dd')}">2021-04-28
+        </div>
+        <div class="col-4 col-md-2 py-3 bg-light border-top border-white d-flex justify-content-center fw-bold">
+            갱신일
+        </div>
+        <div class="col-8 col-md-4 py-3 border-bottom"
+             th:text="${#temporals.format(api_detail.getLast_edit(), 'yyyy-MM-dd')}">2021-04-28
+        </div>
+    </div>
+    <div class="row mx-auto">
+        <div class="col-4 col-md-2 py-3 bg-light border-top border-white d-flex justify-content-center fw-bold">
+            설명
+        </div>
+        <div class="col-8 col-md-10 py-3 border-bottom" th:text="${api_detail.getApiDesc()}"></div>
+    </div>
+    <div class="row mx-auto">
+        <div class="col-4 col-md-2 py-3 bg-light border-top border-white d-flex justify-content-center fw-bold">
+            서비스 요청 URL
+        </div>
+        <a class="col-8 col-md-10 py-3 border-bottom" target="_blank"
+           th:href="'https://api.dataportal.kr/api/v2/' + ${api_detail.getSeq()}"
+           th:text="'https://api.dataportal.kr/api/v2/' + ${api_detail.getSeq()}"></a>
+    </div>
+</section>
+</html>

@@ -226,7 +226,23 @@ public class APIController {
     // API 활용 신청 화면
     @GetMapping("/dev/{seq}")
     @ApiIgnore
-    public String ApiDevRequestView(@PathVariable("seq") String seq) {
+    public String ApiDevRequestView(@PathVariable("seq") String seq, Model model) {
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.get()
+                .uri("/api/" + seq)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        jsonResponse.ifPresent(response -> {
+            ApiListDetailAndDataSetColumn apiList = gson.fromJson(gson.toJson(response.getData()), ApiListDetailAndDataSetColumn.class);
+            model.addAttribute("api_detail", apiList.getDetail());
+        });
+
         return "api/dev/action";
     }
 }
