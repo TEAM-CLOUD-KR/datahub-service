@@ -31,14 +31,14 @@
             margin: 0;
         }
 
-        a:not(.btn),
-        a:not(.btn):link,
-        a:not(.btn):visited {
+        a:not(.btn):not(.list-group-item),
+        a:not(.btn):not(.list-group-item):link,
+        a:not(.btn):not(.list-group-item):visited {
             text-decoration: none;
             color: inherit;
         }
 
-        .container a:not(.btn):hover {
+        .container a:not(.btn):not(.list-group-item):hover {
             text-decoration: underline;
             text-decoration-color: var(--bs-primary);
             color: var(--bs-primary);
