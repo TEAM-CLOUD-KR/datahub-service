@@ -9,8 +9,9 @@
         Aaron(JIN, Taeyang) - 
 */
 
-package kr.dataportal.datahubservice.dto.api;
+package kr.dataportal.datahubservice.dto.api.dev;
 
+import kr.dataportal.datahubservice.dto.api.ApiList;
 import kr.dataportal.datahubservice.dto.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,5 +23,6 @@ public class ApiUsingListDTO {
 
     private final ApiList api;
     private final User requestUser;
+    private final String serviceKey;
     private final ApiUsingAcceptEnum accept;
 }

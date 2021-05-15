@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Data-Hub</title>
+
+    <th:block th:replace="fragments/head :: head"/>
+</head>
+
+<body>
+<div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12  col-md-10 mx-auto">
+            <h2>API 서비스키 관리</h2>
+
+            <!-- API-uses-list result-->
+            <div class="table-responsive">
+                <table class="table mt-3 border-bottom table-hover text-center">
+                    <thead>
+                    <tr class="bg-light">
+                        <th>No.</th>
+                        <th>API</th>
+                        <th>서비스키</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item, iterstate : ${apiUsingList}">
+                        <td th:text="${iterstate.size - iterstate.index}">-</td>
+                        <td th:text="${item.getApi().getName()}">-</td>
+                        <td th:text="${item.getServiceKey()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- API-uses-list result filtering -->
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="col-5 col-md-2 pe-0">
+                    <select class="form-select">
+                        <option value="s_title">제목</option>
+                        <option value="s_content">API 이름</option>
+                        <option value="s_name">작성자</option>
+                    </select>
+                </div>
+                <div class="col-7 col-md-6 pe-0">
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-12 col-md-2 mt-2 mt-md-0">
+                    <button class="btn btn-primary col-12">검색</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

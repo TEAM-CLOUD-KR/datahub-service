@@ -46,9 +46,12 @@
         <div class="col-4 col-md-2 py-3 bg-light border-top border-white d-flex justify-content-center fw-bold">
             서비스 요청 URL
         </div>
-        <a class="col-8 col-md-10 py-3 border-bottom" target="_blank"
-           th:href="'https://api.dataportal.kr/api/v2/' + ${api_detail.getSeq()}"
-           th:text="'https://api.dataportal.kr/api/v2/' + ${api_detail.getSeq()}"></a>
+        <div class="col-8 col-md-10 py-3 border-bottom">
+            <a target="_blank"
+               th:href="'https://api.dataportal.kr/api/v2/' + ${api_detail.getSeq()}"
+               th:text="'https://api.dataportal.kr/api/v2/' + ${api_detail.getSeq()}"></a>
+        </div>
+
     </div>
 </section>
 </html>

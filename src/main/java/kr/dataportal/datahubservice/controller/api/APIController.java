@@ -11,26 +11,21 @@
 
 package kr.dataportal.datahubservice.controller.api;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
 import kr.dataportal.datahubservice.dto.api.*;
+import kr.dataportal.datahubservice.dto.api.dev.ApiDevRequestResponseEnum;
+import kr.dataportal.datahubservice.dto.api.dev.ApiUsingAcceptCreateDTO;
+import kr.dataportal.datahubservice.dto.api.dev.ApiUsingListDTO;
 import kr.dataportal.datahubservice.dto.user.User;
 import kr.dataportal.datahubservice.util.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.servlet.view.RedirectView;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
@@ -166,7 +161,6 @@ public class APIController {
     @PostMapping("/new")
     @ApiIgnore
     public String ApiCreateFunction(ApiListCreateDTO apiListCreateDTO, Model model) {
-        System.out.println(apiListCreateDTO);
         User user = (User) model.getAttribute("user");
         apiListCreateDTO.setPublisher(Objects.requireNonNull(user).getSeq());
         WebClient client = WebClient.builder()
@@ -219,14 +213,61 @@ public class APIController {
     // API 활용 신청 목록 화면
     @GetMapping("/dev")
     @ApiIgnore
-    public String ApiDevRequestListView() {
+    public String ApiDevRequestListView(Model model) {
+        User user = (User) model.getAttribute("user");
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.get()
+                .uri("/api/dev?userSeq=" + Objects.requireNonNull(user).getSeq())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        jsonResponse.ifPresent(response -> {
+            CommonUtil<ApiUsingListDTO> commonUtil = new CommonUtil<>();
+            List<ApiUsingListDTO> apiLists = gson.fromJson(gson.toJson(response.getData()), new TypeToken<ArrayList<ApiUsingListDTO>>() {
+            }.getType());
+            model.addAttribute("apiUsingList", apiLists);
+        });
         return "api/dev/list";
+    }
+
+    // API 활용 신청 기능
+    @PostMapping("/dev")
+    @ApiIgnore
+    public String APiDevRequest(ApiUsingAcceptCreateDTO apiUsingAcceptCreateDTO, Model model) {
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.post()
+                .uri("/api/dev")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(apiUsingAcceptCreateDTO)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        if (jsonResponse.isEmpty()) {
+            return "/api/dev/action";
+        }
+        ApiDevRequestResponseEnum apiDevRequestResponseEnum = gson.fromJson(gson.toJson(jsonResponse.get().getData()), ApiDevRequestResponseEnum.class);
+        model.addAttribute("result", apiDevRequestResponseEnum);
+
+        return switch (apiDevRequestResponseEnum) {
+            case SUCCESS -> "redirect:/api/dev";
+            case FAIL -> "/api/dev/action";
+        };
     }
 
     // API 활용 신청 화면
     @GetMapping("/dev/{seq}")
     @ApiIgnore
     public String ApiDevRequestView(@PathVariable("seq") String seq, Model model) {
+        User user = (User) model.getAttribute("user");
         WebClient client = WebClient.builder()
                 .baseUrl("https://api.dataportal.kr")
                 .build();
@@ -242,6 +283,21 @@ public class APIController {
             ApiListDetailAndDataSetColumn apiList = gson.fromJson(gson.toJson(response.getData()), ApiListDetailAndDataSetColumn.class);
             model.addAttribute("api_detail", apiList.getDetail());
         });
+
+        Optional<JSONResponse> jsonResponse2 = client.get()
+                .uri("/api/dev/search?apiSeq=" + seq + "&userSeq=" + user.getSeq())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        if (jsonResponse2.isPresent()) {
+            ApiUsingListDTO apiUsingItem = gson.fromJson(gson.toJson(jsonResponse2.get().getData()), ApiUsingListDTO.class);
+
+            if (apiUsingItem != null) {
+                return "redirect:/api/dev/";
+            }
+        }
 
         return "api/dev/action";
     }

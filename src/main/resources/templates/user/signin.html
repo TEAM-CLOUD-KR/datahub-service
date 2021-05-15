@@ -20,6 +20,7 @@
             <div class="row">
                 <form class="col-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4 mx-auto login_bottom" id="form-login"
                       method="post" th:action="@{/user}">
+                    <input type="hidden" th:value="${ref}" name="ref">
                     <div class="mt-2 logo_div mb-5">
                         <a href="/">
                             <div class="mx-auto" id="logo" style="width: 230px; height: 55px; cursor: pointer;">

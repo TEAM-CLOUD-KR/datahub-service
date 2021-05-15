@@ -5,6 +5,7 @@ import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
 import kr.dataportal.datahubservice.dto.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 
@@ -30,8 +33,19 @@ public class UserController {
     // 로그인 화면 연결
     @GetMapping("")
     @ApiIgnore
-    public String SignInView(HttpServletRequest req) {
+    public String SignInView(@Nullable String ref, HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
+        if (ref == null || ref.isEmpty()) {
+            try {
+                URI uri = new URI(req.getHeader("referer"));
+                model.addAttribute("ref", uri.getPath());
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        } else {
+            model.addAttribute("ref", ref);
+        }
+
         if (session.getAttribute("user") != null) {
             return "redirect:/";
         }
@@ -48,10 +62,10 @@ public class UserController {
     }
 
     @PostMapping("")
-    public String SignInAction(UserSignInDto signInDto, HttpServletRequest req, Model model) {
+    public String SignInAction(UserSignInDto signInDto, @RequestParam(required = false, defaultValue = "/") String ref, HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
         if (session.getAttribute("user") != null) {
-            return "redirect:/";
+            return "redirect:" + ref;
         }
 
         WebClient client = WebClient.builder()
@@ -81,7 +95,7 @@ public class UserController {
         model.addAttribute("password", signInDto.getPassword());
 
         if (session.getAttribute("user") != null) {
-            return "redirect:/";
+            return "redirect:" + ref;
         }
         return "user/signin";
     }
@@ -120,7 +134,7 @@ public class UserController {
         });
         model.addAttribute("email", userSignUpDto.getEmail());
         model.addAttribute("nickname", userSignUpDto.getNickname());
-        
+
         SignUpStatus result = (SignUpStatus) model.getAttribute("result");
         if (result == null) {
             model.addAttribute("result", "알 수 없는 오류가 발생하였습니다. [SRV->CORE]");

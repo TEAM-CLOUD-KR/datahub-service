@@ -9,7 +9,7 @@
         Aaron(JIN, Taeyang) - 
 */
 
-package kr.dataportal.datahubservice.dto.api;
+package kr.dataportal.datahubservice.dto.api.dev;
 
 public enum ApiUsingAcceptEnum {
     Y, N
