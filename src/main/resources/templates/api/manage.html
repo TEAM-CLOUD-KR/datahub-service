@@ -20,123 +20,95 @@
 <div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
 <div class="container">
     <div class="row">
-        <div class="col-10 mx-auto">
-            <div class="row">
-                <div class="col-2">
-                    <div class="list-group" id="list-tab" role="tablist">
-                        <a class="list-group-item list-group-item-action active" id="list-home-list"
-                           data-bs-toggle="list" href="#list-home" role="tab" aria-controls="home">API 통계</a>
-                        <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list"
-                           href="#list-profile" role="tab" aria-controls="profile">활용신청 관리</a>
+        <div class="col-12 col-md-10 mx-auto">
+            <h2>API 관리</h2>
+            <ul class="nav nav-pills mt-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                            aria-selected="true">API 통계
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                            aria-selected="false">활용신청 현황
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content gx-0" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                     aria-labelledby="list-home-list">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox0"
+                                       value="selectall"
+                                       onclick='selectAll(this)'>
+                                <label class="form-check-label">번호</label>
+                            </th>
+                            <th scope="col">시간</th>
+                            <th scope="col">호출내역</th>
+                            <th scope="col">닉네임</th>
+                            <th scope="col">아이디</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                       value="option1" name="user">
+                                <label class="form-check-label" for="inlineCheckbox1">1</label>
+                            </th>
+                            <td>2021-03-31 14:00</td>
+                            <td>날씨</td>
+                            <td>test1</td>
+                            <td>test@datahub.com</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-danger">차단</button>
+<!--                        <button type="button" class="btn btn-danger ms-e">삭제</button>-->
                     </div>
                 </div>
-                <div class="col-10">
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="list-home" role="tabpanel"
-                             aria-labelledby="list-home-list">
-                            <!--                            api통계 시작-->
-                            <div class="alert alert-light" role="alert" style="background-color: white;">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                           id="inlineRadio1"
-                                           value="option1" checked="true">
-                                    <label class="form-check-label" for="inlineRadio1">시간최신순</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                           id="inlineRadio2"
-                                           value="option2">
-                                    <label class="form-check-label" for="inlineRadio2">
-                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                            <option selected>날씨</option>
-                                            <option value="1">미세먼지</option>
-                                            <option value="2">교통</option>
-                                            <option value="3">학습</option>
-                                        </select>
-
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                           id="inlineRadio3"
-                                           value="option3">
-                                    <label class="form-check-label" for="inlineRadio3">사용자</label>
-                                </div>
-                            </div>
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th scope="col">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox0"
-                                               value="selectall"
-                                               onclick='selectAll(this)'>
-                                        <label class="form-check-label">번호</label>
-                                    </th>
-                                    <th scope="col">시간</th>
-                                    <th scope="col">호출내역</th>
-                                    <th scope="col">닉네임</th>
-                                    <th scope="col">아이디</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th scope="row">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                               value="option1" name="user">
-                                        <label class="form-check-label" for="inlineCheckbox1">1</label>
-                                    </th>
-                                    <td>2021-03-31 14:00</td>
-                                    <td>날씨</td>
-                                    <td>test1</td>
-                                    <td>test@datahub.com</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-primary" style="margin-left: 10px">차단</button>
-                                <button type="button" class="btn btn-danger" style="margin-left: 10px">삭제</button>
-                            </div>
-                        </div>
-                        <!--                        다음페이지-->
-                        <div class="tab-pane fade" id="list-profile" role="tabpanel"
-                             aria-labelledby="list-profile-list">
-                            <table class="table table-hover text-center">
-                                <thead>
-                                <tr>
-                                    <th scope="col" class="text-start">
-                                        <input class="form-check-input" type="checkbox" value="#"
-                                               onclick='selectAll(this)'>
-                                        <label class="form-check-label" for="inlineCheckbox1">번호</label>
-                                    </th>
-                                    <th scope="col">API</th>
-                                    <th scope="col">사용자</th>
-                                    <th scope="col">승인여부</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="item, iterstate : ${apiUsingList}">
-                                    <td th:with="index=${iterstate.size - iterstate.index}" class="text-start">
-                                        <input class="form-check-input" type="checkbox"
-                                               th:id="'chk_' + ${index}"
-                                               th:value="${index}" name="a">
-                                        <label class="form-check-label" th:text="${index}"
-                                               th:for="'chk_' + ${index}">-</label>
-                                    </td>
-                                    <td th:text="${item.api.name}">-</td>
-                                    <td th:text="${item.requestUser.nickname}">-</td>
-                                    <td th:text="${item.accept}">-</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-success me-3">승인</button>
-                                <button type="button" class="btn btn-danger">거부</button>
-                            </div>
-                        </div>
+                <!--다음페이지-->
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel">
+                    <table class="table table-hover text-center">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="text-start">
+                                <input class="form-check-input" type="checkbox" value="#"
+                                       onclick='selectAll(this)'>
+                                <label class="form-check-label" for="inlineCheckbox1">번호</label>
+                            </th>
+                            <th scope="col">API</th>
+                            <th scope="col">사용자</th>
+                            <th scope="col">승인여부</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item, iterstate : ${apiUsingList}">
+                            <td th:with="index=${iterstate.size - iterstate.index}" class="text-start">
+                                <input class="form-check-input" type="checkbox"
+                                       th:id="'chk_' + ${index}"
+                                       th:value="${index}" name="a">
+                                <label class="form-check-label" th:text="${index}"
+                                       th:for="'chk_' + ${index}">-</label>
+                            </td>
+                            <td th:text="${item.getApi().getName()}">-</td>
+                            <td th:text="${item.getRequestUser().getNickname()}">-</td>
+                            <td th:text="${item.getAccept()}">-</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-success me-2">승인</button>
+                        <button type="button" class="btn btn-danger">거부</button>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

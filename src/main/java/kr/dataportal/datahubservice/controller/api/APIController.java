@@ -194,17 +194,18 @@ public class APIController {
                 .build();
 
         Optional<JSONResponse> jsonResponse = client.get()
-                .uri("/api/request?userSeq=" + Objects.requireNonNull(user).getSeq())
+                .uri("/api/user?userSeq=" + Objects.requireNonNull(user).getSeq())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(JSONResponse.class)
                 .blockOptional();
 
         jsonResponse.ifPresent(response -> {
-            CommonUtil<ApiUsingListDTO> commonUtil = new CommonUtil<>();
-            List<ApiUsingListDTO> apiLists = commonUtil.convertObjectToList(
-                    gson.fromJson(gson.toJson(response.getData()), Object.class)
+            List<ApiUsingListDTO> apiLists = gson.fromJson(
+                    gson.toJson(response.getData()), new TypeToken<ArrayList<ApiUsingListDTO>>() {
+                    }.getType()
             );
+            System.out.println("apiLists = " + apiLists.get(0).getApi().getName());
             model.addAttribute("apiUsingList", apiLists);
         });
         return "api/manage";
