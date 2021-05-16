@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head>
-    <title>Data-Hub</title>
+    <title>API 목록 :: 통합 데이터 포털</title>
 
     <th:block th:replace="fragments/head :: head"/>
 
@@ -30,8 +30,8 @@
 <div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
 <div class="container mb-5">
     <div class="row gx-0">
-        <div class="col-10 mx-auto">
-            <h2>API 목록 및 조회</h2>
+        <div class="col-12 col-lg-10 mx-auto">
+            <h2>API 목록</h2>
             <!-- API-search(input_box) -->
             <div class="d-flex flex-column mb-5">
                 <form th:action="@{/api}" method="post" id="frm-search">
