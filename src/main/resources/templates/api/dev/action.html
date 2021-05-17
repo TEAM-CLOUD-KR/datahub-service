@@ -13,7 +13,7 @@
     <div class="col-12 col-lg-10 mx-auto">
         <form name="api_action" th:action="@{/api/dev/}" method="post">
             <input type="hidden" name="apiSeq" th:value="${api_detail.getSeq()}">
-            <input type="hidden" name="userSeq" th:value="${api_detail.getPublisher().getSeq()}">
+            <input type="hidden" name="userSeq" th:value="${user.getSeq()}">
             <h2>API 활용 신청</h2>
             <!-- API-view-API-result-info -->
             <section
