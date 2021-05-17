@@ -21,14 +21,19 @@
                     <tr class="bg-light">
                         <th>No.</th>
                         <th>API</th>
-                        <th>서비스키</th>
+                        <th>EndPoint</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="item, iterstate : ${apiUsingList}">
                         <td th:text="${iterstate.size - iterstate.index}">-</td>
                         <td th:text="${item.getApi().getName()}">-</td>
-                        <td th:text="${item.getServiceKey()}"></td>
+                        <td>
+                            <a target="_blank"
+                               th:text="'https://api.dataportal.kr/api/v2/' + ${item.getApi().getSeq()} + '?serviceKey=' + ${item.getServiceKey()}"
+                               th:href="'https://api.dataportal.kr/api/v2/' + ${item.getApi().getSeq()} + '?serviceKey=' + ${item.getServiceKey()}">
+                            </a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
