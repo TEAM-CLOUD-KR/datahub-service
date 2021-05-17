@@ -22,7 +22,6 @@
                         const dataset_column_selector = document.querySelector('#dataset-column > ul.condition-list');
                         dataset_column_selector.textContent = '';
                         responseData.forEach(column => {
-                            console.log(column['columnEn'] + '/' + column['columnKr']);
                             let htmlliElement = document.createElement('li');
                             let htmlInputElement = document.createElement('input');
                             htmlInputElement.name = 'targetColumn';
@@ -34,7 +33,7 @@
                             htmlLabelElement.classList.add('ms-1');
                             htmlLabelElement.htmlFor = htmlInputElement.id;
                             if (column['columnKr'])
-                                htmlLabelElement.textContent = column['columnKr'];
+                                htmlLabelElement.textContent = `${column['columnKr']}(${column['columnEn']})`;
                             else
                                 htmlLabelElement.textContent = column['columnEn'];
 
@@ -82,15 +81,8 @@
     <div class="row">
         <div class="col-12 col-lg-10 mx-auto">
             <form th:action="@{/api/new}" method="post">
-                <input type="hidden" name="category1st" value="과학기술">
-                <input type="hidden" name="category2nd" value="테스트">
-                <input type="hidden" name="organization" value="테스트">
                 <!-- API-name -->
                 <h2>API 생성</h2>
-                <div class="input-api-name">
-                    <h4>API 이름</h4>
-                    <input type="text" class="form-control" name="name" value="">
-                </div>
 
                 <div class="row">
                     <!-- API-use_dataset -->
@@ -106,6 +98,26 @@
                     <div class="col-12 mt-3 d-none" id="dataset-column">
                         <h4>컬럼 선택</h4>
                         <ul class="condition-list border p-2 pt-0">
+                        </ul>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <h4>API 이름</h4>
+                        <input type="text" class="form-control" name="name" value="">
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <ul>
+                            <li>
+                                <input type="checkbox" name="category1st" id="1st_과학기술" value="과학기술" checked>
+                                <label for="1st_과학기술">과학기술</label>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                <input type="checkbox" name="category2nd" id="2nd_테스트" value="테스트" checked>
+                                <label for="2nd_테스트">테스트</label>
+                            </li>
                         </ul>
                     </div>
 
