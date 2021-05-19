@@ -1,8 +1,11 @@
 package kr.dataportal.datahubservice.controller.dataset;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
 import kr.dataportal.datahubservice.dto.api.ApiListDetailAndDataSetColumn;
+import kr.dataportal.datahubservice.dto.dataset.DataSetColumnDesc;
+import kr.dataportal.datahubservice.dto.dataset.DataSetList;
 import kr.dataportal.datahubservice.dto.user.User;
 import kr.dataportal.datahubservice.util.CommonUtil;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +17,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,11 +33,60 @@ public class DataSetController {
         return (User) req.getSession().getAttribute("user");
     }
 
+    // 데이터셋 검색 메소드
+    private List<DataSetList> getDataSetListByName(String name) {
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.get()
+                .uri("/dataset/search?name=" + name)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        if (jsonResponse.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return gson.fromJson(gson.toJson(jsonResponse.get().getData()),
+                new TypeToken<ArrayList<DataSetList>>() {
+                }.getType()
+        );
+    }
+
     // 데이터셋 목록 화면
     @GetMapping("")
     @ApiIgnore
-    public String DataSetListView() {
+    public String DataSetListView(Model model) {
+        List<DataSetList> dataSetListByName = getDataSetListByName("");
+        model.addAttribute("datasetList", dataSetListByName);
         return "dataset/list";
+    }
+
+    // 데이터셋 상세 조회 화면
+    @GetMapping("/{name}")
+    @ApiIgnore
+    public String DataSetDetailView(@PathVariable("name") String name, Model model) {
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.get()
+                .uri("/common/util/scheme/" + name)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        jsonResponse.ifPresent(
+                response -> {
+                    DataSetColumnDesc dataSetColumnDesc = gson.fromJson(gson.toJson(jsonResponse.get().getData()), DataSetColumnDesc.class);
+                    model.addAttribute("datasetColumn", dataSetColumnDesc);
+                }
+        );
+        return "dataset/view";
     }
 
     // 데이터셋 요청 목록 화면
@@ -54,24 +107,11 @@ public class DataSetController {
     @RequestMapping("/search")
     @ApiIgnore
     public String DataSetSearchFormView(@RequestParam(name = "name", required = false, defaultValue = "") String name, Model model) {
-        WebClient client = WebClient.builder()
-                .baseUrl("https://api.dataportal.kr")
-                .build();
+        List<DataSetList> dataSetListByName = getDataSetListByName(name);
+        if (dataSetListByName.size() != 0) {
+            model.addAttribute("dataset", dataSetListByName);
+        }
 
-        Optional<JSONResponse> jsonResponse = client.get()
-                .uri("/dataset/search?name=" + name)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToMono(JSONResponse.class)
-                .blockOptional();
-
-        jsonResponse.ifPresent(response -> {
-            CommonUtil<String> commonUtil = new CommonUtil<>();
-            List<String> datasetList = commonUtil.convertObjectToList(
-                    gson.fromJson(gson.toJson(response.getData()), Object.class)
-            );
-            model.addAttribute("dataset", datasetList);
-        });
         return "dataset/search-popup";
     }
 }
