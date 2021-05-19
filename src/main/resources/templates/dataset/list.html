@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <title>데이터셋 목록 :: 통합 데이터 포털</title>
+
+    <th:block th:replace="fragments/head :: head"/>
+
+    <style>
+        .condition-list {
+            display: block;
+            overflow-y: scroll;
+            height: 8rem;
+        }
+
+        .ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            word-wrap: break-word;
+            line-height: 1.2em;
+            height: 1.2em;
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
+<div class="container mb-5">
+    <div class="row gx-0">
+        <div class="col-12 col-lg-10 mx-auto">
+            <h2>데이터셋 목록</h2>
+            <!-- API-search(input_box) -->
+            <div class="d-flex flex-column mb-5">
+                <form th:action="@{/dataset}" method="post" id="frm-search">
+                    <div class="d-flex">
+                        <input type="search" name="name" class="form-control" id="text-search"
+                               placeholder="검색어를 입력하세요" th:value="${search_name}"/>
+                        <button type="submit" class="btn btn-primary" id="btn-search"><i class="fas fa-search"></i>
+                        </button>
+                        <!--                        <input type="button" class="btn btn-outline-primary col-md-auto" data-bs-toggle="collapse"-->
+                        <!--                               href="#collapseExample" value="고급 검색">-->
+                    </div>
+
+                    <!-- API-result(number) -->
+                    <h3 class="text-center my-5">총 <span class="text-primary"
+                                                         th:text="${datasetList.size()}">99999</span>개의
+                        결과가
+                        검색되었습니다.</h3>
+
+                    <!-- API-result(list) -->
+                    <div class="row gx-0">
+                        <h4>데이터셋 목록</h4>
+                        <ul class="ul-wrapper">
+                            <li class="p-3 border mb-1" th:each="dataset : ${datasetList}">
+                                <a th:href="@{/dataset/{name}(name=${dataset.getDataset()})}"
+                                   th:text="${dataset.getDataset()}">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
