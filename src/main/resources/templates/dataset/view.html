@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>데이터셋 상세 조회 :: 통합 데이터 포털</title>
+
+    <th:block th:replace="fragments/head :: head"/>
+    <style>
+        th, td {
+            white-space: nowrap;
+        }
+    </style>
+    <script th:inline="javascript">
+        function createDataTable(dataset, headers) {
+            const datasetTable = document.getElementById('datasetTable');
+            const headerElement = document.createElement('thead');
+            const trElement = document.createElement('tr');
+            JSON.parse(headers).forEach(function (header) {
+                const thElement = document.createElement('th');
+                thElement.innerHTML = header;
+                trElement.append(thElement);
+            });
+            headerElement.append(trElement);
+            datasetTable.append(headerElement);
+
+            const bodyElement = document.createElement('tbody');
+            const tmpDataset = JSON.parse(dataset).slice(0, 10);
+            tmpDataset.forEach(function (ds) {
+                const body__trElement = document.createElement('tr');
+                Object.values(ds).forEach(function (item) {
+                    const tdElement = document.createElement('td');
+                    tdElement.innerHTML = item.toString();
+                    body__trElement.append(tdElement);
+                });
+                bodyElement.append(body__trElement);
+            });
+            datasetTable.append(bodyElement);
+        }
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-10 mx-auto">
+            <!-- API-view-page-big-title -->
+            <h2>데이터셋 상세 조회</h2>
+
+            <ul th:if="${type == 'OK'}">
+                aaaa
+            </ul>
+
+            <div class="table-responsive" th:if="${type == 'MOVED_PERMANENTLY'}">
+                <table id="datasetTable" class="table table-hover">
+                    <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        let datasetRaw = /*[[ ${result.getDatasetRaw()} ]]*/;
+                        let datasetColumn = /*[[ ${result.getDatasetColumn()} ]]*/;
+                        /*]]*/
+
+                        createDataTable(datasetRaw, datasetColumn);
+                    </script>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

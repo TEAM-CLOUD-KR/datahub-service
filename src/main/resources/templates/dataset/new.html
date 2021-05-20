@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>데이터셋 등록 :: 통합 데이터 포털</title>
+
+    <th:block th:replace="fragments/head :: head"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"
+            integrity="sha512-wBcFatf7yQavHQWtf4ZEjvtVz4XkYISO96hzvejfh18tn3OrJ3sPBppH0B6q/1SHB4OKHaNNUKqOmsiTGlOM/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script th:inline="javascript">
+        function get_header_row(sheet) {
+            var headers = [];
+            var range = XLSX.utils.decode_range(sheet['!ref']);
+            var C, R = range.s.r; /* start in the first row */
+            /* walk every column in the range */
+            for (C = range.s.c; C <= range.e.c; ++C) {
+                var cell = sheet[XLSX.utils.encode_cell({c: C, r: R})] /* find the cell in the first row */
+
+                var hdr = "UNKNOWN " + C; // <-- replace with your desired default
+                if (cell && cell.t) hdr = XLSX.utils.format_cell(cell);
+
+                headers.push(hdr);
+            }
+            return headers;
+        }
+
+        window.onload = () => {
+            const datasetRaw = document.getElementById('dataset_raw');
+            const datasetTable = document.getElementById('dataset_table');
+            datasetRaw.addEventListener('change', (event) => {
+                const input = event.target;
+                const reader = new FileReader();
+                reader.onload = function () {
+                    const data = reader.result;
+                    const workBook = XLSX.read(data, {type: 'binary'});
+                    workBook.SheetNames.forEach(function (sheetName) {
+                        const ws = workBook.Sheets[sheetName];
+                        const rows = XLSX.utils.sheet_to_json(ws);
+                        const headers = get_header_row(ws);
+                        const headerElement = document.createElement('thead');
+                        const trElement = document.createElement('tr');
+                        headers.forEach(function (header) {
+                            const thElement = document.createElement('th');
+                            thElement.innerHTML = header;
+                            trElement.append(thElement);
+                        });
+                        headerElement.append(trElement);
+
+                        datasetTable.innerHTML = XLSX.utils.sheet_to_html(ws);
+
+                        const datasetTargetTable = document.querySelector('#dataset_table > table');
+                        datasetTargetTable.classList.add('table', 'table-hover', 'mb-0');
+                        datasetTargetTable.prepend(headerElement);
+
+                        document.querySelector('#dataset_table > table > tbody > tr:first-child').remove();
+                        datasetTable.classList.remove('d-none');
+
+                        document.getElementsByName('datasetRaw')[0].value = JSON.stringify(rows);
+                        document.getElementsByName('datasetColumn')[0].value = JSON.stringify(headers);
+                    })
+                };
+                reader.readAsBinaryString(input.files[0]);
+            });
+        };
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-10 mx-auto">
+            <form th:action="@{/dataset/new}" method="post">
+                <!-- API-name -->
+                <h2>데이터셋 등록</h2>
+
+                <div class="row">
+                    <input type="hidden" name="datasetRaw">
+                    <input type="hidden" name="datasetColumn">
+                    <div class="col-12 mt-3">
+                        <h4>데이터셋 이름</h4>
+                        <input type="text" class="form-control" name="dataset" value="">
+                    </div>
+                    <div class="col-12 mt-3">
+                        <h4>파일 업로드</h4>
+                        <input class="form-control" type="file" id="dataset_raw" accept=".xls,.xlsx,.csv">
+                    </div>
+                    <div class="col-12 mt-3 d-none table-responsive" id="dataset_table">
+                    </div>
+                    <div class="col-12 mt-3">
+                        <h4></h4>
+                    </div>
+
+                    <div class="d-grid gap-1 mt-3">
+                        <input type="submit" class="btn btn-primary" value="등록하기">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
