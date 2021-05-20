@@ -82,7 +82,9 @@ public class DataSetController {
                     model.addAttribute("type", jsonResponse.get().getStatus().name());
                     switch (jsonResponse.get().getStatus()) {
                         case OK -> {
-                            DataSetColumnDesc dataSetColumnDesc = gson.fromJson(gson.toJson(jsonResponse.get().getData()), DataSetColumnDesc.class);
+                            List<DataSetColumnDesc> dataSetColumnDesc = gson.fromJson(gson.toJson(jsonResponse.get().getData()),
+                                    new TypeToken<ArrayList<DataSetColumnDesc>>() {
+                                    }.getType());
                             model.addAttribute("result", dataSetColumnDesc);
                         }
                         case MOVED_PERMANENTLY -> {
