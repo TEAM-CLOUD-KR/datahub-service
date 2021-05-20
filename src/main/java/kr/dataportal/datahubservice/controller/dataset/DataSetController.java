@@ -15,6 +15,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -127,7 +130,8 @@ public class DataSetController {
                 .bodyToMono(JSONResponse.class)
                 .blockOptional();
 
-        return "redirect:/dataset/" + dataSetList.getDataset();
+        String encoded = URLEncoder.encode(dataSetList.getDataset(), StandardCharsets.UTF_8);
+        return "redirect:/dataset/" + encoded;
     }
 
     // 데이터셋 검색 폼 화면
