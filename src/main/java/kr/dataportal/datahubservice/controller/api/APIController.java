@@ -18,6 +18,7 @@ import kr.dataportal.datahubservice.dto.api.*;
 import kr.dataportal.datahubservice.dto.api.dev.ApiDevRequestResponseEnum;
 import kr.dataportal.datahubservice.dto.api.dev.ApiUsingAcceptCreateDTO;
 import kr.dataportal.datahubservice.dto.api.dev.ApiUsingListDTO;
+import kr.dataportal.datahubservice.dto.dataset.DataSetColumnDesc;
 import kr.dataportal.datahubservice.dto.user.User;
 import kr.dataportal.datahubservice.util.CommonUtil;
 import lombok.RequiredArgsConstructor;
@@ -126,8 +127,14 @@ public class APIController {
         jsonResponse.ifPresent(response -> {
             ApiListDetailAndDataSetColumn apiList = gson.fromJson(gson.toJson(response.getData()), ApiListDetailAndDataSetColumn.class);
             model.addAttribute("api_detail", apiList.getDetail());
-            model.addAttribute("api_dataset_column_desc", apiList.getDataSetColumnDesc());
-            System.out.println("apiList.getDataSetColumnDesc() = " + apiList.getDataSetColumnDesc());
+
+            if (apiList.getDetail().getTargetDataset().getDatasetColumn() == null) {
+                List<DataSetColumnDesc> ds = gson.fromJson(gson.toJson(apiList.getDataSetColumnDesc()), new TypeToken<ArrayList<DataSetColumnDesc>>() {
+                }.getType());
+                model.addAttribute("api_dataset_column_desc", ds);
+            } else {
+                model.addAttribute("api_dataset_column_string", apiList.getDataSetColumnDesc());
+            }
         });
         return "api/view";
     }

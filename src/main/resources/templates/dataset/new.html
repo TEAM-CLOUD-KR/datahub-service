@@ -35,10 +35,11 @@
                 const reader = new FileReader();
                 reader.onload = function () {
                     const data = reader.result;
-                    const workBook = XLSX.read(data, {type: 'binary', sheetRows: 6});
+                    const workBook = XLSX.read(data, {type: 'binary'});
+                    const sheet = XLSX.read(data, {type: 'binary', sheetRows: 6});
                     workBook.SheetNames.forEach(function (sheetName) {
-                        const ws = workBook.Sheets[sheetName];
-                        const rows = XLSX.utils.sheet_to_json(ws);
+                        const ws = sheet.Sheets[sheetName];
+                        const rows = XLSX.utils.sheet_to_json(workBook.Sheets[sheetName]);
                         const headers = get_header_row(ws);
                         const headerElement = document.createElement('thead');
                         const trElement = document.createElement('tr');

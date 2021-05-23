@@ -74,7 +74,7 @@
                     </div>
 
                     <h4 class="mt-3">응답변수</h4>
-                    <div class="table-responsive">
+                    <div class="table-responsive" th:if="${api_dataset_column_desc} != null">
                         <table class="table table-bordered mb-0">
                             <thead>
                             <tr class="bg-light text-center">
@@ -94,6 +94,20 @@
                                 <td class="text-center" th:text="${ds.getColumnLength()}"></td>
                                 <td class="text-center" th:text="${ds.getNullable()}"></td>
                                 <td th:text="${ds.getColumnDesc()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-responsive" th:unless="${api_dataset_column_desc} != null">
+                        <table class="table table-bordered mb-0">
+                            <thead>
+                            <tr class="bg-light text-center">
+                                <th class="col-2">항목명</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="ds : ${api_dataset_column_string}">
+                                <td th:text="${ds}"></td>
                             </tr>
                             </tbody>
                         </table>

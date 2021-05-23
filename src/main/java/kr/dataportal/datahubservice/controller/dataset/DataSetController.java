@@ -86,7 +86,7 @@ public class DataSetController {
         JSONResponse response = jsonResponse.get();
         DataSetListAndColumn dataSetListAndColumn = gson.fromJson(gson.toJson(response.getData()), DataSetListAndColumn.class);
         model.addAttribute("result", dataSetListAndColumn);
-        if (dataSetListAndColumn.getDataSetColumnDesc().size() > 0) {
+        if (dataSetListAndColumn.getDataSetList().getDatasetColumn() == null) {
             return "dataset/view-entity";
         } else {
             return "dataset/view-raw";
@@ -111,6 +111,7 @@ public class DataSetController {
     @PostMapping("/new")
     @ApiIgnore
     public String DataSetCreateAction(DataSetList dataSetList) {
+        System.out.println("dataSetList = " + dataSetList.getDataset());
         WebClient client = WebClient.builder()
                 .baseUrl("https://api.dataportal.kr")
                 .build();
