@@ -26,6 +26,7 @@ public class WebServiceConfig implements WebMvcConfigurer {
         registry.addInterceptor(userAuthInterceptor)
                 .addPathPatterns("/api/new")
                 .addPathPatterns("/api/manage/**")
-                .addPathPatterns("/api/dev/**");
+                .addPathPatterns("/api/dev/**")
+                .addPathPatterns("/dataset/new");
     }
 }

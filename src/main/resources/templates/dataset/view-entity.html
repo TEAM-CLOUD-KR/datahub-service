@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>데이터셋 상세 조회 :: 통합 데이터 포털</title>
+
+    <th:block th:replace="fragments/head :: head"/>
+</head>
+
+<body>
+<div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
+<div class="container" th:with="dataset=${result.getDataSetList()}">
+    <div class="row">
+        <div class="col-12 col-lg-10 mx-auto">
+            <!-- API-view-page-big-title -->
+            <section
+                    th:replace="dataset/dataset-detail.html :: dataset-detail (dataset=${result.getDataSetList()})"></section>
+
+            <div class="col-12 mt-4">
+                <h4>데이터 미리보기</h4>
+                <div class="table-responsive">
+                    <table id="datasetTable" class="table table-hover">
+                    </table>
+                </div>
+            </div>
+            <div class="d-grid gap-1 mt-3">
+                <a class="btn btn-success" th:href="@{/dataset}">목록</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

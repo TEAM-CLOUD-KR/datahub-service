@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<section th:fragment="dataset-detail (dataset)">
+    <h2>데이터셋 상세 조회</h2>
+    <div class="col-12 mt-3 fs-5" th:text="${dataset.getDataset()}">
+    </div>
+    <div class="col-12 mt-1 fs-6" th:text="${dataset.getDescription()}">
+    </div>
+</section>
+</html>

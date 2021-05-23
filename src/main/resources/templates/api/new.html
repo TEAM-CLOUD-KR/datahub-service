@@ -18,29 +18,50 @@
             xhr.onreadystatechange = function () { // 요청에 대한 콜백
                 if (xhr.readyState === xhr.DONE) { // 요청이 완료되면
                     if (xhr.status === 200 || xhr.status === 201) {
-                        const responseData = JSON.parse(xhr.responseText)['data'];
+                        const responseData = JSON.parse(xhr.responseText)['data']['dataSetColumnDesc'];
                         const dataset_column_selector = document.querySelector('#dataset-column > ul.condition-list');
                         dataset_column_selector.textContent = '';
-                        responseData.forEach(column => {
-                            let htmlliElement = document.createElement('li');
-                            let htmlInputElement = document.createElement('input');
-                            htmlInputElement.name = 'targetColumn';
-                            htmlInputElement.type = 'checkbox';
-                            htmlInputElement.value = column['columnEn'];
-                            htmlInputElement.id = 'dataset_column_' + column['columnEn'];
-                            htmlInputElement.checked = true;
-                            let htmlLabelElement = document.createElement('label');
-                            htmlLabelElement.classList.add('ms-1');
-                            htmlLabelElement.htmlFor = htmlInputElement.id;
-                            if (column['columnKr'])
-                                htmlLabelElement.textContent = `${column['columnKr']}(${column['columnEn']})`;
-                            else
-                                htmlLabelElement.textContent = column['columnEn'];
+                        if (!!responseData[0] && !!responseData[0]['columnEn']) {
+                            responseData.forEach(column => {
+                                let htmlliElement = document.createElement('li');
+                                let htmlInputElement = document.createElement('input');
+                                htmlInputElement.name = 'targetColumn';
+                                htmlInputElement.type = 'checkbox';
+                                htmlInputElement.value = column['columnEn'];
+                                htmlInputElement.id = 'dataset_column_' + column['columnEn'];
+                                htmlInputElement.checked = true;
+                                let htmlLabelElement = document.createElement('label');
+                                htmlLabelElement.classList.add('ms-1');
+                                htmlLabelElement.htmlFor = htmlInputElement.id;
+                                if (column['columnKr'])
+                                    htmlLabelElement.textContent = `${column['columnKr']}(${column['columnEn']})`;
+                                else
+                                    htmlLabelElement.textContent = column['columnEn'];
 
-                            htmlliElement.append(htmlInputElement);
-                            htmlliElement.append(htmlLabelElement);
-                            dataset_column_selector.append(htmlliElement);
-                        });
+                                htmlliElement.append(htmlInputElement);
+                                htmlliElement.append(htmlLabelElement);
+                                dataset_column_selector.append(htmlliElement);
+                            });
+                        } else {
+                            responseData.forEach(column => {
+                                let htmlliElement = document.createElement('li');
+                                let htmlInputElement = document.createElement('input');
+                                htmlInputElement.name = 'targetColumn';
+                                htmlInputElement.type = 'checkbox';
+                                htmlInputElement.value = JSON.parse(column);
+                                htmlInputElement.id = 'dataset_column_' + column;
+                                htmlInputElement.checked = true;
+                                let htmlLabelElement = document.createElement('label');
+                                htmlLabelElement.classList.add('ms-1');
+                                htmlLabelElement.htmlFor = htmlInputElement.id;
+                                htmlLabelElement.textContent = column;
+
+                                htmlliElement.append(htmlInputElement);
+                                htmlliElement.append(htmlLabelElement);
+                                dataset_column_selector.append(htmlliElement);
+                            });
+                        }
+
                     } else {
                         console.error(xhr.responseText);
                     }
@@ -58,7 +79,7 @@
                 openWin.addEventListener('unload', () => {
                     if (openWin.closed) {
                         document.getElementById('dataset-column').classList.remove('d-none');
-                        fetch_dataset_column(document.getElementById('text-dataset-search').value);
+                        fetch_dataset_column(document.getElementById('text-dataset-search-seq').value);
                     }
                 });
             });
@@ -88,6 +109,7 @@
                     <!-- API-use_dataset -->
                     <div class="col-12 mt-3">
                         <h4>대상 데이터셋</h4>
+                        <input type="hidden" id="text-dataset-search-seq" disabled>
                         <div class="input-group">
                             <input type="text" readonly class="form-control" id="text-dataset-search"
                                    name="targetDataset">
@@ -106,7 +128,7 @@
                         <input type="text" class="form-control" name="name" value="">
                     </div>
 
-<!--                    개발 편의를 위해 임시로 생성한 Block-->
+                    <!--                    개발 편의를 위해 임시로 생성한 Block-->
                     <div class="col-12 mt-3 d-none">
                         <ul>
                             <li>

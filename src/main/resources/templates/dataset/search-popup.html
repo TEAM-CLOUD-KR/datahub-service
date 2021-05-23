@@ -5,8 +5,9 @@
     <title>데이터셋 검색 :: 통합 데이터 포털</title>
     <th:block th:replace="fragments/head :: head"/>
     <script th:inline="javascript">
-        function setParentText(value) {
-            opener.document.getElementById("text-dataset-search").value = value;
+        function setParentText(name, seq) {
+            opener.document.getElementById("text-dataset-search-seq").value = seq;
+            opener.document.getElementById("text-dataset-search").value = name;
             window.close();
         }
     </script>
@@ -19,7 +20,8 @@
     </form>
     <ul class="list-group list-group-flush">
         <li class="list-group-item bg-light" th:each="item : ${dataset}">
-            <a th:href="'javascript:setParentText(\'' + ${item} + '\');'" th:text="${item}"></a>
+            <a th:href="'javascript:setParentText(\'' + ${item.getDataset()}+ '\',\'' + ${item.getSeq()} + '\');'"
+               th:text="${item.getDataset()}"></a>
         </li>
     </ul>
 </div>

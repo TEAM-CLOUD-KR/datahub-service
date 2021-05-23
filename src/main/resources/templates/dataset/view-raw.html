@@ -5,12 +5,7 @@
     <title>데이터셋 상세 조회 :: 통합 데이터 포털</title>
 
     <th:block th:replace="fragments/head :: head"/>
-    <style>
-        th, td {
-            white-space: nowrap;
-        }
-    </style>
-    <script th:inline="javascript">
+    <script th:inline="javascript" th:with="dataset=${result.getDataSetList()}">
         function createDataTable(dataset, headers) {
             const datasetTable = document.getElementById('datasetTable');
             const headerElement = document.createElement('thead');
@@ -39,13 +34,10 @@
 
         window.onload = () => {
             /*<![CDATA[*/
-            // let type = /*[[${type}]]*/;
-            // if (type === 'MOVED_PERMANENTLY') {
-            //     let datasetRaw = /*[[ ${result.getDatasetRaw()} ]]*/;
-            //     let datasetColumn = /*[[ ${result.getDatasetColumn()} ]]*/;
-            //
-            //     createDataTable(datasetRaw, datasetColumn);
-            // }
+            let datasetRaw = /*[[ ${dataset.getDatasetRaw()} ]]*/;
+            let datasetColumn = /*[[ ${dataset.getDatasetColumn()} ]]*/;
+
+            createDataTable(datasetRaw, datasetColumn);
             /*]]*/
         }
     </script>
@@ -57,39 +49,18 @@
     <div class="row">
         <div class="col-12 col-lg-10 mx-auto">
             <!-- API-view-page-big-title -->
-            <h2>데이터셋 상세 조회</h2>
+            <section
+                    th:replace="dataset/dataset-detail.html :: dataset-detail (dataset=${result.getDataSetList()})"></section>
 
-            <div th:if="${type} == 'MOVED_PERMANENTLY'">
-                <div class="row mt-2 mx-auto">
-                    <div class="col-4 col-md-2 py-3 bg-light border-white d-flex justify-content-center fw-bold">
-                        이름(국문)
-                    </div>
-                    <div class="col-8 col-md-4 py-3 border-top border-bottom" th:text="${result.getDataset()}">
-                    </div>
-                    <div class="col-4 col-md-2 py-3 bg-light border-white border-top d-flex justify-content-center fw-bold">
-                        이름(영문)
-                    </div>
-                    <div class="col-8 col-md-4 py-3 border-bottom border-top" th:text="${result.getDataset()}">
-                    </div>
-                </div>
-                <div class="row mx-auto">
-                    <div class="col-4 col-md-2 py-3 bg-light border-top border-white d-flex justify-content-center fw-bold">
-                        설명
-                    </div>
-                    <div class="col-8 col-md-10 py-3 border-bottom" th:text="${result.getDescription()}">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 mt-3">
+            <div class="col-12 mt-4">
                 <h4>데이터 미리보기</h4>
-                <div th:if="${type == 'OK'}">
-                    aaaa
-                </div>
                 <div class="table-responsive">
                     <table id="datasetTable" class="table table-hover">
                     </table>
                 </div>
+            </div>
+            <div class="d-grid gap-1 mt-3">
+                <a class="btn btn-success" th:href="@{/dataset}">목록</a>
             </div>
         </div>
     </div>

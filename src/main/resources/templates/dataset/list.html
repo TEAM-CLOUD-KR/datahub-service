@@ -55,7 +55,7 @@
                         <h4>데이터셋 목록</h4>
                         <ul class="ul-wrapper">
                             <li class="p-3 border mb-1" th:each="dataset : ${datasetList}">
-                                <a th:href="@{/dataset/{name}(name=${dataset.getDataset()})}"
+                                <a th:href="@{/dataset/{seq}(seq=${dataset.getSeq()})}"
                                    th:text="${dataset.getDataset()}">
                                 </a>
                             </li>

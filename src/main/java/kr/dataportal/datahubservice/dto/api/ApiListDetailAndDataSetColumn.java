@@ -10,6 +10,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ApiListDetailAndDataSetColumn {
     private final ApiList detail;
-    private final List<DataSetColumnDesc> dataSetColumnDesc;
+    private final List<Object> dataSetColumnDesc;
 
 }

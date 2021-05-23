@@ -127,6 +127,7 @@ public class APIController {
             ApiListDetailAndDataSetColumn apiList = gson.fromJson(gson.toJson(response.getData()), ApiListDetailAndDataSetColumn.class);
             model.addAttribute("api_detail", apiList.getDetail());
             model.addAttribute("api_dataset_column_desc", apiList.getDataSetColumnDesc());
+            System.out.println("apiList.getDataSetColumnDesc() = " + apiList.getDataSetColumnDesc());
         });
         return "api/view";
     }

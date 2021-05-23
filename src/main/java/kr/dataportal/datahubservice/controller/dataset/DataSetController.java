@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
 import kr.dataportal.datahubservice.dto.dataset.DataSetColumnDesc;
 import kr.dataportal.datahubservice.dto.dataset.DataSetList;
+import kr.dataportal.datahubservice.dto.dataset.DataSetListAndColumn;
 import kr.dataportal.datahubservice.dto.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -15,7 +16,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -66,38 +66,31 @@ public class DataSetController {
     }
 
     // 데이터셋 상세 조회 화면
-    @GetMapping("/{name}")
+    @GetMapping("/{seq}")
     @ApiIgnore
-    public String DataSetDetailView(@PathVariable("name") String name, Model model) {
+    public String DataSetDetailView(@PathVariable("seq") int seq, Model model) {
         WebClient client = WebClient.builder()
                 .baseUrl("https://api.dataportal.kr")
                 .build();
 
         Optional<JSONResponse> jsonResponse = client.get()
-                .uri("/common/util/scheme/" + name)
+                .uri("/common/util/scheme/" + seq)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(JSONResponse.class)
                 .blockOptional();
 
-        jsonResponse.ifPresent(
-                response -> {
-                    model.addAttribute("type", jsonResponse.get().getStatus().name());
-                    switch (jsonResponse.get().getStatus()) {
-                        case OK -> {
-                            List<DataSetColumnDesc> dataSetColumnDesc = gson.fromJson(gson.toJson(jsonResponse.get().getData()),
-                                    new TypeToken<ArrayList<DataSetColumnDesc>>() {
-                                    }.getType());
-                            model.addAttribute("result", dataSetColumnDesc);
-                        }
-                        case MOVED_PERMANENTLY -> {
-                            DataSetList dataSetList = gson.fromJson(gson.toJson(jsonResponse.get().getData()), DataSetList.class);
-                            model.addAttribute("result", dataSetList);
-                        }
-                    }
-                }
-        );
-        return "dataset/view";
+        if (jsonResponse.isEmpty()) {
+            return "error";
+        }
+        JSONResponse response = jsonResponse.get();
+        DataSetListAndColumn dataSetListAndColumn = gson.fromJson(gson.toJson(response.getData()), DataSetListAndColumn.class);
+        model.addAttribute("result", dataSetListAndColumn);
+        if (dataSetListAndColumn.getDataSetColumnDesc().size() > 0) {
+            return "dataset/view-entity";
+        } else {
+            return "dataset/view-raw";
+        }
     }
 
     // 데이터셋 요청 목록 화면
@@ -130,8 +123,14 @@ public class DataSetController {
                 .bodyToMono(JSONResponse.class)
                 .blockOptional();
 
-        String encoded = URLEncoder.encode(dataSetList.getDataset(), StandardCharsets.UTF_8);
-        return "redirect:/dataset/" + encoded;
+        if (jsonResponse.isEmpty()) {
+            return "error";
+        }
+
+        Integer seq = gson.fromJson(gson.toJson(jsonResponse.get().getData()), int.class);
+
+
+        return "redirect:/dataset/" + seq;
     }
 
     // 데이터셋 검색 폼 화면

@@ -35,7 +35,7 @@
                 const reader = new FileReader();
                 reader.onload = function () {
                     const data = reader.result;
-                    const workBook = XLSX.read(data, {type: 'binary'});
+                    const workBook = XLSX.read(data, {type: 'binary', sheetRows: 6});
                     workBook.SheetNames.forEach(function (sheetName) {
                         const ws = workBook.Sheets[sheetName];
                         const rows = XLSX.utils.sheet_to_json(ws);
@@ -85,13 +85,14 @@
                         <input type="text" class="form-control" name="dataset" value="">
                     </div>
                     <div class="col-12 mt-3">
+                        <h4>데이터셋 설명</h4>
+                        <textarea name="description" class="form-control" rows="5"></textarea>
+                    </div>
+                    <div class="col-12 mt-3">
                         <h4>파일 업로드</h4>
                         <input class="form-control" type="file" id="dataset_raw" accept=".xls,.xlsx,.csv">
                     </div>
                     <div class="col-12 mt-3 d-none table-responsive" id="dataset_table">
-                    </div>
-                    <div class="col-12 mt-3">
-                        <h4></h4>
                     </div>
 
                     <div class="d-grid gap-1 mt-3">
