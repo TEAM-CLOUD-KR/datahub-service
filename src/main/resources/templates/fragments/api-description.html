@@ -19,7 +19,7 @@
         <div class="col-4 col-md-2 py-3 bg-light border-white border-top d-flex justify-content-center fw-bold">
             제공기관
         </div>
-        <div class="col-8 col-md-4 py-3 border-bottom"
+        <div class="col-8 col-md-4 py-3 border-bottom border-top"
              th:text="${api_detail.getOrganization()}"></div>
     </div>
     <div class="row mx-auto">
@@ -51,7 +51,6 @@
                th:href="'https://api.dataportal.kr/api/v2/' + ${api_detail.getSeq()}"
                th:text="'https://api.dataportal.kr/api/v2/' + ${api_detail.getSeq()}"></a>
         </div>
-
     </div>
 </section>
 </html>

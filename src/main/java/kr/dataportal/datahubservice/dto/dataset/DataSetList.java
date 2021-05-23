@@ -9,4 +9,5 @@ public class DataSetList {
     private final String dataset;
     private final String datasetRaw;
     private final String datasetColumn;
+    private final String description;
 }
