@@ -127,3 +127,40 @@ function combo_chart(canvas, labels, dataset) {
         config
     );
 }
+
+function radar_chart(canvas, label, dataset) {
+    const data = {
+        labels: label,
+        datasets: dataset
+    };
+    const config = {
+        type: 'radar',
+        data: data,
+        options: {
+            responsive: true
+        },
+    };
+    const myChart = new Chart(
+        canvas,
+        config
+    );
+}
+
+
+function polarArea_chart(canvas, label, dataset) {
+    const data = {
+        labels: label,
+        datasets: dataset
+    };
+    const config = {
+        type: 'polarArea',
+        data: data,
+        options: {
+            responsive: true
+        },
+    };
+    const myChart = new Chart(
+        canvas,
+        config
+    );
+}
