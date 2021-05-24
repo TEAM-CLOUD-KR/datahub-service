@@ -20,6 +20,6 @@ public class DashBoardController {
 
     @GetMapping("")
     public String DashBoardMainView() {
-        return "error";
+        return "dashboard/view";
     }
 }

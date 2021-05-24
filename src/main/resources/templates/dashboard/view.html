@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>데이터 시각화 :: 통합 데이터 포털</title>
+
+    <th:block th:replace="fragments/head :: head"/>
+    <!--    chart.js-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script th:src="@{/js/type.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
+            integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"
+            async></script>
+    <script th:inline="javascript">
+        window.onload = () => {
+            circle_chart(
+                document.getElementById("myChart01"),
+                [
+                    '과학기술',
+                    '교육',
+                ],
+                [{
+                    label: 'My First Dataset',
+                    data: [300, 50,],
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+
+                    ],
+                    hoverOffset: 4
+                }],
+                'doughnut'
+            );
+            circle_chart(
+                document.getElementById("myChart05"),
+                [
+                    '영어',
+                    '한국어',
+                    '일본어'
+                ],
+                [{
+                    data: [50, 40, 20],
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(35,160,0)',
+
+                    ],
+                    hoverOffset: 4
+                }],
+                'pie'
+            );
+            line_bar_chart(
+                document.getElementById("myChart02"),
+                [
+                    'January',
+                    'February',
+                    'March',
+                    'April',
+                    'May',
+                    'June',
+                ],
+                [{
+                    label: 'My First dataset',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0, 10, 5, 2, 20, 30, 45],
+                }],
+                'bar'
+            );
+            stepped_line(
+                document.getElementById("myChart03"),
+                ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6'],
+                [
+                    {
+                        label: 'Dataset',
+                        data: [1, 5, 2, 5, 10, 10],
+                        borderColor: 'rgb(255, 99, 132)',
+                        fill: false,
+                        stepped: true,
+                    }
+                ]
+            );
+
+            combo_chart(
+                document.getElementById("myChart04"),
+                ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6'],
+                [
+                    {
+                        label: 'Dataset 1',
+                        data: [1, 2, -3, 4, 5, -6],
+                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        order: 1
+                    },
+                    {
+                        label: 'Dataset 2',
+                        data: [5, -5, 10, -3, -2, -1],
+                        borderColor: 'rgb(54, 162, 235)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        type: 'line',
+                        order: 0
+                    }
+                ]
+            );
+        };
+    </script>
+</head>
+<body>
+<div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bar Chart</h5>
+                    <canvas id="myChart02"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Line Chart</h5>
+                    <canvas id="myChart03"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Combo Chart</h5>
+                    <canvas id="myChart04"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-3 mt-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Doughnut Chart</h5>
+                    <canvas id="myChart01"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3 mt-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Pie Chart</h5>
+                    <canvas id="myChart05"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
