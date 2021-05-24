@@ -27,6 +27,7 @@ public class WebServiceConfig implements WebMvcConfigurer {
                 .addPathPatterns("/api/new")
                 .addPathPatterns("/api/manage/**")
                 .addPathPatterns("/api/dev/**")
-                .addPathPatterns("/dataset/new");
+                .addPathPatterns("/dataset/new")
+                .addPathPatterns("/user/info");
     }
 }

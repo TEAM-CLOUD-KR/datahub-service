@@ -36,11 +36,14 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" th:href="@{/dataset}">데이터셋 목록</a></li>
                             <li><a class="dropdown-item" th:href="@{/dataset/new}">데이터셋 등록</a></li>
-                            <li><a class="dropdown-item" th:href="@{/}">데이터 요청</a></li>
+                            <!--                            <li><a class="dropdown-item" th:href="@{/}">데이터 요청</a></li>-->
                         </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mb-0" th:href="@{/datahub}">데이터허브</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mb-0" th:href="@{/dashboard}">대시보드</a>
                     </li>
                 </ul>
                 <ul th:if="${user == null}" class="navbar-nav ms-3 ms-lg-auto mb-lg-0">
