@@ -31,7 +31,11 @@ public class UserAuthInterceptor implements HandlerInterceptor {
             if (request.getRequestURI() == null || request.getRequestURI().isEmpty()) {
                 response.sendRedirect("/user");
             } else {
-                response.sendRedirect("/user?ref=" + request.getRequestURI());
+                if (request.getQueryString() == null || request.getQueryString().isEmpty()) {
+                    response.sendRedirect("/user?ref=" + request.getRequestURI());
+                } else {
+                    response.sendRedirect("/user?ref=" + request.getRequestURI() + "?" + request.getQueryString());
+                }
             }
             return false;
         }

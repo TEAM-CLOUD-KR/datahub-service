@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>데이터 시각화 :: 통합 데이터 포털</title>
+
+    <th:block th:replace="fragments/head :: head"/>
+    <!--    chart.js-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script th:src="@{/js/type.js}"></script>
+    <script th:inline="javascript">
+        window.onload = () => {
+            const btnApiSearch = document.getElementById('btn-api-search');
+            btnApiSearch.addEventListener('click', () => {
+                window.name = "parentForm";
+                const openWin = window.open("/api/search",
+                    "childForm", "width=570, height=350, resizable = no, scrollbars = no");
+                openWin.addEventListener('unload', () => {
+                    if (openWin.closed) {
+                        // document.getElementById('dataset-column').classList.remove('d-none');
+                        // fetch_dataset_column(document.getElementById('text-dataset-search-seq').value);
+                    }
+                });
+            });
+            const btnViewChart = document.getElementById('view-chart');
+            btnViewChart.addEventListener('click', () => {
+                const textApiSeq = document.getElementById('text-api-search-seq').value;
+                const serviceKey = document.getElementById('text-api-servicekey').value;
+                const chartLabel = '';
+                const page = document.getElementById('page').value;
+                const itemPerPage = document.getElementById('itemPerPage').value;
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () { // 요청에 대한 콜백
+                    if (xhr.readyState === xhr.DONE) { // 요청이 완료되면
+                        if (xhr.status === 200 || xhr.status === 201) {
+                            const result = JSON.parse(xhr.responseText)['data'];
+                            const labels = [];
+                            const datas = [];
+
+                            const tmp_data = [];
+                            result.forEach((item) => {
+                                labels.push(Object.values(item)[1].trim());
+                                tmp_data.push(Number(Object.values(item)[2].trim().replaceAll(',', '')));
+                            });
+                            datas.push({
+                                label: chartLabel,
+                                backgroundColor: 'rgb(255, 99, 132)',
+                                borderColor: 'rgb(255, 99, 132)',
+                                data: tmp_data
+                            });
+                            if (!!document.getElementById('chart_canvas').$chartjs) {
+                                Chart.getChart("chart_canvas").destroy();
+                            }
+                            line_bar_chart(
+                                document.getElementById('chart_canvas'),
+                                labels,
+                                datas,
+                                'bar'
+                            );
+                            document.getElementById('datas').value = JSON.stringify(datas);
+                            document.getElementById('labels').value = JSON.stringify(labels);
+                            document.getElementById('btn-chart-create').classList.remove('d-none');
+                        } else {
+                            console.error(xhr.responseText);
+                        }
+                    }
+                };
+                xhr.open('GET', `https://api.dataportal.kr/api/v2/${textApiSeq}?serviceKey=${serviceKey}&page=${page}&itemPerPage=${itemPerPage}`); // 메소드와 주소 설정
+                xhr.send(); // 요청 전송
+            });
+        };
+    </script>
+</head>
+<body>
+<div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-10 mx-auto">
+            <form th:action="@{/dashboard/new}" method="post">
+                <input type="hidden" name="datas" id="datas">
+                <input type="hidden" name="labels" id="labels">
+                <input type="hidden" name="type" id="type" value="bar">
+                <h2>데이터 시각화</h2>
+
+                <div class="row">
+                    <!-- API-use_dataset -->
+                    <div class="col-12 mt-3">
+                        <h4>대상 API</h4>
+                        <input type="hidden" id="text-api-search-seq" name="apiSeq">
+                        <div class="input-group">
+                            <input type="text" readonly class="form-control" id="text-api-search">
+                            <span class="btn btn-primary" id="btn-api-search">검색</span>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <h4>서비스키</h4>
+                        <input type="text" readonly class="form-control" id="text-api-servicekey">
+                    </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <h4>대상 페이지</h4>
+                        <input type="number" class="form-control" name="page" id="page" placeholder="대상 페이지" value="1">
+                    </div>
+                    <div class="col-12 col-md-6 mt-3">
+                        <h4>페이지 당 조회 건수</h4>
+                        <input type="number" class="form-control" id="itemPerPage" name="itemPerPage"
+                               placeholder="페이지 당 조회 건수" value="10">
+                    </div>
+<!--                    <div class="col-12 mt-3">-->
+<!--                        <h4>범례</h4>-->
+<!--                        <input type="text" class="form-control" id="text-api-chart-label" placeholder="범례">-->
+<!--                    </div>-->
+
+                    <div class="d-grid gap-1 mt-3">
+                        <input type="button" class="btn btn-success" value="차트 미리보기" id="view-chart">
+                    </div>
+                    <div class="col-10 mx-auto">
+                        <canvas id="chart_canvas"></canvas>
+                    </div>
+
+                    <!-- chart-create_button -->
+                    <div class="d-grid gap-1 mt-3 d-none" id="btn-chart-create">
+                        <input type="submit" class="btn btn-primary" value="생성하기">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

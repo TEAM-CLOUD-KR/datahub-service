@@ -1,18 +1,27 @@
 package kr.dataportal.datahubservice.controller.dashboard;
 
+import com.google.gson.Gson;
+import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
+import kr.dataportal.datahubservice.dto.api.ApiListSearchDTO;
+import kr.dataportal.datahubservice.dto.api.ApiListSearchFilterDTO;
+import kr.dataportal.datahubservice.dto.dashboard.DashBoardListDTO;
 import kr.dataportal.datahubservice.dto.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/dashboard")
 @RequiredArgsConstructor
 public class DashBoardController {
+    private final Gson gson;
+
     @ModelAttribute("user")
     public User userModel(HttpServletRequest req) {
         return (User) req.getSession().getAttribute("user");
@@ -21,5 +30,39 @@ public class DashBoardController {
     @GetMapping("")
     public String DashBoardMainView() {
         return "dashboard/view";
+    }
+
+    @GetMapping("/new")
+    public String DashBoardNewView(@RequestParam(name = "type") String type, Model model) {
+        model.addAttribute("type", type);
+        return "dashboard/new";
+    }
+
+    @PostMapping("/new")
+    public String DashBoardNewAction(DashBoardListDTO dashBoardListDTO, Model model) {
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.post()
+                .uri("/dashboard")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(dashBoardListDTO)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        if (jsonResponse.isEmpty()) {
+            return "error";
+        }
+
+        int seq = gson.fromJson(gson.toJson(jsonResponse.get().getData()), int.class);
+
+        return "redirect:/dashboard/" + seq;
+    }
+
+    @GetMapping("/{seq}")
+    public String DashBoardDetailView(@PathVariable int seq) {
+        return "error";
     }
 }

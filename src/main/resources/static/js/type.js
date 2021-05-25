@@ -14,6 +14,17 @@ function line_bar_chart(canvas, labels, dataset, type) {
     );
 }
 
+function line_bar_combo_chart(canvas, dataset, type) {
+    const config = {
+        type: type,
+        data: dataset,
+        options: {}
+    };
+    const myChart = new Chart(
+        canvas,
+        config
+    );
+}
 
 function circle_chart(canvas, labels, dataset, type) {
     const data = {

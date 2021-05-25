@@ -43,12 +43,13 @@
                                 dataset_column_selector.append(htmlliElement);
                             });
                         } else {
-                            responseData.forEach(column => {
+                            const result = JSON.parse(responseData[0]);
+                            result.forEach(column => {
                                 let htmlliElement = document.createElement('li');
                                 let htmlInputElement = document.createElement('input');
                                 htmlInputElement.name = 'targetColumn';
                                 htmlInputElement.type = 'checkbox';
-                                htmlInputElement.value = JSON.parse(column);
+                                htmlInputElement.value = column;
                                 htmlInputElement.id = 'dataset_column_' + column;
                                 htmlInputElement.checked = true;
                                 let htmlLabelElement = document.createElement('label');

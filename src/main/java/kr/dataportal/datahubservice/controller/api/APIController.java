@@ -46,6 +46,31 @@ public class APIController {
         return (User) req.getSession().getAttribute("user");
     }
 
+    // API 팝업 검색 화면
+    @GetMapping("/search")
+    public String ApiSearchPopup(Model model) {
+        User user = (User) model.getAttribute("user");
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.get()
+                .uri("/api/search?userSeq=" + user.getSeq())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        jsonResponse.ifPresent(response -> {
+            List<ApiUsingListDTO> apiItems = gson.fromJson(gson.toJson(response.getData()),
+                    new TypeToken<ArrayList<ApiUsingListDTO>>() {
+                    }.getType());
+
+            model.addAttribute("apiList", apiItems);
+        });
+        return "api/search-popup";
+    }
+
     // API 목록 화면
     @GetMapping("")
     public String ApiListView(Model model) {

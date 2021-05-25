@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>API 검색 :: 통합 데이터 포털</title>
+    <th:block th:replace="fragments/head :: head"/>
+    <script th:inline="javascript">
+        function setParentText(name, seq, servicekey) {
+            opener.document.getElementById("text-api-search-seq").value = seq;
+            opener.document.getElementById("text-api-search").value = name;
+            opener.document.getElementById("text-api-servicekey").value = servicekey;
+            window.close();
+        }
+    </script>
+</head>
+<body class="bg-light">
+<div class="container m-0 p-0 w-100 mw-100">
+    <form class="input-group" th:action="@{/api/search}" method="get">
+        <input type="text" class="form-control" placeholder="API 이름" name="name">
+        <input type="submit" class="btn btn-outline-primary" value="검색">
+    </form>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item bg-light" th:each="item : ${apiList}">
+            <a th:href="'javascript:setParentText(\'' + ${item.getApi().getName()}+ '\',\'' + ${item.getApi().getSeq()} + '\',\'' + ${item.getServiceKey()} +'\');'"
+               th:text="${item.getApi().getName()}"></a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
