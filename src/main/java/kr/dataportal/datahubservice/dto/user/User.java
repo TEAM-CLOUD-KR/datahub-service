@@ -15,6 +15,7 @@ public class User {
     private final String nickname;
     private final LocalDateTime regDate;
     private final LocalDateTime eraseDate;
+    private final String dashboardContent;
 
     public User() {
         this.seq = -1;
@@ -22,5 +23,6 @@ public class User {
         this.nickname = null;
         this.regDate = null;
         this.eraseDate = null;
+        this.dashboardContent = null;
     }
 }

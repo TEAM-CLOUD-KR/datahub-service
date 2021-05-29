@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>데이터 시각화 :: 통합 데이터 포털</title>
+
+    <th:block th:replace="fragments/head :: head"/>
+    <!--    chart.js-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script th:src="@{/js/type.js}"></script>
+    <!-- Editor's Dependecy Style -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <!-- Editor's Style -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+
+    <script th:inline="javascript">
+        window.onload = () => {
+            /*<![CDATA[*/
+            const editor = new toastui.Editor({
+                el: document.querySelector('#editor'),
+                height: '500px',
+                initialEditType: 'markdown',
+                previewStyle: 'vertical',
+                initialValue: /*[[${user.dashboardContent}]]*/
+            });
+
+            document.getElementById('btn-write').addEventListener('click', () => {
+                console.log(editor.getMarkdown());
+            });
+            /*]]>*/
+
+        };
+    </script>
+</head>
+<body>
+<div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2>대시보드 편집</h2>
+            <div id="editor"></div>
+            <div class="d-flex align-items-end flex-column mt-2 pe-0">
+                <button id="btn-write" class="btn btn-primary">등록하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+</body>
+</html>

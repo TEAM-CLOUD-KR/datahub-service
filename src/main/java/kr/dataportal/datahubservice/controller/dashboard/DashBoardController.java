@@ -2,10 +2,10 @@ package kr.dataportal.datahubservice.controller.dashboard;
 
 import com.google.gson.Gson;
 import kr.dataportal.datahubservice.domain.datacore.JSONResponse;
-import kr.dataportal.datahubservice.dto.api.ApiListSearchDTO;
-import kr.dataportal.datahubservice.dto.api.ApiListSearchFilterDTO;
 import kr.dataportal.datahubservice.dto.dashboard.DashBoardListDTO;
+import kr.dataportal.datahubservice.dto.user.DashBoardContentUpdateDto;
 import kr.dataportal.datahubservice.dto.user.User;
+import kr.dataportal.datahubservice.util.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -29,7 +31,49 @@ public class DashBoardController {
 
     @GetMapping("")
     public String DashBoardMainView() {
-        return "dashboard/view";
+        return "dashboard/main";
+    }
+
+    @GetMapping("/list")
+    public String DashBoardChartListView() {
+        return "dashboard/list";
+    }
+
+    @GetMapping("/write")
+    public String DashBoardWriteView(Model model) {
+        User user = (User) model.getAttribute("user");
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.get()
+                .uri("/user/dashboard?userSeq=" + Objects.requireNonNull(user).getSeq())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+
+        jsonResponse.ifPresent(response -> {
+            User findUser = gson.fromJson(gson.toJson(response.getData()), User.class);
+            model.addAttribute("user", findUser);
+        });
+        return "dashboard/write";
+    }
+
+    @PostMapping("/write")
+    public String DashBoardWriteAction(DashBoardContentUpdateDto dashBoardContentUpdateDto) {
+        WebClient client = WebClient.builder()
+                .baseUrl("https://api.dataportal.kr")
+                .build();
+
+        Optional<JSONResponse> jsonResponse = client.post()
+                .uri("/dashboard")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(dashBoardContentUpdateDto)
+                .retrieve()
+                .bodyToMono(JSONResponse.class)
+                .blockOptional();
+        return "redirect:/dashboard/write";
     }
 
     @GetMapping("/new")
