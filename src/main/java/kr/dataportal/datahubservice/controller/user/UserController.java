@@ -103,57 +103,61 @@ public class UserController {
     // 회원가입 화면 연결
     @GetMapping("/new")
     @ApiIgnore
-    public String SignUpView() {
-        return "user/signup";
+    public String SignUpView(Model model) {
+        model.addAttribute("result", "현재 신규 회원 등록은 불가능합니다.");
+        return "user/signup_result";
+        // return "user/signup";
     }
 
     @PostMapping("/new")
     @ApiIgnore
     public String SignUpAction(UserSignUpDto userSignUpDto, HttpServletRequest req, Model model) {
-        HttpSession session = req.getSession();
-        if (session.getAttribute("user") != null) {
-            return "redirect:/";
-        }
-        model.addAttribute("user", userSignUpDto);
-
-        WebClient client = WebClient.builder()
-                .baseUrl("https://api.dataportal.kr")
-                .build();
-
-        Optional<JSONResponse> jsonResponse = client.post()
-                .uri("/user/signup")
-                .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(userSignUpDto)
-                .retrieve()
-                .bodyToMono(JSONResponse.class)
-                .blockOptional();
-
-        jsonResponse.ifPresent(response -> {
-            SignUpStatus signUpStatus = gson.fromJson(gson.toJson(response.getData()), SignUpStatus.class);
-            model.addAttribute("result", signUpStatus);
-        });
-        model.addAttribute("email", userSignUpDto.getEmail());
-        model.addAttribute("nickname", userSignUpDto.getNickname());
-
-        SignUpStatus result = (SignUpStatus) model.getAttribute("result");
-        if (result == null) {
-            model.addAttribute("result", "알 수 없는 오류가 발생하였습니다. [SRV->CORE]");
-            return "user/signup_result";
-        }
-        String resultMsg = switch (result) {
-            case SUCCESS -> "회원가입에 성공하였습니다.";
-            case CONFLICT_EMAIL -> "이미 등록된 이메일입니다.";
-            case CONFLICT_NICKNAME -> "이미 등록된 닉네임입니다.";
-            case MISMATCH_PASSWORD -> "패스워드가 일치하지 않습니다.";
-            case FAIL -> "알 수 없는 오류가 발생하였습니다. 다시 시도해주세요.";
-        };
-        model.addAttribute("result", resultMsg);
-
-        if (result == SignUpStatus.SUCCESS) {
-            return "user/signup_result";
-        }
-
-        return "user/signup";
+        model.addAttribute("result", "현재 신규 회원 등록은 불가능합니다.");
+        return "user/signup_result";
+//        HttpSession session = req.getSession();
+//        if (session.getAttribute("user") != null) {
+//            return "redirect:/";
+//        }
+//        model.addAttribute("user", userSignUpDto);
+//
+//        WebClient client = WebClient.builder()
+//                .baseUrl("https://api.dataportal.kr")
+//                .build();
+//
+//        Optional<JSONResponse> jsonResponse = client.post()
+//                .uri("/user/signup")
+//                .accept(MediaType.APPLICATION_JSON)
+//                .bodyValue(userSignUpDto)
+//                .retrieve()
+//                .bodyToMono(JSONResponse.class)
+//                .blockOptional();
+//
+//        jsonResponse.ifPresent(response -> {
+//            SignUpStatus signUpStatus = gson.fromJson(gson.toJson(response.getData()), SignUpStatus.class);
+//            model.addAttribute("result", signUpStatus);
+//        });
+//        model.addAttribute("email", userSignUpDto.getEmail());
+//        model.addAttribute("nickname", userSignUpDto.getNickname());
+//
+//        SignUpStatus result = (SignUpStatus) model.getAttribute("result");
+//        if (result == null) {
+//            model.addAttribute("result", "알 수 없는 오류가 발생하였습니다. [SRV->CORE]");
+//            return "user/signup_result";
+//        }
+//        String resultMsg = switch (result) {
+//            case SUCCESS -> "회원가입에 성공하였습니다.";
+//            case CONFLICT_EMAIL -> "이미 등록된 이메일입니다.";
+//            case CONFLICT_NICKNAME -> "이미 등록된 닉네임입니다.";
+//            case MISMATCH_PASSWORD -> "패스워드가 일치하지 않습니다.";
+//            case FAIL -> "알 수 없는 오류가 발생하였습니다. 다시 시도해주세요.";
+//        };
+//        model.addAttribute("result", resultMsg);
+//
+//        if (result == SignUpStatus.SUCCESS) {
+//            return "user/signup_result";
+//        }
+//
+//        return "user/signup";
     }
 
     // 마이페이지 화면 연결
