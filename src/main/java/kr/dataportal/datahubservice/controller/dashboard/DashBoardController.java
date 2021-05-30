@@ -29,18 +29,7 @@ public class DashBoardController {
         return (User) req.getSession().getAttribute("user");
     }
 
-    @GetMapping("")
-    public String DashBoardMainView() {
-        return "dashboard/main";
-    }
-
-    @GetMapping("/list")
-    public String DashBoardChartListView() {
-        return "dashboard/list";
-    }
-
-    @GetMapping("/write")
-    public String DashBoardWriteView(Model model) {
+    private User getCurrentUser(Model model) {
         User user = (User) model.getAttribute("user");
         WebClient client = WebClient.builder()
                 .baseUrl("https://api.dataportal.kr")
@@ -53,10 +42,30 @@ public class DashBoardController {
                 .bodyToMono(JSONResponse.class)
                 .blockOptional();
 
-        jsonResponse.ifPresent(response -> {
-            User findUser = gson.fromJson(gson.toJson(response.getData()), User.class);
-            model.addAttribute("user", findUser);
-        });
+        if (jsonResponse.isEmpty()) {
+
+        }
+
+        User findUser = gson.fromJson(gson.toJson(jsonResponse.get().getData()), User.class);
+        return findUser;
+    }
+
+    @GetMapping("")
+    public String DashBoardMainView(Model model) {
+        model.addAttribute("user", getCurrentUser(model));
+        return "dashboard/main";
+    }
+
+    @GetMapping("/list")
+    public String DashBoardChartListView(Model model) {
+
+        model.addAttribute("user", getCurrentUser(model));
+        return "dashboard/list";
+    }
+
+    @GetMapping("/write")
+    public String DashBoardWriteView(Model model) {
+        model.addAttribute("user", getCurrentUser(model));
         return "dashboard/write";
     }
 
@@ -67,13 +76,13 @@ public class DashBoardController {
                 .build();
 
         Optional<JSONResponse> jsonResponse = client.post()
-                .uri("/dashboard")
+                .uri("/user/dashboard")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(dashBoardContentUpdateDto)
                 .retrieve()
                 .bodyToMono(JSONResponse.class)
                 .blockOptional();
-        return "redirect:/dashboard/write";
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/new")

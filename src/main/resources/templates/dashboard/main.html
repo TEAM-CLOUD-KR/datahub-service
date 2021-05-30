@@ -10,9 +10,12 @@
     <script th:src="@{/js/type.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script th:inline="javascript">
+        /*<![CDATA[*/
         window.onload = () => {
-            document.getElementById('dashboard-content').innerHTML = marked('# Marked in the browser\n\nRendered by **marked**.');
+            document.getElementById('dashboard-content').innerHTML =
+                marked(/*[[${user.dashboardContent}]]*/);
         };
+        /*]]>*/
     </script>
 </head>
 <body>
