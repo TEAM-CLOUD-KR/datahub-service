@@ -22,10 +22,10 @@
 <div th:replace="fragments/header.html :: fragment-header (user=${user})"></div>
 <div class="container">
     <div class="row">
-        <div class="d-flex align-items-end flex-column mb-2 pe-0">
-            <a th:href="@{/dashboard/write}" class="btn btn-primary">편집</a>
-        </div>
         <div class="col-12 border rounded-3 p-3">
+            <div class="d-flex align-items-end flex-column pe-0">
+                <a th:href="@{/dashboard/write}" class="btn btn-primary">편집</a>
+            </div>
             <div id="dashboard-content">
 
             </div>
